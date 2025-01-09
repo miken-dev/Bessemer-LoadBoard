@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { DevBanner } from './DevBanner.svelte';
+	import DevBanner from './DevBanner.svelte';
 </script>
 
 <DevBanner />
