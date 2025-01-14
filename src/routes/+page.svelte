@@ -1,12 +1,11 @@
 <script lang="ts">
-	import DevBanner from './DevBanner.svelte';
-
+	import DevBanner from '$lib/components/DevBanner.svelte'
 	//import { slide } from "svelte/transition";
 	//import { ChevronDown } from "lucide-svelte";
-	import DataTable from './LoadTablev2.svelte';
+	import DataTable from '$lib/components/LoadTablev2.svelte';
 	import tableData from '$lib/sampledata.json';
 
-	import Map from './Map.svelte';
+	import Map from '$lib/components/Map.svelte';
 	import ViewsBar from '$lib/components/ViewsBar.svelte';
 	// Store selected row id
 	let selectedRow: string | null = $state(null);
