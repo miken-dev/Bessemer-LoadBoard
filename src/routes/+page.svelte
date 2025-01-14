@@ -2,10 +2,9 @@
 	import DevBanner from './DevBanner.svelte';
 	import LoadTable from './LoadTable.svelte';
  
-	import { slide } from "svelte/transition";
-	import { ChevronDown } from "lucide-svelte";
+	//import { slide } from "svelte/transition";
+	//import { ChevronDown } from "lucide-svelte";
 	import DataTable from "./LoadTablev2.svelte";
-	import type { TableData } from "./types.js";
 	import tableData from "$lib/sampledata.json";
 
 	// Store selected row id
