@@ -1,17 +1,16 @@
 <script lang="ts">
-	import { slide } from "svelte/transition";
-	import { ChevronDown } from "lucide-svelte";
-	import type { TableData } from "./types.js";
-	import { cn } from "$lib/utils";
+	import { slide } from 'svelte/transition';
+	import type { TableDataTypes } from '$lib/types';
+	import { cn } from '$lib/utils';
 
 	// Component props
 	let {
 		tableData,
 		selectedRow,
-		toggleDetails,
+		toggleDetails
 	}: {
-		tableData: TableData[];
-		selectedRow: string | null;
+		tableData: TableDataTypes[];
+		selectedRow: number | null;
 		toggleDetails: (id: string) => void;
 	} = $props();
 </script>
@@ -21,104 +20,123 @@
 		<tbody class="divide-y divide-gray-200 bg-white">
 			{#each tableData as row, index}
 				<!-- Combined row with all data -->
-				<tr class={cn("transition-colors cursor-pointer", index % 2 === 0 ? "bg-white" : "bg-gray-50", selectedRow === row.id && "bg-blue-50 hover:bg-blue-50", selectedRow !== row.id && "hover:bg-gray-100")} onclick={() => toggleDetails(row.id)}>
+				<tr
+					class={cn(
+						'cursor-pointer transition-colors',
+						index % 2 === 0 ? 'bg-white' : 'bg-gray-50',
+						selectedRow === row.loadID && 'bg-blue-50 hover:bg-blue-50',
+						selectedRow !== row.loadID && 'hover:bg-gray-100'
+					)}
+					onclick={() => toggleDetails(row.loadID)}
+				>
 					<td class="w-10 pl-4">
-						<div class="h-full flex items-center">
-							<ChevronDown class={cn("w-4 h-4 transition-transform", selectedRow === row.id && "rotate-180")} />
+						<div class="flex h-full items-center">
+							<svg
+								class={cn(
+									'h-4 w-4 transition-transform',
+									selectedRow === row.loadID && 'rotate-180'
+								)}
+								xmlns="http://www.w3.org/2000/svg"
+								fill="none"
+								viewBox="0 0 24 24"
+								stroke="currentColor"
+							>
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M19 9l-7 7-7-7"
+								/>
+							</svg>
 						</div>
 					</td>
 					<td>
-						<div class="py-3 space-y-4">
-							<!-- First row data -->
-							<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-								<div>
-									<div class="text-xs text-gray-500 font-medium">ID</div>
-									<div class="text-sm mt-1">{row.id}</div>
+						<div class="space-y-4 py-3">
+							<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 space-x-7 py-5 ">
+								<!-- Origin -->
+								<div class="stack">
+									<div>
+										<div class="text-xs font-medium text-gray-500">Load Date</div>
+										<div class="mt-1 text-sm">{row.loadDate}</div>
+									</div>
+									<div>
+										<div class="text-xs font-medium text-gray-500">Origin</div>
+										<div class="mt-1 text-sm">
+											{`${row.originCityName}, ${row.originStateName}`}
+										</div>
+									</div>
 								</div>
-								<div>
-									<div class="text-xs text-gray-500 font-medium">Name</div>
-									<div class="text-sm mt-1 font-medium">{row.name}</div>
+								<!-- Destination -->
+								<div class="stack">
+									<div>
+										<div class="text-xs font-medium text-gray-500">Delivery Date</div>
+										<div class="mt-1 text-sm font-medium">{row.deliveryDate}</div>
+									</div>
+									<div>
+										<div class="text-xs font-medium text-gray-500">Destination</div>
+										<div class="mt-1 text-sm">
+											{`${row.destinationCityName}, ${row.destinationStateName}`}
+										</div>
+									</div>
 								</div>
-								<div>
-									<div class="text-xs text-gray-500 font-medium">Status</div>
-									<div class="text-sm mt-1">{row.status}</div>
+								<!-- Dimensions/Commodity -->
+								<div class="stack">
+									<div>
+										<div class="text-xs font-medium text-gray-500">Dimensions</div>
+										<div class="mt-1 text-sm">{`${row.lengthFeet}'${row.lengthInches}" x ${row.widthFeet}'${row.widthInches}" x ${row.heightFeet}'${row.heightInches}" x ${row.weightInPounds}lbs.`}</div>
+									</div>
+									<div>
+										<div class="text-xs font-medium text-gray-500">Commodity</div>
+										<div class="mt-1 text-sm">{row.commodity}</div>
+									</div>
 								</div>
-								<div>
-									<div class="text-xs text-gray-500 font-medium">Category</div>
-									<div class="text-sm mt-1">{row.category}</div>
+								<!-- Revenue/Miles -->
+								<div class="stack">
+									<div>
+										<div class="text-xs font-medium text-gray-500">Revenue</div>
+										<div class="mt-1 text-sm">{row.revenue}</div>
+									</div>
+									<div>
+										<div class="text-xs font-medium text-gray-500">Miles</div>
+										<div class="mt-1 text-sm">{row.miles}</div>
+									</div>
 								</div>
-								<div>
-									<div class="text-xs text-gray-500 font-medium">Priority</div>
-									<div class="text-sm mt-1">{row.priority}</div>
-								</div>
-							</div>
-							<!-- Second row data -->
-							<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-								<div>
-									<div class="text-xs text-gray-500 font-medium">Created</div>
-									<div class="text-sm mt-1">{row.created}</div>
-								</div>
-								<div>
-									<div class="text-xs text-gray-500 font-medium">Updated</div>
-									<div class="text-sm mt-1">{row.updated}</div>
-								</div>
-								<div>
-									<div class="text-xs text-gray-500 font-medium">Owner</div>
-									<div class="text-sm mt-1">{row.owner}</div>
-								</div>
-								<div>
-									<div class="text-xs text-gray-500 font-medium">Progress</div>
-									<div class="text-sm mt-1">{row.progress}%</div>
+								<!-- Agent/Phone -->
+								<div class="stack">
+									<div>
+										<div class="text-xs font-medium text-gray-500">Agent</div>
+										<div class="mt-1 text-sm">AGENT NAME</div>
+									</div>
+									<div>
+										<div class="text-xs font-medium text-gray-500">Phone #</div>
+										<div class="mt-1 text-sm">{row.terminalPhone}</div>
+									</div>
 								</div>
 							</div>
 						</div>
 					</td>
 				</tr>
 				<!-- Expanded details section -->
-				{#if selectedRow === row.id}
+				{#if selectedRow === row.loadID}
 					<tr transition:slide>
 						<td colspan="2" class="bg-gray-50">
 							<div class="p-4 md:p-6">
-								<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+								<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
 									<div>
-										<h4 class="text-sm font-semibold text-gray-600">Description</h4>
-										<p class="text-sm mt-1">{row.details.description}</p>
+										<h4 class="text-sm font-semibold text-gray-600">Pieces</h4>
+										<p class="mt-1 text-sm">{row.pieceCount}</p>
 									</div>
 									<div>
-										<h4 class="text-sm font-semibold text-gray-600">Department</h4>
-										<p class="text-sm mt-1">{row.details.department}</p>
+										<h4 class="text-sm font-semibold text-gray-600">LTL</h4>
+										<p class="mt-1 text-sm">{row.ltl}</p>
 									</div>
 									<div>
-										<h4 class="text-sm font-semibold text-gray-600">Budget</h4>
-										<p class="text-sm mt-1">${row.details.budget}</p>
+										<h4 class="text-sm font-semibold text-gray-600">Terminal</h4>
+										<p class="mt-1 text-sm">${row.terminalName}</p>
 									</div>
 									<div>
-										<h4 class="text-sm font-semibold text-gray-600">Location</h4>
-										<p class="text-sm mt-1">{row.details.location}</p>
-									</div>
-									<div>
-										<h4 class="text-sm font-semibold text-gray-600">Team Size</h4>
-										<p class="text-sm mt-1">{row.details.teamSize}</p>
-									</div>
-									<div>
-										<h4 class="text-sm font-semibold text-gray-600">Start Date</h4>
-										<p class="text-sm mt-1">{row.details.startDate}</p>
-									</div>
-									<div>
-										<h4 class="text-sm font-semibold text-gray-600">End Date</h4>
-										<p class="text-sm mt-1">{row.details.endDate}</p>
-									</div>
-									<div>
-										<h4 class="text-sm font-semibold text-gray-600">Risk Level</h4>
-										<p class="text-sm mt-1">{row.details.riskLevel}</p>
-									</div>
-									<div>
-										<h4 class="text-sm font-semibold text-gray-600">Phase</h4>
-										<p class="text-sm mt-1">{row.details.phase}</p>
-									</div>
-									<div>
-										<h4 class="text-sm font-semibold text-gray-600">Status Notes</h4>
-										<p class="text-sm mt-1">{row.details.statusNotes}</p>
+										<h4 class="text-sm font-semibold text-gray-600">Notes</h4>
+										<p class="mt-1 text-sm">{row.notes}</p>
 									</div>
 								</div>
 							</div>
@@ -129,4 +147,3 @@
 		</tbody>
 	</table>
 </div>
-
