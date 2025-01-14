@@ -2,7 +2,7 @@ export type TableDataTypes = {
 	loadID: number;
 	companyNumber: number;
 	loadDate: string;
-	deliveryDate: Date;
+	deliveryDate: String;
 	originAddress: string;
 	originZipCodeID: number;
 	originZipCode: string;
