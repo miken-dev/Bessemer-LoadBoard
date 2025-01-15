@@ -7,6 +7,9 @@
 
 	import Map from '$lib/components/Map.svelte';
 	import ViewsBar from '$lib/components/ViewsBar.svelte';
+	import Header from '$lib/components/Header.svelte'
+
+
 	// Store selected row id
 	let selectedRow: string | null = $state(null);
 
@@ -20,6 +23,7 @@
 </script>
 
 <DevBanner />
+	<Header />
 <main class="mx-5">
 	<ViewsBar bind:tableIsShowing bind:mapIsShowing />
 	<div class="flex flex-col items-start md:flex-row">
