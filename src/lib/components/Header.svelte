@@ -1,17 +1,9 @@
 <script lang="ts">
-
 </script>
 
-<div>
-// Logo
-	<div class="logo">
-
+<div class="flex justify-between items-center w-screen p-5 bg-blue-600" >
+	<div>
+		<img src="https://placehold.co/300x70" />
 	</div>
-// Header Buttons
-	<div class="button container"
-
-	</div>
+		<button class="bg-gray-500 hover:bg-blue-600 text-white font-boldd py-2 px-4 rounded">Equipment Search</button>
 </div>
-// Auto refreshing notification
-Auto refreshing in NaN minutes NaN seconds
-//Blue bottom bar
