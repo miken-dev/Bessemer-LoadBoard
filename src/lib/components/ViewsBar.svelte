@@ -8,7 +8,7 @@
 	} = $props();
 </script>
 
-<div class="flex">
+<div class="flex justify-items-end bg-red-500">
 	<button
 		onclick={() => {
 			tableIsShowing = !tableIsShowing;
