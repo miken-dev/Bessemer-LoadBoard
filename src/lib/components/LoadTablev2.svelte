@@ -13,6 +13,18 @@
 		selectedRow: number | null;
 		toggleDetails: (id: string) => void;
 	} = $props();
+
+	const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+	const day = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+	const dateOrdinals = (d: number) => {
+		if (d > 3 && d < 21) return 'th';
+		switch (d % 10) {
+			case 1: return "st";
+			case 2: return "nd";
+			case 3: return "rd";
+			default: return "th";
+		}
+	}
 </script>
 
 <div class="overflow-x-auto rounded-lg border border-gray-200 shadow-sm">
@@ -52,12 +64,12 @@
 					</td>
 					<td>
 						<div class="space-y-4 py-3">
-							<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 space-x-7 py-5 ">
+							<div class="grid grid-cols-2 space-x-7 py-5 md:grid-cols-3 lg:grid-cols-5">
 								<!-- Origin -->
 								<div class="stack">
 									<div>
 										<div class="text-xs font-medium text-gray-500">Load Date</div>
-										<div class="mt-1 text-sm">{row.loadDate}</div>
+										<div class="mt-1 text-sm">{`${day[new Date(row.loadDate).getDay()]} ${month[new Date(row.loadDate).getMonth()]} ${new Date(row.loadDate).getDate()}${dateOrdinals(new Date(row.loadDate).getDate())} ${new Date(row.loadDate).getFullYear()}`}</div>
 									</div>
 									<div>
 										<div class="text-xs font-medium text-gray-500">Origin</div>
@@ -70,7 +82,7 @@
 								<div class="stack">
 									<div>
 										<div class="text-xs font-medium text-gray-500">Delivery Date</div>
-										<div class="mt-1 text-sm font-medium">{row.deliveryDate}</div>
+										<div class="mt-1 text-sm">{`${day[new Date(row.deliveryDate).getDay()]} ${month[new Date(row.deliveryDate).getMonth()]} ${new Date(row.deliveryDate).getDate()}${dateOrdinals(new Date(row.deliveryDate).getDate())} ${new Date(row.deliveryDate).getFullYear()}`}</div>
 									</div>
 									<div>
 										<div class="text-xs font-medium text-gray-500">Destination</div>
@@ -83,7 +95,9 @@
 								<div class="stack">
 									<div>
 										<div class="text-xs font-medium text-gray-500">Dimensions</div>
-										<div class="mt-1 text-sm">{`${row.lengthFeet}'${row.lengthInches}" x ${row.widthFeet}'${row.widthInches}" x ${row.heightFeet}'${row.heightInches}" x ${row.weightInPounds}lbs.`}</div>
+										<div class="mt-1 text-sm">
+											{`${row.lengthFeet}'${row.lengthInches}" x ${row.widthFeet}'${row.widthInches}" x ${row.heightFeet}'${row.heightInches}" x ${row.weightInPounds}lbs.`}
+										</div>
 									</div>
 									<div>
 										<div class="text-xs font-medium text-gray-500">Commodity</div>
