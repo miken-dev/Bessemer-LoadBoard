@@ -9,5 +9,5 @@ declare global {
 		// interface Platform {}
 	}
 }
-
+declare module leaflet;
 export {};
