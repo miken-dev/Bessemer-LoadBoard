@@ -2,7 +2,7 @@
 	import DevBanner from '$lib/components/DevBanner.svelte';
 	import DataTable from '$lib/components/LoadTablev2.svelte';
 	import tableData from '$lib/sampledata.json';
-
+	import Drawer from '$lib/components/Drawer.svelte';
 
 	import ViewsBar from '$lib/components/ViewsBar.svelte';
 	import Header from '$lib/components/Header.svelte';
@@ -40,4 +40,5 @@
 		</div>
 		{/if}
 	</div>
+	<Drawer />
 </main>
