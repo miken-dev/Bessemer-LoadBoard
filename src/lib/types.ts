@@ -2,7 +2,7 @@ export type TableDataTypes = {
 	loadID: number;
 	companyNumber: number;
 	loadDate: string;
-	deliveryDate: Date;
+	deliveryDate: string;
 	originAddress: string;
 	originZipCodeID: number;
 	originZipCode: string;
@@ -43,4 +43,5 @@ export type TableDataTypes = {
 	destinationLng: number;
 	manualLoad: boolean;
 	areaLoadCount: number;
+
 };
