@@ -11,7 +11,7 @@
 	}: {
 		tableData: TableDataTypes[];
 		selectedRow: number | null;
-		toggleDetails: (id: string) => void;
+		toggleDetails: (id: number) => void;
 	} = $props();
 
 	const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
