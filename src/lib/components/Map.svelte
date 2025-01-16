@@ -1,25 +1,36 @@
 <script lang="ts">
-	import { Map, TileLayer, Marker, Popup } from 'sveaflet';
+	import { Map, TileLayer, Marker, Circle, Polygon, Popup } from 'sveaflet';
 
-	let marker: Marker;
+	import type { TableDataTypes } from '$lib/types';
 
+	let {
+		tableData,
+		selectedRow = $bindable(),
+		toggleDetails2 = $bindable()
+	}: {
+		tableData: TableDataTypes[];
+		selectedRow: number | null;
+		toggleDetails2: boolean;
+	} = $props();
+
+	const toggle = (id: number) => {
+		selectedRow = id;
+		toggleDetails2 = true 
+	}
 </script>
 
-<div style="width:100%;height:500px;">
+<div class="size-80 md:h-svh md:w-screen">
 	<Map
 		options={{
-			center: [51.505, -0.09],
-			zoom: 13
+			center: [44.67498, -103.856037],
+			zoom: 4.4
 		}}
 	>
 		<TileLayer url={'https://tile.openstreetmap.org/{z}/{x}/{y}.png'} />
-		<Marker latLng={[51.505, -0.09]} bind:instance={marker}>
-			<Popup
-				options={{
-					content: 'Hello Sveaflet.'
-				}}
-			></Popup>
-		</Marker>
+		{#each tableData as row, index}
+			<Marker onclick={() => toggle(row.loadID)} latLng={[row.originLat, row.originLng]} />
+		{/each}
+
+		<Marker latLng={[51.505, -0.09]} />
 	</Map>
 </div>
-
