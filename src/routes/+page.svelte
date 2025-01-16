@@ -1,5 +1,6 @@
 <script lang="ts">
-	import DevBanner from '$lib/components/DevBanner.svelte'
+export const ssr = false;
+import DevBanner from '$lib/components/DevBanner.svelte'
 	//import { slide } from "svelte/transition";
 	//import { ChevronDown } from "lucide-svelte";
 	import DataTable from '$lib/components/LoadTablev2.svelte';
