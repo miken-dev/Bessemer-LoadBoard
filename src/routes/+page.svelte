@@ -9,7 +9,7 @@
 	import Map from '$lib/components/Map.svelte';
 	// Store selected row id
 	let selectedRow: string | null = $state(null);
-	let toggleDetails2 = $state(false)
+	let detailsHidden = $state(true);
 	/** Toggle row details */
 	const toggleDetails = (id: string) => {
 		selectedRow = selectedRow === id ? null : id;
@@ -17,14 +17,17 @@
 
 	let tableIsShowing: boolean = $state(false);
 	let mapIsShowing: boolean = $state(true);
-
 </script>
 
-<DevBanner />
-<Header />
-<main class="mx-5">
-	<p>details = {toggleDetails2}, selected row = {selectedRow} 
-	<ViewsBar bind:tableIsShowing bind:mapIsShowing />
+<header class="dark:bg-gray-800 dark:text-gray-100">
+	<DevBanner />
+	<Header />
+</header>
+<main class="gray-800 mx-5  dark:bg-gray-800 dark:text-gray-100">
+	<p>
+		details hidden = {detailsHidden}, selected loadID = {selectedRow ? selectedRow : 'null'}
+		<ViewsBar bind:tableIsShowing bind:mapIsShowing />
+	</p>
 	<div class="flex flex-col items-start md:flex-row">
 		{#if tableIsShowing}
 			<div class="min-h-screen w-full bg-gray-50 p-4 text-gray-900 md:p-8">
@@ -35,10 +38,10 @@
 		{/if}
 
 		{#if mapIsShowing}
-		<div class="sticky top-0">
-			<Map {tableData} bind:selectedRow bind:toggleDetails2/>
-		</div>
+			<div class="sticky top-0">
+				<Map {tableData} bind:selectedRow bind:detailsHidden />
+			</div>
 		{/if}
 	</div>
-	<Drawer />
+	<Drawer {tableData} bind:selectedRow bind:detailsHidden />
 </main>
