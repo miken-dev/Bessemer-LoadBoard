@@ -6,16 +6,16 @@
 	let {
 		tableData,
 		selectedRow = $bindable(),
-		toggleDetails2 = $bindable()
+		detailsHidden = $bindable()
 	}: {
 		tableData: TableDataTypes[];
 		selectedRow: number | null;
-		toggleDetails2: boolean;
+		detailsHidden: boolean;
 	} = $props();
 
 	const toggle = (id: number) => {
 		selectedRow = id;
-		toggleDetails2 = true 
+		detailsHidden = false 
 	}
 </script>
 
