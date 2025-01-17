@@ -7,11 +7,11 @@
 	let {
 		tableData,
 		selectedRow,
-		toggleDetails
+		detailsHidden	
 	}: {
 		tableData: TableDataTypes[];
 		selectedRow: number | null;
-		toggleDetails: (id: number) => void;
+		detailsHidden: boolean;
 	} = $props();
 
 	const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
@@ -24,6 +24,10 @@
 			case 3: return "rd";
 			default: return "th";
 		}
+	}
+	const toggle = (id: number) => {
+		selectedRow = id;
+		detailsHidden = false 
 	}
 </script>
 
@@ -39,7 +43,7 @@
 						selectedRow === row.loadID && 'bg-blue-50 hover:bg-blue-50',
 						selectedRow !== row.loadID && 'hover:bg-gray-100'
 					)}
-					onclick={() => toggleDetails(row.loadID)}
+					onclick={toggle(row.loadID ?? 0)}
 				>
 					<td class="w-10 pl-4">
 						<div class="flex h-full items-center">
