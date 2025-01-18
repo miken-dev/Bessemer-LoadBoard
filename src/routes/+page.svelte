@@ -10,6 +10,7 @@
 	// Store selected row id
 	let selectedRow: string | null = $state(null);
 	let detailsHidden = $state(true);
+	let tableClicked = $state(false)
 	/** Toggle row details */
 	const toggleDetails = (id: string) => {
 		selectedRow = selectedRow === id ? null : id;
@@ -25,23 +26,23 @@
 </header>
 <main class="gray-800 mx-5  dark:bg-gray-800 dark:text-gray-100">
 	<p>
-		details hidden = {detailsHidden}, selected loadID = {selectedRow ? selectedRow : 'null'}
+		details hidden = {detailsHidden}, selected loadID = {selectedRow ? selectedRow : 'null'}, tableClicked = {tableClicked}
 		<ViewsBar bind:tableIsShowing bind:mapIsShowing />
 	</p>
-	<div class="flex flex-col items-start md:flex-row">
+	<div class="flex flex-col items-start md:flex-row"> 
 		{#if tableIsShowing}
 			<div class="min-h-screen w-full bg-gray-50 p-4 text-gray-900 md:p-8">
 				<div class="mx-auto max-w-[95rem]">
-					<DataTable {tableData} {selectedRow} {toggleDetails} />
+					<DataTable {tableData} bind:selectedRow bind:detailsHidden bind:tableClicked />
 				</div>
 			</div>
 		{/if}
 
 		{#if mapIsShowing}
 			<div class="sticky top-0">
-				<Map {tableData} bind:selectedRow bind:detailsHidden />
+				<Map {tableData} bind:selectedRow bind:detailsHidden bind:tableClicked />
 			</div>
 		{/if}
 	</div>
-	<Drawer {tableData} bind:selectedRow bind:detailsHidden />
+	<Drawer {tableData} bind:selectedRow bind:detailsHidden {tableClicked} />
 </main>
