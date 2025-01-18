@@ -1,22 +1,25 @@
 <script lang="ts">
-	import { Map, TileLayer, Marker, Circle, Polygon, Popup } from 'sveaflet';
+	import { Map, TileLayer, Marker } from 'sveaflet';
 
 	import type { TableDataTypes } from '$lib/types';
 
 	let {
 		tableData,
 		selectedRow = $bindable(),
-		detailsHidden = $bindable()
+		detailsHidden = $bindable(),
+		tableClicked = $bindable()
 	}: {
 		tableData: TableDataTypes[];
 		selectedRow: number | null;
 		detailsHidden: boolean;
+		tableClicked: boolean;
 	} = $props();
 
 	const toggle = (id: number) => {
 		selectedRow = id;
-		detailsHidden = false 
-	}
+		detailsHidden = false;
+		tableClicked = false;
+	};
 </script>
 
 <div class="size-80 md:h-svh md:w-screen">
