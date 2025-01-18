@@ -6,29 +6,49 @@
 	// Component props
 	let {
 		tableData,
-		selectedRow,
-		detailsHidden	
+		selectedRow = $bindable(),
+		detailsHidden = $bindable(),
+		tableClicked = $bindable()
 	}: {
 		tableData: TableDataTypes[];
 		selectedRow: number | null;
 		detailsHidden: boolean;
+		tableClicked: boolean;
 	} = $props();
 
-	const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-	const day = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+	const month = [
+		'January',
+		'February',
+		'March',
+		'April',
+		'May',
+		'June',
+		'July',
+		'August',
+		'September',
+		'October',
+		'November',
+		'December'
+	];
+	const day = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 	const dateOrdinals = (d: number) => {
 		if (d > 3 && d < 21) return 'th';
 		switch (d % 10) {
-			case 1: return "st";
-			case 2: return "nd";
-			case 3: return "rd";
-			default: return "th";
+			case 1:
+				return 'st';
+			case 2:
+				return 'nd';
+			case 3:
+				return 'rd';
+			default:
+				return 'th';
 		}
-	}
+	};
 	const toggle = (id: number) => {
 		selectedRow = id;
-		detailsHidden = false 
-	}
+		detailsHidden = false;
+		tableClicked = true;
+	};
 </script>
 
 <div class="overflow-x-auto rounded-lg border border-gray-200 shadow-sm">
@@ -37,13 +57,13 @@
 			{#each tableData as row, index}
 				<!-- Combined row with all data -->
 				<tr
+					onclick={() => toggle(row.loadID)}
 					class={cn(
 						'cursor-pointer transition-colors',
 						index % 2 === 0 ? 'bg-white' : 'bg-gray-50',
 						selectedRow === row.loadID && 'bg-blue-50 hover:bg-blue-50',
 						selectedRow !== row.loadID && 'hover:bg-gray-100'
 					)}
-					onclick={toggle(row.loadID ?? 0)}
 				>
 					<td class="w-10 pl-4">
 						<div class="flex h-full items-center">
@@ -73,7 +93,9 @@
 								<div class="stack">
 									<div>
 										<div class="text-xs font-medium text-gray-500">Load Date</div>
-										<div class="mt-1 text-sm">{`${day[new Date(row.loadDate).getDay()]} ${month[new Date(row.loadDate).getMonth()]} ${new Date(row.loadDate).getDate()}${dateOrdinals(new Date(row.loadDate).getDate())} ${new Date(row.loadDate).getFullYear()}`}</div>
+										<div class="mt-1 text-sm">
+											{`${day[new Date(row.loadDate).getDay()]} ${month[new Date(row.loadDate).getMonth()]} ${new Date(row.loadDate).getDate()}${dateOrdinals(new Date(row.loadDate).getDate())} ${new Date(row.loadDate).getFullYear()}`}
+										</div>
 									</div>
 									<div>
 										<div class="text-xs font-medium text-gray-500">Origin</div>
@@ -86,7 +108,9 @@
 								<div class="stack">
 									<div>
 										<div class="text-xs font-medium text-gray-500">Delivery Date</div>
-										<div class="mt-1 text-sm">{`${day[new Date(row.deliveryDate).getDay()]} ${month[new Date(row.deliveryDate).getMonth()]} ${new Date(row.deliveryDate).getDate()}${dateOrdinals(new Date(row.deliveryDate).getDate())} ${new Date(row.deliveryDate).getFullYear()}`}</div>
+										<div class="mt-1 text-sm">
+											{`${day[new Date(row.deliveryDate).getDay()]} ${month[new Date(row.deliveryDate).getMonth()]} ${new Date(row.deliveryDate).getDate()}${dateOrdinals(new Date(row.deliveryDate).getDate())} ${new Date(row.deliveryDate).getFullYear()}`}
+										</div>
 									</div>
 									<div>
 										<div class="text-xs font-medium text-gray-500">Destination</div>
@@ -134,7 +158,7 @@
 						</div>
 					</td>
 				</tr>
-				<!-- Expanded details section -->
+				<!-- Expanded details section 
 				{#if selectedRow === row.loadID}
 					<tr transition:slide>
 						<td colspan="2" class="bg-gray-50">
@@ -160,7 +184,7 @@
 							</div>
 						</td>
 					</tr>
-				{/if}
+				{/if}-->
 			{/each}
 		</tbody>
 	</table>
