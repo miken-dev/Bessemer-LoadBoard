@@ -4,13 +4,14 @@
 	import tableData from '$lib/sampledata.json';
 	import Drawer from '$lib/components/Drawer.svelte';
 
+	import NewSearch from '$lib/components/NewSearch.svelte';
 	import ViewsBar from '$lib/components/ViewsBar.svelte';
 	import Header from '$lib/components/Header.svelte';
 	import Map from '$lib/components/Map.svelte';
 	// Store selected row id
 	let selectedRow: string | null = $state(null);
 	let detailsHidden = $state(true);
-	let tableClicked = $state(false)
+	let tableClicked = $state(false);
 	/** Toggle row details */
 	const toggleDetails = (id: string) => {
 		selectedRow = selectedRow === id ? null : id;
