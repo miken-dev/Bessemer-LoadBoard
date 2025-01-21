@@ -47,7 +47,7 @@
 </script>
 
 <Table hoverable={true} {tabledata}>
-	<TableHead sort={{a, b} => a.destinationCityName}}>Origin City Name</TableHead>
+	<TableHead sort={{a, b} => a.destinationCityName}>Origin City Name</TableHead>
 
 
 </Table>
