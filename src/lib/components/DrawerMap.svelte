@@ -43,19 +43,17 @@
 		}}
 	>
 		<TileLayer url={'https://tile.openstreetmap.org/{z}/{x}/{y}.png'} />
-		<LayerGroup>
-			<Popup
-				latLng={[originLat, originLng]}
-				options={{
-					content: `Origin<br>: ${originCity}, ${originState}`
-				}}
-			/>
-			<Popup
-				latLng={[destLat, destLng]}
-				options={{
-					content: `Destination:<br> ${destCity}, ${destState}`
-				}}
-			/>
-		</LayerGroup>
+		<Tooltip
+			latLng={[originLat, originLng]}
+			options={{
+				content: `<strong>Origin:</strong><br> ${originCity}, ${originState}`
+			}}
+		/>
+		<Tooltip
+			latLng={[destLat, destLng]}
+			options={{
+				content: `<strong>Destination:</strong><br> ${destCity}, ${destState}`
+			}}
+		/>
 	</Map>
 </div>
