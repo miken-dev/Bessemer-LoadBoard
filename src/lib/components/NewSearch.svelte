@@ -1,6 +1,6 @@
 <script lang="ts">
 import { Dropdown, DropdownItem, DropdownDivider, DropdownHeader } from "flowbite-svelte";
-import { ChevronDownOutline} from 'flowbite-svelte-icons'
+//import { ChevronDownOutline} from 'flowbite-svelte-icons'
 
 let miles = [5, 10, 25, 50, 100, 150, 200, 250, 300, 400, 500]
 let cities = ["Cleveland", "Savannah"]
