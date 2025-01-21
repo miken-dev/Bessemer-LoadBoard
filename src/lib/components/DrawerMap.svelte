@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { Map, TileLayer, Marker, Circle, Polygon, Popup, LayerGroup } from 'sveaflet';
-
+	import { Map, TileLayer, Tooltip, Marker, Circle, Polygon, Popup, LayerGroup } from 'sveaflet';
+ 	
 	let {
 		originLat,
 		originLng,
