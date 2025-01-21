@@ -39,14 +39,15 @@
 		options={{
 			center: [centerMap(originLat, destLat), centerMap(originLng, destLng)],
 			zoom: zoomLevel(originLng, destLng),
-			touchZoom: false, scrollWheelZoom: false, boxZoom: false, zoomControl: false
+			touchZoom: false, scrollWheelZoom: false, boxZoom: false, zoomControl: false, closePopupOnClick: false, dragging: false
 		}}
 	>
 		<TileLayer url={'https://tile.openstreetmap.org/{z}/{x}/{y}.png'} />
 		<Tooltip
 			latLng={[originLat, originLng]}
 			options={{
-				content: `<strong>Origin:</strong><br> ${originCity}, ${originState}`
+				content: `<strong>Origin:</strong><br> ${originCity}, ${originState}`,
+				permanent: false
 			}}
 		/>
 		<Tooltip
