@@ -39,14 +39,19 @@
 	<DevBanner />
 	<Header />
 </header>
-<main class="gray-800 mx-5  dark:bg-gray-800 dark:text-gray-100">
+<main class="gray-800 mx-5 dark:bg-gray-800 dark:text-gray-100">
+	<!--
 	<p>
-		details hidden = {detailsHidden}, selected loadID = {selectedRow ? selectedRow : 'null'}, tableClicked = {tableClicked}
-		<ViewsBar bind:tableIsShowing bind:mapIsShowing />
-	</p>
-	<div class="flex flex-col items-start md:flex-row"> 
+		details hidden = {detailsHidden}, selected loadID = {selectedRow ? selectedRow : 'null'},
+		tableClicked = {tableClicked}
+	</p> -->
+	<div class="flex">
+		<NewSearch />
+	</div>
+	<ViewsBar bind:tableIsShowing bind:mapIsShowing />
+	<div class="flex flex-row items-start md:flex-row">
 		{#if tableIsShowing}
-			<div class="min-h-screen w-full bg-gray-50 p-4 text-gray-900 md:p-8">
+			<div class="min-h-screen w-1/2 bg-gray-50 p-4 text-gray-900 md:p-8">
 				<div class="mx-auto max-w-[95rem]">
 					<DataTable {tableData} bind:selectedRow bind:detailsHidden bind:tableClicked />
 				</div>
@@ -54,7 +59,7 @@
 		{/if}
 
 		{#if mapIsShowing}
-			<div class="sticky top-0">
+			<div class="sticky top-0 sm:w-screen md:{mapWidth}">
 				<Map {tableData} bind:selectedRow bind:detailsHidden bind:tableClicked />
 			</div>
 		{/if}
