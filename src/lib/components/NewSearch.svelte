@@ -32,16 +32,15 @@ let states = ["OH", "GA"]
 <div>
 	<h3>New Search</h3>
 	<!-- TODO: Add divider -->
-	<div>
+	<div class="flex p-5">
 		<h4>Origin:</h4>
 		<p>Within</p>
-		<Button>Miles<ChevronDownOutline class="ms-2 h-6 w-6 text-white dark:text-white" /></Button>
+		<button>Miles</button>
 		<Dropdown>
 			{#each miles as mile}
 				<DropdownItem onclick={() => filterOriginMiles = mile}>{mile}</DropdownItem>
 			{/each}
 		</Dropdown>
-		</Button>
 		<p>miles of</p>
 		<Dropdown>
 			{#each states as state}
@@ -50,7 +49,7 @@ let states = ["OH", "GA"]
 		</Dropdown>
 		<Dropdown>
 			{#each cities as city}
-				<DropdownItem onclick={() => filterOriginState = state}>{state}</DropdownItem>
+				<DropdownItem onclick={() => filterOriginState = city}>{city}</DropdownItem>
 			{/each}
 		</Dropdown>
 	</div>
