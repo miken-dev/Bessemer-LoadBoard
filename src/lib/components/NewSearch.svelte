@@ -6,15 +6,15 @@ let miles = [5, 10, 25, 50, 100, 150, 200, 250, 300, 400, 500]
 let cities = ["Cleveland", "Savannah"]
 let states = ["OH", "GA"]
 	let {
-		filterOriginMiles = $bindable(),
-		filterOriginCity = $bindable(),
-	filterOriginState = $bindable(),
-	filterDestinationMiles = $bindable(),
-	filterDestinationCity = $bindable(),
-	filterDestinationState = $bindable(),
-	filterPickupStart = $bindable(),
-	filterPickupEnd = $bindable(),
-	filterTrailerType = $bindable()
+		filterOriginMiles,
+		filterOriginCity,
+	filterOriginState,
+	filterDestinationMiles,
+	filterDestinationCity,
+	filterDestinationState,
+	filterPickupStart,
+	filterPickupEnd,
+	filterTrailerType
 }: {
 	filterOriginMiles: number;
 	filterOriginCity: string;
@@ -25,7 +25,7 @@ let states = ["OH", "GA"]
 	filterPickupStart: string; //date
 	filterPickupEnd: string; //date
 	filterTrailerType: string; //string array
-}
+} = $props()
 
 const clearSearch = () => {
 
