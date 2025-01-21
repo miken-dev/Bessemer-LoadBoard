@@ -27,6 +27,7 @@
 
 </script>
 
+<div class="size-80 md:h-svh w-full">
 	<Map
 		options={{
 			center: [44.67498, -103.856037],
