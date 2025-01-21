@@ -27,18 +27,17 @@
 
 </script>
 
-<div class="size-80 md:h-svh w-full">
-	<Map
+<div class="h-full w-full md:mt-20">
+	<Map 
 		options={{
 			center: [44.67498, -103.856037],
 			zoom: 4.4
 		}}
 	>
 		<TileLayer url={'https://tile.openstreetmap.org/{z}/{x}/{y}.png'} />
-		{#each tableData as row, index}
+		{#each tableData as row}
 			<Marker onclick={() => toggle(row.loadID)} latLng={[row.originLat, row.originLng]} />
 		{/each}
 
-		<Marker latLng={[51.505, -0.09]} />
 	</Map>
 </div>
