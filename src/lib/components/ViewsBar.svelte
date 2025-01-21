@@ -14,7 +14,7 @@
 	<p class="my-auto">Show:</p>
 	<button class="{tableIsShowing ? active : inactive } text-white py-2 px-4 my-3 mx-1 rounded"
 		onclick={() => {
-			tableIsShowing = !tableIsShowing;
+			tableIsShowing = tableIsShowing === true ? false : true ;
 		}}>Table</button
 	>
 	<button class="{mapIsShowing ? active : inactive } text-white py-2 px-4 my-3 mx-1 rounded"
