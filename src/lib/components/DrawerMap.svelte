@@ -21,7 +21,7 @@
 		destState: string;
 	} = $props();
 
-	let average = (x: number, y: number): number => {
+	let centerMap = (x: number, y: number): number => {
 		return (x + y) / 2;
 	};
 
