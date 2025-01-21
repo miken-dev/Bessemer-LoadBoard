@@ -27,9 +27,6 @@ let states = ["OH", "GA"]
 	filterTrailerType: string; //string array
 } = $props()
 
-const clearSearch = () => {
-
-}
 </script>
 
 <div>
