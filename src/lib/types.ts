@@ -44,4 +44,10 @@ export type TableDataTypes = {
 	manualLoad: boolean;
 	areaLoadCount: number;
 
+
 };
+
+
+export type FormattedTypes = TableDataTypes & {
+	origin: `${TableDataTypes['originCityName']}, ${TableDataTypes['originStateName']}`
+}
