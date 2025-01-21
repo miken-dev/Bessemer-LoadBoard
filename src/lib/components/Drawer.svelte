@@ -21,7 +21,24 @@
 		duration: 200,
 		easing: sineIn
 	};
-
+	const columns = [
+		{
+			title: 'Load Date',
+			property: 'loadDate'
+		},
+		{
+			title: 'Origin City',
+			property: 'originCity'
+		},
+		{
+			title: 'Origin State',
+			property: 'originState'
+		},
+		{
+			title: 'Notes',
+			property: 'notes'
+		}
+	];
 	const month = [
 		'January',
 		'February',
@@ -71,61 +88,73 @@
 						originLng={data.originLng}
 						destLat={data.destinationLat}
 						destLng={data.destinationLng}
+						originCity={data.originCityName}
+						originState={data.originStateName}
+						destCity={data.destinationCityName}
+						destState={data.destinationStateName}
 					/>
 				</div>
 				<!-- load info -->
 				<div>
-					<h2>Origin Information</h2>
-					<div>
-						<h3>Load Date</h3>
-						<p>{data.loadID}</p>
+					{#each columns as column}
+						<div class="flex flex-row">
+							<h3>{column.title}</h3>
+							<p>{data[column.property]}</p>
+						</div>
+					{/each}
+					<div class="flex flex-row">
+						<h3>Load Date:</h3>
+						<p>
+							{` ${day[new Date(data.loadDate).getDay()]} ${month[new Date(data.loadDate).getMonth()]} ${new Date(data.loadDate).getFullYear()}`}
+						</p>
 					</div>
 
-					<div>
-						<h3>Origin</h3>
-						<p></p>
+					<div class="flex">
+						<h3>Origin:</h3>
+						<p>{` ${data.originCityName}, ${data.originStateName}`}</p>
 					</div>
-					<div>
-						<h3>Origin Terminal</h3>
+					<div class="flex">
+						<h3>Origin Terminal:</h3>
 						<p></p>
 					</div>
 					<h2>Destination Info</h2>
 
-					<div>
+					<div class="flex">
 						<h3>Delivery Date</h3>
 						<p>Delivery Destination</p>
 					</div>
 					<h2>Commodity Info</h2>
 
-					<div>
+					<div class="flex">
 						<h3>Dimensions</h3>
 						<p>Commodity</p>
 					</div>
-					<div>
+					<div class="flex">
 						<h3>Pieces</h3>
 						<p></p>
 					</div>
 					<h2>Other Info</h2>
-					<div>
+					<div class="flex">
 						<h3>Agent</h3>
 						<p></p>
 					</div>
-					<div>
+					<div class="flex">
 						<h3>Phone Number</h3>
 						<p></p>
 					</div>
-					<div>
+					<div class="flex">
 						<h3>Miles</h3>
 						<p></p>
 					</div>
-					<div>
+					<div class="flex">
 						<h3>Revenue</h3>
+						<p></p>
 					</div>
-					<div>
+					<div class="flex">
 						<h3>LTL</h3>
 						<p></p>
 					</div>
-					<div>
+					<div class="flex">
 						<h3>Notes</h3>
 						<p></p>
 					</div>
@@ -150,58 +179,59 @@
 					</div>
 					<!-- load info -->
 					<div>
-						<h2>Origin Information</h2>
-						<div>
-							<h3>Load Date</h3>
-							<p>{data.loadID}</p>
+						<div class="flex flex-row">
+							<h3>Load Date:</h3>
+							<p>
+								{`${day[new Date(data.loadDate).getDay()]} ${month[new Date(data.loadDate).getMonth()]} ${new Date(data.loadDate).getFullYear()}`}
+							</p>
 						</div>
 
-						<div>
-							<h3>Origin</h3>
-							<p></p>
+						<div class="flex">
+							<h3>Origin:</h3>
+							<p>{`${data.originCityName}, ${data.originStateName}`}</p>
 						</div>
-						<div>
-							<h3>Origin Terminal</h3>
+						<div class="flex">
+							<h3>Origin Terminal:</h3>
 							<p></p>
 						</div>
 						<h2>Destination Info</h2>
 
-						<div>
+						<div class="flex">
 							<h3>Delivery Date</h3>
 							<p>Delivery Destination</p>
 						</div>
 						<h2>Commodity Info</h2>
 
-						<div>
+						<div class="flex">
 							<h3>Dimensions</h3>
 							<p>Commodity</p>
 						</div>
-						<div>
+						<div class="flex">
 							<h3>Pieces</h3>
 							<p></p>
 						</div>
 						<h2>Other Info</h2>
-						<div>
+						<div class="flex">
 							<h3>Agent</h3>
 							<p></p>
 						</div>
-						<div>
+						<div class="flex">
 							<h3>Phone Number</h3>
 							<p></p>
 						</div>
-						<div>
+						<div class="flex">
 							<h3>Miles</h3>
 							<p></p>
 						</div>
-						<div>
+						<div class="flex">
 							<h3>Revenue</h3>
 							<p></p>
 						</div>
-						<div>
+						<div class="flex">
 							<h3>LTL</h3>
 							<p></p>
 						</div>
-						<div>
+						<div class="flex">
 							<h3>Notes</h3>
 							<p></p>
 						</div>
