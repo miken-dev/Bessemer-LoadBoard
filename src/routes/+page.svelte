@@ -19,6 +19,20 @@
 
 	let tableIsShowing: boolean = $state(false);
 	let mapIsShowing: boolean = $state(true);
+	let mapWidth = (): string => {
+		if (tableIsShowing) {
+			return 'w-1/3';
+		} else {
+			return 'w-screen';
+		}
+	};
+	let tableWidth = (): string => {
+		if (tableIsShowing) {
+			return 'w-1/3';
+		} else {
+			return 'w-screen';
+		}
+	};
 </script>
 
 <header class="dark:bg-gray-800 dark:text-gray-100">
