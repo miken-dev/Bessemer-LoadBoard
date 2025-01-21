@@ -7,12 +7,16 @@
 		tableData,
 		selectedRow = $bindable(),
 		detailsHidden = $bindable(),
-		tableClicked = $bindable()
+		tableClicked = $bindable(),
+		tableIsShowing = $bindable(),
+		mapIsShowing = $bindable()
 	}: {
 		tableData: TableDataTypes[];
 		selectedRow: number | null;
 		detailsHidden: boolean;
 		tableClicked: boolean;
+		tableIsShowing: boolean;
+		mapIsShowing: boolean;
 	} = $props();
 
 	const toggle = (id: number) => {
@@ -20,9 +24,9 @@
 		detailsHidden = false;
 		tableClicked = false;
 	};
+
 </script>
 
-<div class="size-80 md:h-svh md:w-screen">
 	<Map
 		options={{
 			center: [44.67498, -103.856037],
