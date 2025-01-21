@@ -37,8 +37,9 @@
 <div class="size-80">
 	<Map
 		options={{
-			center: [average(originLat, destLat), average(originLng, destLng)],
-			zoom: zoomLevel(originLng, destLng)
+			center: [centerMap(originLat, destLat), centerMap(originLng, destLng)],
+			zoom: zoomLevel(originLng, destLng),
+			touchZoom: false, scrollWheelZoom: false, boxZoom: false, zoomControl: false
 		}}
 	>
 		<TileLayer url={'https://tile.openstreetmap.org/{z}/{x}/{y}.png'} />
