@@ -4,7 +4,7 @@
 
 {#if dev}
 	<div>
-		<p>Developer mode Backend: Dev - DB: Undefined - Upstream: Undefined - SVKit: Dev<p>
+		<p>Developer mode <p>
 	</div>
 {/if}
 
