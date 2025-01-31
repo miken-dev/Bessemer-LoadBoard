@@ -2,8 +2,6 @@
 	import { Drawer, Hr, Button, CloseButton } from 'flowbite-svelte';
 	import { sineIn } from 'svelte/easing';
 	import type { TableDataTypes } from '$lib/types';
-	import SearchOptions from './SearchOptions.svelte';
-	import { writable } from 'svelte/store';
 	import DrawerMap from './DrawerMap.svelte';
 	let {
 		tableData,
