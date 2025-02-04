@@ -2,7 +2,7 @@
 	import DevBanner from '$lib/components/DevBanner.svelte';
 	import DataTable from '$lib/components/LoadTablev2.svelte';
 	import tableData from '$lib/sampledata.json';
-	import Drawer from '$lib/components/Drawer.svelte';
+	import Drawer from '$lib/components/Drawerv2.svelte';
 	import { dev } from '$app/environment';
 	import NewSearch from '$lib/components/NewSearch.svelte';
 	import ViewsBar from '$lib/components/ViewsBar.svelte';
