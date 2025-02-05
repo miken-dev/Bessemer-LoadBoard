@@ -1,11 +1,14 @@
 <script lang="ts">
-	import DrawerMap from "./DrawerMap.svelte";
-	import type { TableDataTypes } from "$lib/types";
+	import DrawerMap from './DrawerMap.svelte';
+	import type { TableDataTypes } from '$lib/types';
+	import InfoDisplay from './InfoDisplay.svelte';
 	let {
-		data
+		data,
+		horizontal
 	}: {
-		data: TableDataTypes;
-	} = $props()
+		data: any;
+		horizontal: boolean;
+	} = $props();
 	let selectedCity = $state('');
 	let selectedState = $state('');
 
@@ -38,20 +41,13 @@
 		}
 	};
 </script>
-<div class="top-0 size-80 ">
-	<DrawerMap
-		originLat={data.originLat}
-		originLng={data.originLng}
-		destLat={data.destinationLat}
-		destLng={data.destinationLng}
-		originCity={data.originCityName}
-		originState={data.originStateName}
-		destCity={data.destinationCityName}
-		destState={data.destinationStateName}
-	/>
-</div>
+
 <!-- load info -->
-<div class="ml-3">
+<div
+	class=" ml-3 flex {horizontal
+		? 'w-screen gap-x-60 flex-row pb-10 '
+		: 'w-9/12 flex-col'}"
+>
 	<!---
 {#each columns as column}
 <div class="flex flex-row mt-5">
@@ -59,66 +55,93 @@
 <p>{data[column.property]}</p>
 </div>
 {/each} -->
-	<div class="flex flex-col my-1 mt-4 ">
-		<h3 class="font-extrabold">Load Date:</h3>
-		<p>	{`${day[new Date(data.loadDate).getDay()]} ${month[new Date(data.loadDate).getMonth()]} ${new Date(data.loadDate).getDate()}${dateOrdinals(new Date(data.loadDate).getDate())} ${new Date(data.loadDate).getFullYear()}`}</p>
+	<div class="top-0 size-80">
+		<DrawerMap
+			originLat={data.originLat}
+			originLng={data.originLng}
+			destLat={data.destinationLat}
+			destLng={data.destinationLng}
+			originCity={data.originCityName}
+			originState={data.originStateName}
+			destCity={data.destinationCityName}
+			destState={data.destinationStateName}
+		/>
 	</div>
+	<div>
+		<div class="my-1 mt-4 flex flex-col">
+			<h3 class="font-extrabold">Load Date:</h3>
+			<p>
+				{`${day[new Date(data.loadDate).getDay()]} ${month[new Date(data.loadDate).getMonth()]} ${new Date(data.loadDate).getDate()}${dateOrdinals(new Date(data.loadDate).getDate())} ${new Date(data.loadDate).getFullYear()}`}
+			</p>
+		</div>
 
-	<div class="flex flex-col my-1 mt-3">
-		<h3 class="font-extrabold">Origin:</h3>
-		<p>{` ${data.originCityName}, ${data.originStateName}`}</p>
+		<div class="my-1 mt-3 flex flex-col">
+			<h3 class="font-extrabold">Origin:</h3>
+			<p>{` ${data.originCityName}, ${data.originStateName}`}</p>
+		</div>
+		<div class="my-1 mt-3 flex flex-col">
+			<h3 class="font-extrabold">Origin Terminal:</h3>
+			<p>{`${data.terminalName}`}</p>
+		</div>
+		<div class="my-1 mt-3 flex flex-col">
+			<h3 class="font-extrabold">Delivery Date:</h3>
+			<p>
+				{`${day[new Date(data.deliveryDate).getDay()]} ${month[new Date(data.deliveryDate).getMonth()]} ${new Date(data.deliveryDate).getDate()}${dateOrdinals(new Date(data.deliveryDate).getDate())} ${new Date(data.deliveryDate).getFullYear()}`}
+			</p>
+		</div>
+		<div class="my-1 mt-3 flex flex-col">
+			<h3 class="font-extrabold">Delivery Destination:</h3>
+			<p>{`${data.destinationCityName}, ${data.destinationStateName}`}</p>
+		</div>
+		<div class="my-1 mt-3 flex flex-col">
+			<h3 class="font-extrabold">Dimensions:</h3>
+			<p>
+				{`${data.lengthFeet}'${data.lengthInches}" x ${data.widthFeet}'${data.widthInches}" x ${data.heightFeet}'${data.heightInches}"`}
+			</p>
+		</div>
+		<div class="my-1 mt-3 flex flex-col">
+			<h3 class="font-extrabold">Weight:</h3>
+			<p>{`${data.weightInPounds}lbs.`}</p>
+		</div>
 	</div>
-	<div class="flex flex-col my-1 mt-3">
-		<h3 class="font-extrabold">Origin Terminal:</h3>
-		<p>{`${data.terminalName}`}</p>
-	</div>
-	<div class="flex flex-col my-1 mt-3">
-		<h3 class="font-extrabold">Delivery Date:</h3>
-		<p>{`${day[new Date(data.deliveryDate).getDay()]} ${month[new Date(data.deliveryDate).getMonth()]} ${new Date(data.deliveryDate).getDate()}${dateOrdinals(new Date(data.deliveryDate).getDate())} ${new Date(data.deliveryDate).getFullYear()}`}</p>
-	</div>
-	<div class="flex flex-col my-1 mt-3">
-		<h3 class="font-extrabold">Delivery Destination:</h3>
-		<p>{`${data.destinationCityName}, ${data.destinationStateName}`}</p>
-	</div>
-	<div class="flex flex-col my-1 mt-3">
-		<h3 class="font-extrabold">Dimensions:</h3>
-		<p>{`${data.lengthFeet}'${data.lengthInches}" x ${data.widthFeet}'${data.widthInches}" x ${data.heightFeet}'${data.heightInches}"`}</p>
-	</div>
-	<div class="flex flex-col my-1 mt-3">
-		<h3 class="font-extrabold">Weight:</h3>
-		<p>{`${data.weightInPounds}lbs.`}</p>
-	</div>
-	<div class="flex flex-col my-1 mt-3">
-		<h3 class="font-extrabold">Commodity:</h3>
-		<p>{data.commodity}</p>
-	</div>
+	<div>
+		<div class="my-1 mt-3 flex flex-col">
+			<h3 class="font-extrabold">Commodity:</h3>
+			<p>{data.commodity}</p>
+		</div>
 
-	<div class="flex flex-col my-1 mt-3">
-		<h3 class="font-extrabold">Number of Pieces:</h3>
-		<p>{data.pieceCount}</p>
-	</div>
-	<div class="flex flex-col my-1 mt-3">
-		<h3 class="font-extrabold">Agent:</h3>
-		<p>AGENT NAME</p>
-	</div>
-	<div class="flex flex-col my-1 mt-3">
-		<h3 class="font-extrabold">Phone Number:</h3>
-		<p>{data.terminalPhone}</p>
-	</div>
-	<div class="flex flex-col my-1 mt-3">
-		<h3 class="font-extrabold">Revenue:</h3>
-		<p>{`$${data.revenue}`}</p>
-	</div>
-	<div class="flex flex-col my-1 mt-3">
-		<h3 class="font-extrabold">Miles:</h3>
-		<p>{data.miles}</p>
-	</div>
-	<div class="flex flex-col my-1 mt-3">
-		<h3 class="font-extrabold">LTL:</h3>
-		<p>{data.ltl}</p>
-	</div>
-	<div class="flex flex-col my-1 mt-3 max-w-80">
-		<h3 class="font-extrabold">Notes:</h3>
-		<p>{data.notes}</p>
+		<div class="my-1 mt-3 flex flex-col">
+			<h3 class="font-extrabold">Number of Pieces:</h3>
+			<p>{data.pieceCount}</p>
+		</div>
+		<div class="my-1 mt-3 flex flex-col">
+			<h3 class="font-extrabold">Agent:</h3>
+			<p>AGENT NAME</p>
+		</div>
+		<div class="my-1 mt-3 flex flex-col">
+			<h3 class="font-extrabold">Phone Number:</h3>
+			<p>{data.terminalPhone}</p>
+		</div>
+		<div class="my-1 mt-3 flex flex-col">
+			<h3 class="font-extrabold">Revenue:</h3>
+			<p>{`$${data.revenue}`}</p>
+		</div>
+		<div class="my-1 mt-3 flex flex-col">
+			<h3 class="font-extrabold">Miles:</h3>
+			<p>{data.miles}</p>
+		</div>
+		<div class="my-1 mt-3 flex flex-col">
+			<h3 class="font-extrabold">LTL:</h3>
+			<p>{data.ltl}</p>
+		</div>
+		<div class="my-1 mt-3 flex max-w-80 flex-col">
+			<h3 class="font-extrabold">Notes:</h3>
+			<p>{data.notes}</p>
+		</div>
 	</div>
 </div>
+
+<style>
+	* {
+	}
+</style>
