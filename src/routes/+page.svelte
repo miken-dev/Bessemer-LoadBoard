@@ -2,7 +2,7 @@
 	import DevBanner from '$lib/components/DevBanner.svelte';
 	import DataTable from '$lib/components/LoadTablev2.svelte';
 	import tableData from '$lib/sampledata.json';
-	import Drawer from '$lib/components/Drawerv2.svelte';
+	import Drawerv2 from '$lib/components/Drawerv2.svelte';
 	import { dev } from '$app/environment';
 	import NewSearch from '$lib/components/NewSearch.svelte';
 	import ViewsBar from '$lib/components/ViewsBar.svelte';
@@ -14,12 +14,13 @@
 	import { ChevronDownOutline } from 'flowbite-svelte-icons';
 	import { slide } from 'svelte/transition';
 
-	// Application State 
-	let selectedRow: string | null = $state(null);
+	// Application State
+	let selectedRow: number | null = $state(null);
+	let selectedCity: string | null = $state(null);
 	let detailsHidden = $state(true);
 	let tableClicked = $state(false);
 	let saved = $state(false);
-	
+
 	let saveSearchDialogIsShowing: boolean = $state(false);
 	let manageSavedSearchIsShowing: boolean = $state(false);
 	let searchOptionsIsShowing: boolean = $state(true);
@@ -51,18 +52,22 @@
 			<p>
 				<strong>DEVELOPER MODE</strong> detailsHidden={detailsHidden}, selectedLoadID={selectedRow
 					? selectedRow
-					: 'null'}, tableClicked={tableClicked}
+					: 'null'}, tableClicked={tableClicked}, city={selectedCity}
 			</p>
 		</div>
 	{/if}
 	<Header />
 </header>
-<main class="gray-800  w-full px-5 md:px-20 dark:bg-gray-800 dark:text-gray-100">
-	<div transition:slide={{y:200, duration: 500}} onclick={() => {
-		searchOptionsIsShowing = !searchOptionsIsShowing
-	}} class="flex">
-	<h3 class="ml-5 mt-5">Search Options</h3>
-	<ChevronDownOutline class="ms-2 mt-5 h-6 w-6 text-gray-800 dark:text-white" />
+<main class="gray-800 w-full px-5 dark:bg-gray-800 dark:text-gray-100 md:px-20">
+	<div
+		transition:slide={{ y: 200, duration: 500 }}
+		onclick={() => {
+			searchOptionsIsShowing = !searchOptionsIsShowing;
+		}}
+		class="flex"
+	>
+		<h3 class="ml-5 mt-5">Search Options</h3>
+		<ChevronDownOutline class="ms-2 mt-5 h-6 w-6 text-gray-800 dark:text-white" />
 	</div>
 	{#if searchOptionsIsShowing}
 		<div class="flex flex-col md:flex-row">
@@ -71,7 +76,6 @@
 		</div>
 	{/if}
 	<ViewsBar bind:tableIsShowing bind:mapIsShowing />
-
 	<!-- Table and Map -->
 	<div class="flex flex-col items-start justify-center md:flex-row">
 		{#if tableIsShowing}
@@ -84,11 +88,11 @@
 
 		{#if mapIsShowing}
 			<div class="sticky top-0 w-11/12 md:{mapWidth} h-lvh md:h-[35rem] lg:h-[50rem]">
-				<Map {tableData} bind:selectedRow bind:detailsHidden bind:tableClicked />
+				<Map {tableData} bind:selectedCity bind:selectedRow bind:detailsHidden bind:tableClicked />
 			</div>
 		{/if}
 	</div>
-	<Drawer {tableData} bind:selectedRow bind:detailsHidden {tableClicked} />
+	<Drawerv2 {tableData} {selectedCity} bind:selectedRow bind:detailsHidden {tableClicked} />
 	<ManageSavedSearchModal bind:manageSavedSearchIsShowing />
 	<SaveSearchDialog bind:saveSearchDialogIsShowing bind:saved />
 </main>
