@@ -2,7 +2,6 @@
 	import { Button, Dropdown, DropdownItem, DropdownDivider, DropdownHeader } from 'flowbite-svelte';
 	import { ChevronDownOutline } from 'flowbite-svelte-icons';
 	import { Datepicker } from 'flowbite-svelte';
-	import Drawer from './Drawer.svelte';
 	let miles = [5, 10, 25, 50, 100, 150, 200, 250, 300, 400, 500];
 	let cities = ['Atlanta', 'Austin', 'Cleveland'];
 	let states = ['GA', 'OH', 'TX'];
