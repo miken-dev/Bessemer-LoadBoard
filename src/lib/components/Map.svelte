@@ -5,6 +5,7 @@
 
 	let {
 		tableData,
+		selectedCity = $bindable(),
 		selectedRow = $bindable(),
 		detailsHidden = $bindable(),
 		tableClicked = $bindable(),
@@ -12,6 +13,7 @@
 		mapIsShowing = $bindable()
 	}: {
 		tableData: TableDataTypes[];
+		selectedCity: string | null;
 		selectedRow: number | null;
 		detailsHidden: boolean;
 		tableClicked: boolean;
@@ -19,16 +21,19 @@
 		mapIsShowing: boolean;
 	} = $props();
 
-	const toggle = (id: number) => {
+	const toggle = (id: number, city: string) => {
 		selectedRow = id;
+		selectedCity = city;
+		console.log(city)
+		console.log(selectedCity)
+		console.log(city === selectedCity)
 		detailsHidden = false;
 		tableClicked = false;
 	};
-
 </script>
 
 <div class="h-full w-full md:mt-20">
-	<Map 
+	<Map
 		options={{
 			center: [44.67498, -103.856037],
 			zoom: 4.4
@@ -36,8 +41,7 @@
 	>
 		<TileLayer url={'https://tile.openstreetmap.org/{z}/{x}/{y}.png'} />
 		{#each tableData as row}
-			<Marker onclick={() => toggle(row.loadID)} latLng={[row.originLat, row.originLng]} />
+			<Marker onclick={() => toggle(row.loadID, row.originCityName)} latLng={[row.originLat, row.originLng]} />
 		{/each}
-
 	</Map>
 </div>
