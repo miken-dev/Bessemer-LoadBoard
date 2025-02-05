@@ -1,62 +1,93 @@
-<script>
-	import { ChevronLeftIcon, ChevronRightIcon } from "lucide-svelte";
+<script lang="ts">
+	import { onMount } from "svelte";
 	import { fade } from "svelte/transition";
+	import { ChevronLeftIcon, ChevronRightIcon } from "lucide-svelte";
+	import type { Snippet } from "svelte";
 
-	// Props definition
-	let {
-		items = [],
-		content,
-	} = $props();
+	let { children }: { children: Snippet } = $props();
 
-	// Current index state
+	let container: HTMLElement | undefined = $state(undefined);
 	let currentIndex = $state(0);
+	let totalSlides = $state(0);
+	let isAnimating = $state(false);
 
-	// Computed properties
-	const isFirstSlide = $derived(currentIndex === 0);
-	const isLastSlide = $derived(currentIndex === items.length - 1);
+	// Initialize carousel
+	onMount(() => {
+		if (!container) return;
+		totalSlides = container.children.length;
+	});
 
-	// Navigation functions
+	// Navigation functions with debouncing
+	async function goToSlide(index: number) {
+		if (!container || isAnimating) return;
+
+		isAnimating = true;
+		currentIndex = index;
+
+		const targetSlide = container.children[index] as HTMLElement;
+		if (!targetSlide) return;
+
+		container.scrollTo({
+			left: targetSlide.offsetLeft,
+			behavior: "smooth",
+		});
+
+		// Wait for animation to complete
+		await new Promise((resolve) => setTimeout(resolve, 500));
+		isAnimating = false;
+	}
+
 	function next() {
-		if (!isLastSlide) {
-			currentIndex++;
+		const nextIndex = currentIndex + 1;
+		if (nextIndex < totalSlides) {
+			goToSlide(nextIndex);
 		}
 	}
 
 	function prev() {
-		if (!isFirstSlide) {
-			currentIndex--;
+		const prevIndex = currentIndex - 1;
+		if (prevIndex >= 0) {
+			goToSlide(prevIndex);
 		}
-	}
-
-	function goToSlide(index) {
-		currentIndex = index;
 	}
 </script>
 
-<div class="w-full h-full relative group">
-	<!-- Main carousel content -->
-	<div class="w-full h-full overflow-hidden relative">
-		{#key currentIndex}
-			<div transition:fade={{ duration: 300 }} class="w-full h-full">
-				{@render content({ item: items[currentIndex] })}
-			</div>
-		{/key}
+<div class="relative group">
+	<!-- Carousel container -->
+	<div bind:this={container} class="flex overflow-x-auto snap-x snap-mandatory scroll-smooth hide-scrollbar">
+		<!-- Render children with wrapper -->
+		{@render children()}
 	</div>
 
-	<!-- Navigation buttons -->
-	<button class={["absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-background/80 shadow-lg", "hover:bg-background transition-colors duration-200", isFirstSlide && "opacity-50 cursor-not-allowed"]} onclick={prev} disabled={isFirstSlide} aria-label="Previous slide">
-		<ChevronLeftIcon class="size-6" />
-	</button>
+	{#if totalSlides > 1}
+		<div transition:fade>
+			<!-- Previous button -->
+			<button onclick={prev} class="absolute left-2 top-1/2 -translate-y-1/2 bg-background/80 p-2 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity disabled:opacity-30 hover:bg-background" disabled={currentIndex === 0 || isAnimating}>
+				<ChevronLeftIcon class="size-6" />
+			</button>
 
-	<button class={["absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-background/80 shadow-lg", "hover:bg-background transition-colors duration-200", isLastSlide && "opacity-50 cursor-not-allowed"]} onclick={next} disabled={isLastSlide} aria-label="Next slide">
-		<ChevronRightIcon class="size-6" />
-	</button>
+			<!-- Next button -->
+			<button onclick={next} class="absolute right-2 top-1/2 -translate-y-1/2 bg-background/80 p-2 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity disabled:opacity-30 hover:bg-background" disabled={currentIndex === totalSlides - 1 || isAnimating}>
+				<ChevronRightIcon class="size-6" />
+			</button>
+		</div>
 
-	<!-- Indicators -->
-	<div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-		{#each items as _, i}
-			<button class={["w-2 h-2 rounded-full transition-all duration-200", currentIndex === i ? "bg-primary w-4" : "bg-primary/50"]} onclick={() => goToSlide(i)} aria-label={`Go to slide ${i + 1}`} />
-		{/each}
-	</div>
+		<!-- Indicators -->
+		<div class="absolute bottom-2 left-1/2 -translate-x-1/2 flex  gap-2">
+			{#each Array(totalSlides) as _, i}
+				<button onclick={() => goToSlide(i)} disabled={isAnimating} class={["w-2 h-2 rounded-full transition-all", currentIndex === i ? "bg-primary" : "bg-primary/30", "hover:bg-primary/60"]} />
+			{/each}
+		</div>
+	{/if}
 </div>
+
+<style>
+	.hide-scrollbar {
+		-ms-overflow-style: none;
+		scrollbar-width: none;
+	}
+	.hide-scrollbar::-webkit-scrollbar {
+		display: none;
+	}
+</style>
 
