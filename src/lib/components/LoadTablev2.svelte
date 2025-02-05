@@ -6,10 +6,12 @@
 	let {
 		tableData,
 		selectedRow = $bindable(),
+		selectedCity = $bindable(),
 		detailsHidden = $bindable(),
 		tableClicked = $bindable()
 	}: {
 		tableData: TableDataTypes[];
+		selectedCity: string | null
 		selectedRow: number | null;
 		detailsHidden: boolean;
 		tableClicked: boolean;
@@ -43,8 +45,9 @@
 				return 'th';
 		}
 	};
-	const toggle = (id: number) => {
+	const toggle = (id: number, city: string) => {
 		selectedRow = id;
+		
 		detailsHidden = false;
 		tableClicked = true;
 	};
@@ -64,7 +67,7 @@
 			{#each tableData as row, index}
 				<!-- Combined row with all data -->
 				<tr
-					onclick={() => toggle(row.loadID)}
+					onclick={() => toggle(row.loadID, row.originCityName)}
 					class={cn(
 						'cursor-pointer transition-colors',
 						index % 2 === 0 ? 'bg-white dark:bg-gray-800' : 'bg-sky-100 dark:bg-sky-900',
