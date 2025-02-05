@@ -11,6 +11,6 @@
 		<!--	<button class="rounded bg-gray-500 px-4 py-2 font-bold text-white hover:bg-blue-600"
 			>Equipment Search</button
 		> -->
-		<DarkMode dark:text-gray-100 />
+		<DarkMode class="dark:text-gray-100" />
 	</div>
 </div>
