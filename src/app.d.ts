@@ -9,5 +9,6 @@ declare global {
 		// interface Platform {}
 	}
 }
-declare module leaflet;
-export {};
+declare module leaflet { }
+declare module 'svelte-carousel';
+export { };
