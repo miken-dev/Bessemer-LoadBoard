@@ -1,6 +1,18 @@
 <script lang="ts">
-	import { Button, Dropdown, DropdownItem, DropdownDivider, DropdownHeader } from 'flowbite-svelte';
-	import { ChevronDownOutline } from 'flowbite-svelte-icons';
+	import {
+		Button,
+		ButtonGroup,
+		Dropdown,
+		DropdownItem,
+		DropdownDivider,
+		DropdownHeader
+	} from 'flowbite-svelte';
+	import {
+		ChevronDownOutline,
+		FloppyDiskSolid,
+		SearchSolid,
+		DeleteRowOutline
+	} from 'flowbite-svelte-icons';
 	import { Datepicker } from 'flowbite-svelte';
 	let miles = [5, 10, 25, 50, 100, 150, 200, 250, 300, 400, 500];
 	let cities = ['Atlanta', 'Austin', 'Cleveland'];
@@ -99,10 +111,23 @@
 			{/each}
 		</Dropdown>
 	</div>
-	<Button
-		color="dark"
-		onclick={() => {
-			saveSearchDialogIsShowing = true;
-		}}>Save Search</Button
-	>
+
+	<ButtonGroup divClass="flex justify-end">
+		<Button color="blue">
+			<SearchSolid class="w-4 h-4 me-2"/>
+			Search</Button
+		>
+		<Button
+			color="dark"
+			onclick={() => {
+				saveSearchDialogIsShowing = true;
+			}}
+		>
+			<FloppyDiskSolid class="w-4 h-4 me-2"/>
+			Save Search
+		</Button>
+		<Button color="dark">
+			<DeleteRowOutline class="w-4 h-4 me-2"/>
+			Clear Search</Button>
+	</ButtonGroup>
 </div>
