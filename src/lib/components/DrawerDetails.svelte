@@ -44,11 +44,7 @@
 </script>
 
 <!-- load info -->
-<div
-	class=" ml-3 flex {horizontal
-		? 'w-screen gap-x-60 flex-row pb-10 '
-		: 'w-9/12 flex-col'}"
->
+<div class=" ml-3 flex {horizontal ? 'w-screen flex-row gap-x-60 pb-10 ' : 'w-9/12 flex-col'}">
 	<!---
 {#each columns as column}
 <div class="flex flex-row mt-5">
@@ -56,20 +52,20 @@
 <p>{data[column.property]}</p>
 </div>
 {/each} -->
-	{#if browser }
-	<div class="top-0 size-80">
-		<DrawerMap
-			originLat={data.originLat}
-			originLng={data.originLng}
-			destLat={data.destinationLat}
-			destLng={data.destinationLng}
-			originCity={data.originCityName}
-			originState={data.originStateName}
-			destCity={data.destinationCityName}
-			destState={data.destinationStateName}
-		/>
-	</div>
-{/if}
+	{#if browser}
+		<div class="top-0 size-80">
+			<DrawerMap
+				originLat={data.originLat}
+				originLng={data.originLng}
+				destLat={data.destinationLat}
+				destLng={data.destinationLng}
+				originCity={data.originCityName}
+				originState={data.originStateName}
+				destCity={data.destinationCityName}
+				destState={data.destinationStateName}
+			/>
+		</div>
+	{/if}
 	<div>
 		<div class="my-1 mt-4 flex flex-col">
 			<h3 class="font-extrabold">Load Date:</h3>
