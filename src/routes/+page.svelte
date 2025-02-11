@@ -51,13 +51,17 @@
         const initialId = getUserId();
         if (initialId !== null) {
             userId = initialId;  // Direct assignment, no .value needed
+			loggedIn = true
         }
 
         const checkCookie = setInterval(() => {
             const currentId = getUserId();
             if (currentId !== null) {
                 userId = currentId;  // Direct assignment
-            }
+				loggedIn = true
+            } else {
+				loggedIn = false
+			}
         }, 1000);
 
         return () => clearInterval(checkCookie);
