@@ -1,14 +1,17 @@
 <script lang="ts">
 	// Data import
 	import tableData from '$lib/sampledata.json';
-	
+	import type { PageData } from '$lib/types';
 	// framework/library imports
 	import { dev } from '$app/environment';
 	import { ChevronDownOutline } from 'flowbite-svelte-icons';
 	import { slide } from 'svelte/transition';
+	import { onMount } from 'svelte';
+	import { writable, type Writable } from 'svelte/store';
 
 	// Component imports
 	import DataTable from '$lib/components/LoadTablev2.svelte';
+
 	import Drawerv2 from '$lib/components/Drawerv2.svelte';
 	import NewSearch from '$lib/components/NewSearch.svelte';
 	import ViewsBar from '$lib/components/ViewsBar.svelte';
@@ -17,6 +20,8 @@
 	import ManageSavedSearchModal from '$lib/components/manageSavedSearchModal.svelte';
 	import SavedSearches from '$lib/components/SavedSearches.svelte';
 	import SaveSearchDialog from '$lib/components/saveSearchDialog.svelte';
+
+	const { data } = $props<{ data: PageData }>();
 
 	// Application State
 	let selectedRow: number | null = $state(null);
@@ -31,8 +36,35 @@
 	let searchOptionsIsShowing: boolean = $state(true);
 	let tableIsShowing: boolean = $state(true);
 	let mapIsShowing: boolean = $state(true);
-	
+
+	const userId = $state<string | null>(null);
 	// Helper functions
+        function getUserId(): string | null {
+        const cookie = document.cookie
+            .split('; ')
+            .find(row => row.startsWith('dds_user_id='));
+        return cookie ? cookie.split('=')[1] : null;
+    }
+
+	onMount(() => {
+        const initialId = getUserId();
+        if (initialId !== null) {
+            userId.value = initialId;
+        }
+
+        const checkCookie = setInterval(() => {
+            const currentId = getUserId();
+            // Only update if we have a valid ID
+            if (currentId !== null) {
+                userId.value = currentId;
+            }
+        }, 1000);
+
+        return () => clearInterval(checkCookie);
+    });
+
+
+
 	let mapWidth = (): string => {
 		if (tableIsShowing) {
 			return 'w-1/3';
@@ -58,7 +90,7 @@
 			<p>
 				<strong>DEVELOPER MODE</strong> detailsHidden={detailsHidden}, selectedLoadID={selectedRow
 					? selectedRow
-					: 'null'}, tableClicked={tableClicked}, city={selectedCity}
+					: 'null'}, tableClicked={tableClicked}, city={selectedCity}, userID={userId}
 			</p>
 		</div>
 	{/if}
@@ -85,7 +117,7 @@
 	{/if}
 
 	<ViewsBar bind:tableIsShowing bind:mapIsShowing />
-	
+
 	<!-- Table and Map -->
 	<div class="flex flex-col items-start justify-center md:flex-row">
 		{#if tableIsShowing}
