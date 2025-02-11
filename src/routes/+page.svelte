@@ -1,9 +1,12 @@
 <script lang="ts">
-	import DevBanner from '$lib/components/DevBanner.svelte';
-	import DataTable from '$lib/components/LoadTablev2.svelte';
 	import tableData from '$lib/sampledata.json';
-	import Drawerv2 from '$lib/components/Drawerv2.svelte';
+
 	import { dev } from '$app/environment';
+	import { ChevronDownOutline } from 'flowbite-svelte-icons';
+	import { slide } from 'svelte/transition';
+
+	import DataTable from '$lib/components/LoadTablev2.svelte';
+	import Drawerv2 from '$lib/components/Drawerv2.svelte';
 	import NewSearch from '$lib/components/NewSearch.svelte';
 	import ViewsBar from '$lib/components/ViewsBar.svelte';
 	import Header from '$lib/components/Header.svelte';
@@ -11,8 +14,6 @@
 	import ManageSavedSearchModal from '$lib/components/manageSavedSearchModal.svelte';
 	import SavedSearches from '$lib/components/SavedSearches.svelte';
 	import SaveSearchDialog from '$lib/components/saveSearchDialog.svelte';
-	import { ChevronDownOutline } from 'flowbite-svelte-icons';
-	import { slide } from 'svelte/transition';
 
 	// Application State
 	let selectedRow: number | null = $state(null);
@@ -20,6 +21,7 @@
 	let detailsHidden = $state(true);
 	let tableClicked = $state(false);
 	let saved = $state(false);
+	let loggedIn = $state(false)
 
 	let saveSearchDialogIsShowing: boolean = $state(false);
 	let manageSavedSearchIsShowing: boolean = $state(false);
@@ -56,9 +58,10 @@
 			</p>
 		</div>
 	{/if}
-	<Header />
+	<Header {loggedIn}/>
 </header>
 <main class="gray-800 w-full px-5 dark:bg-gray-800 dark:text-gray-100 md:px-20">
+	{#if loggedIn}
 	<div
 		transition:slide={{ y: 200, duration: 500 }}
 		onclick={() => {
@@ -75,6 +78,7 @@
 			<SavedSearches bind:manageSavedSearchIsShowing />
 		</div>
 	{/if}
+{/if}
 	<ViewsBar bind:tableIsShowing bind:mapIsShowing />
 	<!-- Table and Map -->
 	<div class="flex flex-col items-start justify-center md:flex-row">
