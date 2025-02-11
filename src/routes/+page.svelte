@@ -62,7 +62,7 @@
 			</p>
 		</div>
 	{/if}
-	<Header {loggedIn}/>
+	<Header {loggedIn} />
 </header>
 <main class="gray-800 w-full px-5 dark:bg-gray-800 dark:text-gray-100 md:px-20">
 	{#if loggedIn}
