@@ -85,7 +85,7 @@
 </script>
 
 <header class="dark:bg-gray-800 dark:text-gray-100">
-	{#if dev}
+	<!--	{#if dev} -->
 		<div class="flex items-center justify-center bg-red-600">
 			<p>
 				<strong>DEVELOPER MODE</strong> detailsHidden={detailsHidden}, selectedLoadID={selectedRow
@@ -93,7 +93,7 @@
 					: 'null'}, tableClicked={tableClicked}, city={selectedCity}, userID={userId}
 			</p>
 		</div>
-	{/if}
+	<!-- {/if} -->
 	<Header {loggedIn} />
 </header>
 <main class="gray-800 w-full px-5 dark:bg-gray-800 dark:text-gray-100 md:px-20">
