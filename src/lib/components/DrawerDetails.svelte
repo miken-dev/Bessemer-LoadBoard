@@ -1,5 +1,6 @@
 <script lang="ts">
 	import DrawerMap from './DrawerMap.svelte';
+	import { browser } from '$app/environment';
 	import type { TableDataTypes } from '$lib/types';
 	import InfoDisplay from './InfoDisplay.svelte';
 	let {
@@ -55,6 +56,7 @@
 <p>{data[column.property]}</p>
 </div>
 {/each} -->
+	{#if browser }
 	<div class="top-0 size-80">
 		<DrawerMap
 			originLat={data.originLat}
@@ -67,6 +69,7 @@
 			destState={data.destinationStateName}
 		/>
 	</div>
+{/if}
 	<div>
 		<div class="my-1 mt-4 flex flex-col">
 			<h3 class="font-extrabold">Load Date:</h3>
