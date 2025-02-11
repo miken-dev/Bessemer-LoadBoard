@@ -66,24 +66,26 @@
 </header>
 <main class="gray-800 w-full px-5 dark:bg-gray-800 dark:text-gray-100 md:px-20">
 	{#if loggedIn}
-	<div
-		transition:slide={{ y: 200, duration: 500 }}
-		onclick={() => {
-			searchOptionsIsShowing = !searchOptionsIsShowing;
-		}}
-		class="flex"
-	>
-		<h3 class="ml-5 mt-5">Search Options</h3>
-		<ChevronDownOutline class="ms-2 mt-5 h-6 w-6 text-gray-800 dark:text-white" />
-	</div>
-	{#if searchOptionsIsShowing}
-		<div class="flex flex-col md:flex-row">
-			<NewSearch />
-			<SavedSearches bind:manageSavedSearchIsShowing />
+		<div
+			transition:slide={{ y: 200, duration: 500 }}
+			onclick={() => {
+				searchOptionsIsShowing = !searchOptionsIsShowing;
+			}}
+			class="flex"
+		>
+			<h3 class="ml-5 mt-5">Search Options</h3>
+			<ChevronDownOutline class="ms-2 mt-5 h-6 w-6 text-gray-800 dark:text-white" />
 		</div>
+		{#if searchOptionsIsShowing}
+			<div class="flex flex-col md:flex-row">
+				<NewSearch />
+				<SavedSearches bind:manageSavedSearchIsShowing />
+			</div>
+		{/if}
 	{/if}
-{/if}
+
 	<ViewsBar bind:tableIsShowing bind:mapIsShowing />
+	
 	<!-- Table and Map -->
 	<div class="flex flex-col items-start justify-center md:flex-row">
 		{#if tableIsShowing}
