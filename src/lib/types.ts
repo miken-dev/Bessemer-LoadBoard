@@ -51,3 +51,12 @@ export type TableDataTypes = {
 export type FormattedTypes = TableDataTypes & {
 	origin: `${TableDataTypes['originCityName']}, ${TableDataTypes['originStateName']}`
 }
+
+
+export interface PageData {
+    userId: string | null;
+}
+
+interface Locals {
+    userId: string | null;
+}
