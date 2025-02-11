@@ -21,7 +21,6 @@
 	import SavedSearches from '$lib/components/SavedSearches.svelte';
 	import SaveSearchDialog from '$lib/components/saveSearchDialog.svelte';
 
-	const { data } = $props<{ data: PageData }>();
 
 	// Application State
 	let selectedRow: number | null = $state(null);
@@ -37,34 +36,40 @@
 	let tableIsShowing: boolean = $state(true);
 	let mapIsShowing: boolean = $state(true);
 
-	const userId = $state<string | null>(null);
-	// Helper functions
-        function getUserId(): string | null {
+	// Cookie set up 
+    function getUserId(): string | null {
         const cookie = document.cookie
             .split('; ')
             .find(row => row.startsWith('dds_user_id='));
         return cookie ? cookie.split('=')[1] : null;
     }
 
-	onMount(() => {
+    // In runes mode, state() returns the value directly
+    let userId = $state<string | null>(null);
+
+    onMount(() => {
         const initialId = getUserId();
         if (initialId !== null) {
-            userId.value = initialId;
+            userId = initialId;  // Direct assignment, no .value needed
         }
 
         const checkCookie = setInterval(() => {
             const currentId = getUserId();
-            // Only update if we have a valid ID
             if (currentId !== null) {
-                userId.value = currentId;
+                userId = currentId;  // Direct assignment
             }
         }, 1000);
 
         return () => clearInterval(checkCookie);
     });
 
+    function useUserId(id: string | null): string {
+        return id ?? 'Not logged in';
+    }
 
 
+
+	//Helper functions
 	let mapWidth = (): string => {
 		if (tableIsShowing) {
 			return 'w-1/3';
