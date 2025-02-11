@@ -1,10 +1,13 @@
 <script lang="ts">
+	// Data import
 	import tableData from '$lib/sampledata.json';
-
+	
+	// framework/library imports
 	import { dev } from '$app/environment';
 	import { ChevronDownOutline } from 'flowbite-svelte-icons';
 	import { slide } from 'svelte/transition';
 
+	// Component imports
 	import DataTable from '$lib/components/LoadTablev2.svelte';
 	import Drawerv2 from '$lib/components/Drawerv2.svelte';
 	import NewSearch from '$lib/components/NewSearch.svelte';
@@ -21,14 +24,15 @@
 	let detailsHidden = $state(true);
 	let tableClicked = $state(false);
 	let saved = $state(false);
-	let loggedIn = $state(false)
+	let loggedIn = $state(false);
 
 	let saveSearchDialogIsShowing: boolean = $state(false);
 	let manageSavedSearchIsShowing: boolean = $state(false);
 	let searchOptionsIsShowing: boolean = $state(true);
 	let tableIsShowing: boolean = $state(true);
 	let mapIsShowing: boolean = $state(true);
-
+	
+	// Helper functions
 	let mapWidth = (): string => {
 		if (tableIsShowing) {
 			return 'w-1/3';
