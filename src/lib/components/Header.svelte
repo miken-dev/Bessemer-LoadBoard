@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { DarkMode, ButtonGroup, Button } from 'flowbite-svelte';
+	import { dev } from '$app/environment'
 	import logo from '$lib/assets/logo.png';
 	let {
 		loggedIn = $bindable()
@@ -11,6 +12,8 @@
 		loggedIn = false
 		console.log("Logged out")
 		// TODO: add logout logic
+	let devLogin = () => {
+		document.cookie = "dds_user_id=5244833"
 	}
 </script>
 
@@ -23,6 +26,10 @@
 			>Equipment Search</button
 		> -->
 		<DarkMode class="dark:text-gray-100 pt-2" />
+		{#if dev}
+
+			<Button on:click={devLogin} color="blue">Log in (DEV)</Button>
+		{/if}
 		{#if loggedIn}
 			<Button on:click={logout} color="blue">Log Out</Button>
 		{:else}
