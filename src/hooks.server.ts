@@ -1,9 +1,12 @@
-import PocketBase from 'pocketbase';
-import type { PageServerLoad } from './$types';
+import { PB } from '$lib/server/server'
 
-const pb = new PocketBase('https://bessemer-loadboard.pockethost.io')
 
-const records = await pb.collection('Active_Loads').getFullList({});
+export const handle = async ({event, resolve }) => {
+	event.locals.pb = PB;
+	const response = await resolve(event)
+	return response
+}
+
 
 
 
