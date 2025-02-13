@@ -22,8 +22,10 @@
 		mapIsShowing: boolean;
 	} = $props();
 
-	const toggle = (id: number, city: string) => {
-		selectedRow = id;
+	const toggle = (city: string, id?: number) => {
+		if (id) {
+			selectedRow = id;
+		}
 		selectedCity = city;
 		console.log(city);
 		console.log(selectedCity);
