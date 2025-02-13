@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { Map, TileLayer, Marker } from 'sveaflet';
 	import { Map, TileLayer, Marker, Popup } from 'sveaflet';
 	import { browser } from '$app/environment';
 	import type { TableDataTypes } from '$lib/types';
@@ -9,17 +8,13 @@
 		selectedCity = $bindable(),
 		selectedRow = $bindable(),
 		detailsHidden = $bindable(),
-		tableClicked = $bindable(),
-		tableIsShowing = $bindable(),
-		mapIsShowing = $bindable()
+		tableClicked = $bindable()
 	}: {
 		tableData: TableDataTypes[];
 		selectedCity: string | null;
 		selectedRow: number | null;
 		detailsHidden: boolean;
 		tableClicked: boolean;
-		tableIsShowing: boolean;
-		mapIsShowing: boolean;
 	} = $props();
 
 	const toggle = (city: string, id?: number) => {
