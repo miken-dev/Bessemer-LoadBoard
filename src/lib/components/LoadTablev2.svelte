@@ -8,13 +8,15 @@
 		selectedRow = $bindable(),
 		selectedCity = $bindable(),
 		detailsHidden = $bindable(),
-		tableClicked = $bindable()
+		tableClicked = $bindable(),
+		loggedIn
 	}: {
 		tableData: TableDataTypes[];
-		selectedCity: string | null
+		selectedCity: string | null;
 		selectedRow: number | null;
 		detailsHidden: boolean;
 		tableClicked: boolean;
+		loggedIn: boolean;
 	} = $props();
 
 	const month = [
@@ -47,12 +49,13 @@
 	};
 	const toggle = (id: number, city: string) => {
 		selectedRow = id;
-		
+
 		detailsHidden = false;
 		tableClicked = true;
 	};
 </script>
 
+<!--
 <label for="sort">Sort by:</label>
 <select name="sort" id="sort">
 	<option value="">Load Date</option>
@@ -60,10 +63,12 @@
 	<option value="">Weight</option>
 	<option value="">Revenue</option>
 	<option value="">Miles</option>
-</select>
-<div class="overflow-x-auto rounded-lg border border-gray-200 dark:bg-gray-800 dark:text-gray-100 shadow-sm">
+</select> -->
+<div
+	class="overflow-x-auto rounded-lg border border-gray-200 shadow-sm dark:bg-gray-800 dark:text-gray-100"
+>
 	<table class="w-full divide-y divide-gray-200">
-		<tbody class="divide-y divide-gray-200 bg-white ">
+		<tbody class="divide-y divide-gray-200 bg-white">
 			{#each tableData as row, index}
 				<!-- Combined row with all data -->
 				<tr
@@ -77,7 +82,9 @@
 				>
 					<td>
 						<div class="space-y-4 py-3">
-							<div class="grid grid-cols-2 gap-5 mx-7 py-5 md:grid-cols-3 lg:grid-cols-5 justify-items-start align-top">
+							<div
+								class="mx-7 grid grid-cols-2 justify-items-start gap-5 py-5 align-top md:grid-cols-3 lg:grid-cols-5"
+							>
 								<!-- Origin -->
 								<div>
 									<div class="text-xs font-medium text-gray-500 dark:text-gray-300">Load Date</div>
@@ -93,13 +100,17 @@
 								</div>
 								<!-- Destination -->
 								<div>
-									<div class="text-xs font-medium text-gray-500 dark:text-gray-300">Delivery Date</div>
+									<div class="text-xs font-medium text-gray-500 dark:text-gray-300">
+										Delivery Date
+									</div>
 									<div class="mt-1 text-sm">
 										{`${day[new Date(row.deliveryDate).getDay()]} ${month[new Date(row.deliveryDate).getMonth()]} ${new Date(row.deliveryDate).getDate()}${dateOrdinals(new Date(row.deliveryDate).getDate())} ${new Date(row.deliveryDate).getFullYear()}`}
 									</div>
 								</div>
 								<div>
-									<div class="text-xs font-medium text-gray-500 dark:text-gray-300">Destination</div>
+									<div class="text-xs font-medium text-gray-500 dark:text-gray-300">
+										Destination
+									</div>
 									<div class="mt-1 text-sm">
 										{`${row.destinationCityName}, ${row.destinationStateName}`}
 									</div>

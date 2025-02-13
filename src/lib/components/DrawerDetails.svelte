@@ -102,6 +102,11 @@
 			<h3 class="font-extrabold">Weight:</h3>
 			<p>{`${data.weightInPounds}lbs.`}</p>
 		</div>
+		<div class="my-1 mt-3 flex flex-col">
+			<h3 class="font-extrabold">Trailer Types:</h3>
+			<p>{`${data.trailerTypes}`}</p>
+		</div>
+
 	</div>
 	<div>
 		<div class="my-1 mt-3 flex flex-col">
