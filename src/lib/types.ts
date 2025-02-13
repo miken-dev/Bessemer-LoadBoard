@@ -1,6 +1,5 @@
 export type TableDataTypes = {
 	loadID: number;
-	companyNumber: number;
 	loadDate: string;
 	deliveryDate: string;
 	originAddress: string;
