@@ -9,9 +9,11 @@
 	} = $props();
 
 	let logout = () => {
-		loggedIn = false
-		console.log("Logged out")
-		// TODO: add logout logic
+		loggedIn = false;
+		console.log('Logged out');
+		document.cookie = "dds_user_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC"
+	};
+
 	let devLogin = () => {
 		document.cookie = "dds_user_id=5244833"
 	}
@@ -25,7 +27,7 @@
 		<!--	<button class="rounded bg-gray-500 px-4 py-2 font-bold text-white hover:bg-blue-600"
 			>Equipment Search</button
 		> -->
-		<DarkMode class="dark:text-gray-100 pt-2" />
+		<DarkMode class="pt-2 dark:text-gray-100" />
 		{#if dev}
 
 			<Button on:click={devLogin} color="blue">Log in (DEV)</Button>
