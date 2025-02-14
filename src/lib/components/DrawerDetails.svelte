@@ -55,10 +55,10 @@
 	{#if browser}
 		<div class="top-0 size-80">
 			<DrawerMap
-				originLat={data.originLat}
-				originLng={data.originLng}
-				destLat={data.destinationLat}
-				destLng={data.destinationLng}
+				originLat={Number(data.originLat)}
+				originLng={Number(data.originLng)}
+				destLat={Number(data.destinationLat)}
+				destLng={Number(data.destinationLng)}
 				originCity={data.originCityName}
 				originState={data.originStateName}
 				destCity={data.destinationCityName}
