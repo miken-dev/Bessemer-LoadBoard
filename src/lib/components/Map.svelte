@@ -4,12 +4,14 @@
 	import type { TableDataTypes } from '$lib/types';
 
 	let {
+		multipleLoads = $bindable(), 
 		tableData,
 		selectedCity = $bindable(),
 		selectedRow = $bindable(),
 		detailsHidden = $bindable(),
 		tableClicked = $bindable()
 	}: {
+		multipleLoads: boolean
 		tableData: TableDataTypes[];
 		selectedCity: string | null;
 		selectedRow: number | null;
@@ -17,10 +19,11 @@
 		tableClicked: boolean;
 	} = $props();
 
-	const toggle = (city: string, id?: number) => {
+	const toggle = (multiLoads: boolean, city: string, id?: number) => {
 		if (id) {
 			selectedRow = id;
 		}
+		multipleLoads = multiLoads,
 		selectedCity = city;
 		console.log(city);
 		console.log(selectedCity);
@@ -42,12 +45,12 @@
 			{#each tableData as row}
 				{#if row.areaLoadCount === 1}
 					<Marker
-						onclick={() => toggle(row.originCityName, row.loadID)}
+						onclick={() => toggle(false, row.originCityName, row.loadID)}
 						latLng={[row.originLat, row.originLng]}
 					/>
 				{:else}
 					<Popup
-						onclick={() => toggle(row.originCityName)}
+						onclick={() => toggle(true, row.originCityName)}
 						latLng={[row.originLat, row.originLng]}
 						options={{
 							autoClose: false,
