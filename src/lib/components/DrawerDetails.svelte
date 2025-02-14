@@ -70,7 +70,7 @@
 		<div class="my-1 mt-4 flex flex-col">
 			<h3 class="font-extrabold">Load Date:</h3>
 			<p>
-				{`${day[new Date(data.loadDate).getDay()]} ${month[new Date(data.loadDate).getMonth()]} ${new Date(data.loadDate).getDate()}${dateOrdinals(new Date(data.loadDate).getDate())} ${new Date(data.loadDate).getFullYear()}`}
+				{`${day[new Date(data.loadDate).getDay()]}, ${month[new Date(data.loadDate).getMonth()]} ${new Date(data.loadDate).getDate()}${dateOrdinals(new Date(data.loadDate).getDate())} ${new Date(data.loadDate).getFullYear()}`}
 			</p>
 		</div>
 
@@ -85,7 +85,7 @@
 		<div class="my-1 mt-3 flex flex-col">
 			<h3 class="font-extrabold">Delivery Date:</h3>
 			<p>
-				{`${day[new Date(data.deliveryDate).getDay()]} ${month[new Date(data.deliveryDate).getMonth()]} ${new Date(data.deliveryDate).getDate()}${dateOrdinals(new Date(data.deliveryDate).getDate())} ${new Date(data.deliveryDate).getFullYear()}`}
+				{`${day[new Date(data.deliveryDate).getDay()]}, ${month[new Date(data.deliveryDate).getMonth()]} ${new Date(data.deliveryDate).getDate()}${dateOrdinals(new Date(data.deliveryDate).getDate())} ${new Date(data.deliveryDate).getFullYear()}`}
 			</p>
 		</div>
 		<div class="my-1 mt-3 flex flex-col">
@@ -95,7 +95,11 @@
 		<div class="my-1 mt-3 flex flex-col">
 			<h3 class="font-extrabold">Dimensions:</h3>
 			<p>
-				{`${data.lengthFeet}'${data.lengthInches}" x ${data.widthFeet}'${data.widthInches}" x ${data.heightFeet}'${data.heightInches}"`}
+				{#if data.lengthFeet === 0 && data.lengthInches === 0 && data.widthFeet === 0 && data.widthInches === 0 && data.heightFeet === 0 && data.heightInches === 0}
+					Not available
+				{:else}
+					{`${data.lengthFeet}'${data.lengthInches}" x ${data.widthFeet}'${data.widthInches}" x ${data.heightFeet}'${data.heightInches}"`}
+				{/if}
 			</p>
 		</div>
 		<div class="my-1 mt-3 flex flex-col">
@@ -106,7 +110,6 @@
 			<h3 class="font-extrabold">Trailer Types:</h3>
 			<p>{`${data.trailerTypes}`}</p>
 		</div>
-
 	</div>
 	<div>
 		<div class="my-1 mt-3 flex flex-col">
@@ -132,7 +135,13 @@
 		</div>
 		<div class="my-1 mt-3 flex flex-col">
 			<h3 class="font-extrabold">Miles:</h3>
-			<p>{data.miles}</p>
+			<p>
+				{#if data.miles == 0 || data.miles === -1}
+					Not Available
+				{:else}
+					{data.miles}
+				{/if}
+			</p>
 		</div>
 		<div class="my-1 mt-3 flex flex-col">
 			<h3 class="font-extrabold">LTL:</h3>
