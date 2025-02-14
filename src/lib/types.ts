@@ -42,20 +42,32 @@ export type TableDataTypes = {
 	destinationLng: number;
 	manualLoad: boolean;
 	areaLoadCount: number;
-
-
 };
 
-
 export type FormattedTypes = TableDataTypes & {
-	origin: `${TableDataTypes['originCityName']}, ${TableDataTypes['originStateName']}`
-}
-
+	origin: `${TableDataTypes['originCityName']}, ${TableDataTypes['originStateName']}`;
+};
 
 export interface PageData {
-    userId: string | null;
+	userId: string | null;
 }
 
 interface Locals {
-    userId: string | null;
+	userId: string | null;
 }
+
+export type savedSearchesTypes = {
+	id: string;
+	name: string;
+	originMiles: number;
+	originState: string;
+	originCity: string;
+	destMiles: number;
+	destState: string;
+	destCity: string;
+	pickupDateStart: Date;
+	pickupDateEnd: Date;
+	trailerType: string;
+	emailNotification: boolean;
+	textNotification: boolean;
+};
