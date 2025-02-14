@@ -11,13 +11,15 @@
 		selectedCity,
 		selectedRow = $bindable(),
 		detailsHidden = $bindable(),
-		tableClicked
+		tableClicked,
+		multipleLoads
 	}: {
 		tableData: any;
 		selectedCity: string | null;
 		selectedRow: number | null;
 		detailsHidden: boolean;
 		tableClicked: boolean;
+		multipleLoads: boolean;
 	} = $props();
 
 	let isSingleRow = () => {
@@ -53,7 +55,7 @@
 		id="loadDetailsDrawerMobile"
 	>
 		<CloseButton on:click={() => (detailsHidden = true)} class="mb-4, dark:text-white" />
-		{#if tableClicked || singleItem(tableData)}
+		{#if tableClicked || !multipleLoads}
 			{#each tableData as data}
 				{#if data.loadID === selectedRow}
 					<DrawerDetails {data} horizontal={false} />
@@ -65,9 +67,7 @@
 				<DrawerCarousel>
 					{#each tableData as data}
 						{#if data.originCityName === selectedCity}
-							{#if data.loadID === selectedRow}
 								<DrawerDetails {data} horizontal={false} />
-							{/if}
 						{/if}
 					{/each}
 				</DrawerCarousel>
@@ -87,7 +87,7 @@
 		<CloseButton on:click={() => (detailsHidden = true)} class="mb-4, dark:text-white" />
 
 		<div class="container">
-			{#if tableClicked || singleItem(tableData)}
+			{#if tableClicked || !multipleLoads}
 				{#each tableData as data}
 					{#if data.loadID === selectedRow}
 						<DrawerDetails {data} horizontal={true} />
