@@ -106,14 +106,69 @@
 		'Van'
 	];
 	let {
-		fromDateRange,
-		toDateRange,
+		originLatFilter = $bindable(),
+		originLngFilter = $bindable(),
+		destLatFilter = $bindable(),
+		destLngFilter = $bindable(),
+		originMilesFilter = $bindable(),
+		originStateFilter = $bindable(),
+		originCityFilter = $bindable(),
+		destMilesFilter = $bindable(),
+		destCityFilter = $bindable(),
+		destStateFilter = $bindable(),
+		trailerTypesFilter = $bindable(),
+		fromDateRange = $bindable(),
+		toDateRange = $bindable(),
 		saveSearchDialogIsShowing = $bindable()
 	}: {
+		originLatFilter: number | undefined;
+		originLngFilter: number | undefined;
+		destLatFilter: number | undefined;
+		destLngFilter: number | undefined;
+		originMilesFilter: number | undefined;
+		originStateFilter: string | undefined;
+		originCityFilter: string | undefined;
+		destMilesFilter: number | undefined;
+		destCityFilter: string | undefined;
+		destStateFilter: string | undefined;
+		trailerTypesFilter: string | undefined;
 		fromDateRange: Date | null | undefined;
 		toDateRange: Date | null | undefined;
 		saveSearchDialogIsShowing: boolean;
 	} = $props();
+
+	function clearSearch() {
+		originLatFilter = undefined;
+		originLngFilter = undefined;
+		destLatFilter = undefined;
+		destLngFilter = undefined;
+		originMilesFilter = undefined;
+		originStateFilter = undefined;
+		originCityFilter = undefined;
+		destMilesFilter = undefined;
+		destCityFilter = undefined;
+		destStateFilter = undefined;
+		trailerTypesFilter = undefined;
+		fromDateRange = undefined;
+		toDateRange = undefined;
+	}
+	function setOriginAddress(lat: string, lng: string, city: string) {
+		originLatFilter = Number(lat);
+		originLngFilter = Number(lng);
+		originCityFilter = city;
+	}
+	function setDestinationAddress(lat: string, lng: string, city: string) {
+		destLatFilter = Number(lat);
+		destLngFilter = Number(lng);
+		destCityFilter = city;
+	}
+	function addTrailerType(trailerType: string) {
+		if (trailerTypesFilter?.includes(trailerType)) {
+			trailerTypesFilter.replace(`${trailerType}, `, '');
+		} else {
+			return (trailerTypesFilter += `${trailerType}, `);
+		}
+	}
 </script>
 
 <div class="m-5 flex w-full flex-col gap-5 rounded bg-slate-200 p-5 dark:bg-gray-900">
