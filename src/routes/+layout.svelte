@@ -1,5 +1,7 @@
 <script lang="ts">
 	import '../app.css';
+	import PocketBase from 'pocketbase'
+	
 	let { children } = $props();
 
 	import { onMount } from 'svelte';
