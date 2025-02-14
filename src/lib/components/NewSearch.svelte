@@ -174,66 +174,89 @@
 <div class="m-5 flex w-full flex-col gap-5 rounded bg-slate-200 p-5 dark:bg-gray-900">
 	<h2 class="text-2xl font-extrabold">New Search</h2>
 	<!-- TODO: Add divider -->
-	<div class="flex items-center justify-start gap-3">
+	<div class="flex flex-col items-center justify-start gap-3 md:flex-row">
 		<p class="flex-1 justify-self-start">Origin:</p>
-		<p>Within</p>
-		<Button size="xs" color="light"
-			>Miles<ChevronDownOutline class="ms-2 h-6 w-6 text-gray-800 dark:text-white" /></Button
-		>
-		<Dropdown>
-			{#each miles as mile}
-				<DropdownItem>{mile}</DropdownItem>
-			{/each}
-		</Dropdown>
-		<p>of</p>
-		<Button size="xs" color="light"
-			>State<ChevronDownOutline class="ms-2 h-6 w-6 text-gray-800 dark:text-white" /></Button
-		>
-		<Dropdown>
-			{#each states as state}
-				<DropdownItem>{state}</DropdownItem>
-			{/each}
-		</Dropdown>
-		<Button size="xs" color="light"
-			>City<ChevronDownOutline class="ms-2 h-6 w-6 text-gray-800 dark:text-white" /></Button
-		>
-		<Dropdown>
-			{#each cities as city}
-				<DropdownItem>{city}</DropdownItem>
-			{/each}
-		</Dropdown>
+		<div class="flex gap-3">
+			<p>Within</p>
+			<Button size="xs" color="light"
+				>{originMilesFilter} Miles<ChevronDownOutline
+					class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
+				/></Button
+			>
+			<Dropdown class="max-h-48 w-48 overflow-y-auto py-1">
+				{#each miles as mile}
+					<DropdownItem on:click={() => (originMilesFilter = mile)}>{mile}</DropdownItem>
+				{/each}
+			</Dropdown>
+			<p>of</p>
+			<Button size="xs" color="light"
+				>{originStateFilter ? originStateFilter : 'State'}<ChevronDownOutline
+					class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
+				/></Button
+			>
+			<Dropdown class="max-h-48 w-48 overflow-y-auto py-1">
+				{#each states as state}
+					<DropdownItem on:click={() => (originStateFilter = state)}>{state}</DropdownItem>
+				{/each}
+			</Dropdown>
+			<Button size="xs" color="light"
+				>{originCityFilter ? originCityFilter : 'City'}<ChevronDownOutline
+					class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
+				/></Button
+			>
+			<Dropdown class="max-h-48 w-48 overflow-y-auto py-1">
+				{#each locations as location}
+					{#if location.state === originStateFilter}
+						<DropdownItem
+							on:click={() => setOriginAddress(location.lat, location.lng, location.city)}
+							>{location.city}</DropdownItem
+						>
+					{/if}
+				{/each}
+			</Dropdown>
+		</div>
 	</div>
-
-	<div class="flex items-center justify-start gap-3">
+	<div class="flex flex-col items-center justify-start gap-3 md:flex-row">
 		<p class="flex-1 justify-self-start">Destination:</p>
-		<p>Within</p>
-		<Button size="xs" color="light"
-			>Miles<ChevronDownOutline class="ms-2 h-6 w-6 text-gray-800 dark:text-white" /></Button
-		>
-		<Dropdown>
-			{#each miles as mile}
-				<DropdownItem>{mile}</DropdownItem>
-			{/each}
-		</Dropdown>
-		<p>of</p>
-		<Button size="xs" color="light"
-			>State<ChevronDownOutline
-				class="text-gratext-gratext-gratext-gratext-gratext-gratext-gratext-gray-800 ms-2 h-6 w-6 dark:text-white"
-			/></Button
-		>
-		<Dropdown>
-			{#each states as state}
-				<DropdownItem>{state}</DropdownItem>
-			{/each}
-		</Dropdown>
-		<Button size="xs" color="light"
-			>City<ChevronDownOutline class="ms-2 h-6 w-6 text-gray-800 dark:text-white" /></Button
-		>
-		<Dropdown>
-			{#each cities as city}
-				<DropdownItem>{city}</DropdownItem>
-			{/each}
-		</Dropdown>
+		<div class="flex gap-3">
+			<p>Within</p>
+			<Button size="xs" color="light"
+				>{destMilesFilter} Miles<ChevronDownOutline
+					class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
+				/></Button
+			>
+			<Dropdown class="max-h-48 w-48 overflow-y-auto py-1">
+				{#each miles as mile}
+					<DropdownItem on:click={() => (destMilesFilter = mile)}>{mile}</DropdownItem>
+				{/each}
+			</Dropdown>
+			<p>of</p>
+			<Button size="xs" color="light"
+				>{destStateFilter ? destStateFilter : 'State'}<ChevronDownOutline
+					class="text-gratext-gratext-gratext-gratext-gratext-gratext-gratext-gray-800 ms-2 h-6 w-6 dark:text-white"
+				/></Button
+			>
+			<Dropdown class="max-h-48 w-48 overflow-y-auto py-1">
+				{#each states as state}
+					<DropdownItem on:click={() => (destStateFilter = state)}>{state}</DropdownItem>
+				{/each}
+			</Dropdown>
+			<Button size="xs" color="light"
+				>{destCityFilter ? destCityFilter : 'City'}<ChevronDownOutline
+					class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
+				/></Button
+			>
+			<Dropdown class="max-h-48 w-48 overflow-y-auto py-1">
+				{#each locations as location}
+					{#if location.state === destStateFilter}
+						<DropdownItem
+							on:click={() => setDestinationAddress(location.lat, location.lng, location.city)}
+							>{location.city}</DropdownItem
+						>
+					{/if}
+				{/each}
+			</Dropdown>
+		</div>
 	</div>
 
 	<div class="flex items-center justify-between gap-3">
@@ -245,18 +268,30 @@
 	<div class="flex items-center justify-between gap-3">
 		<p class="justify-self-start">Trailer Type:</p>
 		<Button size="md" color="light"
-			>Pick a type<ChevronDownOutline class="ms-2 h-6 w-6 text-gray-800 dark:text-white" /></Button
+			>{trailerTypesFilter ? trailerTypesFilter : 'Pick a type'}<ChevronDownOutline
+				class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
+			/></Button
 		>
-		<Dropdown>
-			{#each trailerTypes as type}
-				<DropdownItem>{type}</DropdownItem>
+		<Dropdown class="h-48 w-60 overflow-y-auto py-1">
+			{#each trailerTypes as trailerType}
+				<li>
+					{#if trailerTypesFilter.includes(trailerType)}
+						<Checkbox class="px-3" checked color="blue" on:click={() => addTrailerType(trailerType)}
+							>{trailerType}</Checkbox
+						>
+					{:else}
+						<Checkbox class="px-3" color="blue" on:click={() => addTrailerType(trailerType)}
+							>{trailerType}</Checkbox
+						>
+					{/if}
+				</li>
 			{/each}
 		</Dropdown>
 	</div>
 
 	<ButtonGroup divClass="flex justify-end">
 		<Button color="blue">
-			<SearchSolid class="w-4 h-4 me-2"/>
+			<SearchSolid class="me-2 h-4 w-4" />
 			Search</Button
 		>
 		<Button
@@ -265,11 +300,12 @@
 				saveSearchDialogIsShowing = true;
 			}}
 		>
-			<FloppyDiskSolid class="w-4 h-4 me-2"/>
+			<FloppyDiskSolid class="me-2 h-4 w-4" />
 			Save Search
 		</Button>
-		<Button color="dark">
-			<DeleteRowOutline class="w-4 h-4 me-2"/>
-			Clear Search</Button>
+		<Button color="dark" on:click={clearSearch}>
+			<DeleteRowOutline class="me-2 h-4 w-4" />
+			Clear Search</Button
+		>
 	</ButtonGroup>
 </div>
