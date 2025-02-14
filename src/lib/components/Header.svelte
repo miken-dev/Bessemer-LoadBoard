@@ -3,13 +3,16 @@
 	import { dev } from '$app/environment'
 	import logo from '$lib/assets/logo.png';
 	let {
-		loggedIn = $bindable()
+		loggedIn = $bindable(),
+		userID = $bindable()
 	}: {
 		loggedIn: Boolean;
+		userID: number | null;
 	} = $props();
 
 	let logout = () => {
 		loggedIn = false;
+		userID = null;
 		console.log('Logged out');
 		document.cookie = "dds_user_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC"
 	};
