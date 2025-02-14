@@ -1,9 +1,10 @@
 <script lang="ts">
 	// Data import
-	//	import tableData from '$lib/sampledata.json';
 	import type { PageData, TableDataTypes } from '$lib/types';
+
 	// framework/library imports
 	import { dev } from '$app/environment';
+	import { Button } from 'flowbite-svelte';
 	import { ChevronDownOutline } from 'flowbite-svelte-icons';
 	import { slide } from 'svelte/transition';
 	import { onMount, onDestroy } from 'svelte';
@@ -28,6 +29,7 @@
 	let tableClicked = $state(false);
 	let saved = $state(false);
 	let loggedIn = $state(true);
+	let multipleLoads = $state(false);
 
 	let saveSearchDialogIsShowing: boolean = $state(false);
 	let manageSavedSearchIsShowing: boolean = $state(false);
@@ -36,39 +38,29 @@
 	let mapIsShowing: boolean = $state(true);
 
 	// filters
-	let filterOriginMiles: number = $state(0);
-	let filterOriginState: string = $state('');
-	let filterOriginCity: string = $state('');
 
-	let filterDestMiles: number = $state(0);
-	let filterDestState: string = $state('');
-	let filterDestCity: string = $state('');
-
-	let pickupStart: string = $state('');
-	let pickupEnd: string = $state('');
-
-	let trailerType: string = $state('');
-
-	function makeFilters() {
-		let filters = '';
-		if (!loggedIn) {
-			filters += 'isPublic = true';
-		}
-	}
-
+	let originMilesFilter: number | undefined = $state();
+	let originStateFilter: string | undefined = $state();
+	let originCityFilter: string | undefined = $state();
+	let destMilesFilter: number | undefined = $state();
+	let destCityFilter: string | undefined = $state();
+	let destStateFilter: string | undefined = $state();
+	let trailerTypesFilter: string | undefined = $state("");
+	let fromDateRange: Date | null | undefined = $state();
+	let toDateRange: Date | null | undefined = $state();
+	let filter: string = $state("")
 	// PocketBase
 	const PB = new PocketBase('https://bessemer-loadboard.pockethost.io');
 
 	let tableData: [TableDataTypes] | [] = $state([]);
 
 	async function getRecords() {
-		
-		const records = await PB.collection('Active_Loads').getFullList({
+		let records = await PB.collection('Active_Loads').getFullList({
+			filters: `${filter}`,
 		});
-
 		const results: [TableDataTypes] = records.map((record) => {
 			return {
-				loadID: record.loadID,
+				loadID: record.id,
 				loadDate: record.loadDate,
 				deliveryDate: record.deliveryDate,
 				originAddress: record.originAddress,
@@ -133,6 +125,7 @@
 		if (initialId !== null) {
 			userId = initialId; // Direct assignment, no .value needed
 			loggedIn = true;
+			filter = ""
 		}
 
 		const checkCookie = setInterval(() => {
@@ -140,8 +133,12 @@
 			if (currentId !== null) {
 				userId = currentId; // Direct assignment
 				loggedIn = true;
+				filter = ""
+				getRecords()
 			} else {
 				loggedIn = false;
+				filter = "isPublic = True"
+				getRecords()
 			}
 		}, 1000);
 
@@ -151,8 +148,38 @@
 	function useUserId(id: string | null): string {
 		return id ?? 'Not logged in';
 	}
-
 	//Helper functions
+	function toRadians(degrees: number): number {
+		return (degrees * Math.PI) / 180;
+	}
+	function distanceFilter(
+		dataLat: number,
+		dataLong: number,
+		filterLat: number,
+		filterLong: number
+	): number {
+		const earthRadiusKM = 6371;
+		const dataLatConverted = toRadians(dataLat);
+		const dataLongConverted = toRadians(dataLong);
+		const filterLatConverted = toRadians(filterLat);
+		const filterLongConverted = toRadians(filterLong);
+
+		const deltaLat = filterLatConverted - dataLatConverted;
+		const deltaLong = filterLongConverted - dataLongConverted;
+
+		const a =
+			Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
+			Math.cos(dataLatConverted) *
+				Math.cos(filterLatConverted) *
+				Math.sin(deltaLong / 2) *
+				Math.sin(deltaLong / 2);
+		const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+		const distance = earthRadiusKM * c;
+		const distanceMiles = distance * 0.621371;
+		return distanceMiles;
+	}
+
 	let mapWidth = (): string => {
 		if (tableIsShowing) {
 			return 'w-1/3';
@@ -178,28 +205,51 @@
 			<p>
 				<strong>DEVELOPER MODE</strong> detailsHidden={detailsHidden}, selectedLoadID={selectedRow
 					? selectedRow
-					: 'null'}, tableClicked={tableClicked}, city={selectedCity}, userID={userId}
+					: 'null'}, tableClicked={tableClicked}, city={selectedCity}, userID={userId} multi={multipleLoads}
 			</p>
 		</div>
 	{/if}
 	<Header {loggedIn} />
 </header>
-<main class="gray-800 w-full px-5 dark:bg-gray-800 dark:text-gray-100 md:px-20">
+<main class="gray-800 min-h-lvh w-full px-5 pt-5 dark:bg-gray-800 dark:text-gray-100 md:px-20">
 	{#if loggedIn}
-		<div
-			transition:slide={{ y: 200, duration: 500 }}
+		<Button
+			outline
 			onclick={() => {
 				searchOptionsIsShowing = !searchOptionsIsShowing;
 			}}
-			class="flex"
+			color="blue"
+			class="ml-5 flex p-3"
 		>
-			<h3 class="ml-5 mt-5">Search Options</h3>
-			<ChevronDownOutline class="ms-2 mt-5 h-6 w-6 text-gray-800 dark:text-white" />
-		</div>
+			<p class="ml-5">{searchOptionsIsShowing ? 'Hide' : 'Show'} Search Options</p>
+			<ChevronDownOutline class="ms-2  h-6 w-6 text-gray-800 dark:text-white" />
+		</Button>
 		{#if searchOptionsIsShowing}
 			<div class="flex flex-col md:flex-row">
-				<NewSearch bind:saveSearchDialogIsShowing />
-				<SavedSearches bind:manageSavedSearchIsShowing />
+				<NewSearch
+					bind:originMilesFilter
+					bind:originStateFilter
+					bind:originCityFilter
+					bind:destMilesFilter
+					bind:destCityFilter
+					bind:destStateFilter
+					bind:trailerTypesFilter
+					bind:fromDateRange
+					bind:toDateRange
+					bind:saveSearchDialogIsShowing
+				/>
+				<SavedSearches
+					bind:originMilesFilter
+					bind:originStateFilter
+					bind:originCityFilter
+					bind:destMilesFilter
+					bind:destCityFilter
+					bind:destStateFilter
+					bind:trailerTypesFilter
+					bind:fromDateRange
+					bind:toDateRange
+					bind:manageSavedSearchIsShowing
+				/>
 			</div>
 		{/if}
 	{/if}
@@ -218,11 +268,25 @@
 
 		{#if mapIsShowing}
 			<div class="sticky top-0 w-11/12 md:{mapWidth} h-lvh md:h-[35rem] lg:h-[50rem]">
-				<Map {tableData} bind:selectedCity bind:selectedRow bind:detailsHidden bind:tableClicked />
+				<Map
+					bind:multipleLoads
+					{tableData}
+					bind:selectedCity
+					bind:selectedRow
+					bind:detailsHidden
+					bind:tableClicked
+				/>
 			</div>
 		{/if}
 	</div>
-	<Drawerv2 {tableData} {selectedCity} bind:selectedRow bind:detailsHidden {tableClicked} />
+	<Drawerv2
+		{tableData}
+		{selectedCity}
+		bind:selectedRow
+		bind:detailsHidden
+		{tableClicked}
+		{multipleLoads}
+	/>
 	<ManageSavedSearchModal bind:manageSavedSearchIsShowing />
 	<SaveSearchDialog bind:saveSearchDialogIsShowing bind:saved />
 </main>
