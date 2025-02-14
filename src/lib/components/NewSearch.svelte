@@ -2,6 +2,7 @@
 	import {
 		Button,
 		ButtonGroup,
+		Checkbox,
 		Dropdown,
 		DropdownItem,
 		DropdownDivider,
@@ -14,10 +15,8 @@
 		DeleteRowOutline
 	} from 'flowbite-svelte-icons';
 	import { Datepicker } from 'flowbite-svelte';
+	import locations from '$lib/assets/locations.json';
 	let miles = [5, 10, 25, 50, 100, 150, 200, 250, 300, 400, 500];
-	let cities = ['Atlanta', 'Austin', 'Cleveland'];
-	let states = ['GA', 'OH', 'TX'];
-	let trailerTypes = ['Type 1', 'Type 2'];
 	let {
 		fromDateRange,
 		toDateRange,
