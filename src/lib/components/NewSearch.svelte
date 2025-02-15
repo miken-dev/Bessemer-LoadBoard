@@ -290,12 +290,8 @@
 	</div>
 
 	<ButtonGroup divClass="flex justify-end">
-		<Button color="blue">
-			<SearchSolid class="me-2 h-4 w-4" />
-			Search</Button
-		>
 		<Button
-			color="dark"
+			color="blue"
 			onclick={() => {
 				saveSearchDialogIsShowing = true;
 			}}
