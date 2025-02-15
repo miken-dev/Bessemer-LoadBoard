@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { DarkMode, ButtonGroup, Button } from 'flowbite-svelte';
-	import { dev } from '$app/environment'
+	import { invalidateAll } from '$app/navigation';
+	import { dev } from '$app/environment';
 	import logo from '$lib/assets/logo.png';
 	let {
 		loggedIn = $bindable(),
@@ -14,12 +15,15 @@
 		loggedIn = false;
 		userID = null;
 		console.log('Logged out');
-		document.cookie = "dds_user_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC"
+		document.cookie = 'dds_user_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC';
+		invalidateAll;
 	};
 
 	let devLogin = () => {
-		document.cookie = "dds_user_id=5244833"
-	}
+		document.cookie = 'dds_user_id=5244833';
+		invalidateAll;
+		location.reload();
+	};
 </script>
 
 <div class="flex w-screen items-center justify-between border-b-4 border-sky-400 p-5">
@@ -32,7 +36,6 @@
 		> -->
 		<DarkMode class="pt-2 dark:text-gray-100" />
 		{#if dev}
-
 			<Button on:click={devLogin} color="blue">Log in (DEV)</Button>
 		{/if}
 		{#if loggedIn}
