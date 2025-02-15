@@ -58,49 +58,88 @@
 		let records;
 		if (loggedIn) {
 			records = await PB.collection('Active_Loads').getFullList({});
+			const results: [TableDataTypes] = records.map((record) => {
+				return {
+					loadID: record.id,
+					loadDate: record.loadDate,
+					deliveryDate: record.deliveryDate,
+					originAddress: record.originAddress,
+					originZipCode: record.originZipCode,
+					destinationAddress: record.destinationAddress,
+					destinationZipCode: record.destinationZipCode,
+					commodity: record.commodity,
+					lengthFeet: record.lengthFeet,
+					lengthInches: record.lengthInches,
+					widthFeet: record.widthFeet,
+					widthInches: record.widthInches,
+					heightFeet: record.heightFeet,
+					heightInches: record.heightInches,
+					weightInPounds: record.weightInPounds,
+					pieceCount: record.pieceCount,
+					revenue: record.revenue,
+					notes: record.notes,
+					terminalID: record.terminalID,
+					terminalPhone: record.terminalPhone,
+					ltl: record.ltl,
+					isPublic: record.isPublic,
+					trailerTypes: record.trailerTypes,
+					miles: record.miles,
+					terminalName: record.terminalName,
+					originStateName: record.originStateName,
+					originCityName: record.originCityName,
+					originLat: record.originLat,
+					originLng: record.originLng,
+					destinationStateName: record.destinationStateName,
+					destinationCityName: record.destinationCityName,
+					destinationLat: record.destinationLat,
+					destinationLng: record.destinationLng,
+					areaLoadCount: record.areaLoadCount
+				};
+			});
+			return results;
 		} else {
 			records = await PB.collection('Active_Loads_Public').getFullList({});
+				const results: [TableDataTypes] = records.map((record) => {
+					return {
+						loadID: record.id,
+						loadDate: record.loadDate,
+						deliveryDate: record.deliveryDate,
+						originAddress: record.originAddress,
+						originZipCode: record.originZipCode,
+						destinationAddress: record.destinationAddress,
+						destinationZipCode: record.destinationZipCode,
+						commodity: record.commodity,
+						lengthFeet: record.lengthFeet,
+						lengthInches: record.lengthInches,
+						widthFeet: record.widthFeet,
+						widthInches: record.widthInches,
+						heightFeet: record.heightFeet,
+						heightInches: record.heightInches,
+						weightInPounds: record.weightInPounds,
+						pieceCount: record.pieceCount,
+						revenue: record.revenue,
+						notes: record.notes,
+						terminalID: record.terminalID,
+						terminalPhone: record.terminalPhone,
+						ltl: record.ltl,
+						isPublic: record.isPublic,
+						trailerTypes: record.trailerTypes,
+						miles: record.miles,
+						terminalName: record.terminalName,
+						originStateName: record.originStateName,
+						originCityName: record.originCityName,
+						originLat: record.originLat,
+						originLng: record.originLng,
+						destinationStateName: record.destinationStateName,
+						destinationCityName: record.destinationCityName,
+						destinationLat: record.destinationLat,
+						destinationLng: record.destinationLng,
+						areaLoadCount: record.areaLoadCount
+					};
+				});
+			return results;
 		}
-		const results: [TableDataTypes] = records.map((record) => {
-			return {
-				loadID: record.id,
-				loadDate: record.loadDate,
-				deliveryDate: record.deliveryDate,
-				originAddress: record.originAddress,
-				originZipCode: record.originZipCode,
-				destinationAddress: record.destinationAddress,
-				destinationZipCode: record.destinationZipCode,
-				commodity: record.commodity,
-				lengthFeet: record.lengthFeet,
-				lengthInches: record.lengthInches,
-				widthFeet: record.widthFeet,
-				widthInches: record.widthInches,
-				heightFeet: record.heightFeet,
-				heightInches: record.heightInches,
-				weightInPounds: record.weightInPounds,
-				pieceCount: record.pieceCount,
-				revenue: record.revenue,
-				notes: record.notes,
-				terminalID: record.terminalID,
-				terminalPhone: record.terminalPhone,
-				ltl: record.ltl,
-				isPublic: record.isPublic,
-				trailerTypes: record.trailerTypes,
-				miles: record.miles,
-				terminalName: record.terminalName,
-				originStateName: record.originStateName,
-				originCityName: record.originCityName,
-				originLat: record.originLat,
-				originLng: record.originLng,
-				destinationStateName: record.destinationStateName,
-				destinationCityName: record.destinationCityName,
-				destinationLat: record.destinationLat,
-				destinationLng: record.destinationLng,
-				areaLoadCount: record.areaLoadCount
-			};
-		});
 
-		return results;
 	}
 
 	PB.collection('Active_Loads').subscribe('*', async (e) => {
