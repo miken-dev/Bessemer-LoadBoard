@@ -37,7 +37,7 @@
 		fromDateRange: Date | null | undefined;
 		toDateRange: Date | null | undefined;
 		manageSavedSearchIsShowing: boolean;
-		userID: number;
+		userId: string | null;
 	} = $props();
 
 	let active = 'bg-blue-600';
