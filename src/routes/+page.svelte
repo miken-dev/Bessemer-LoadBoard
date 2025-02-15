@@ -46,8 +46,8 @@
 	let destCityFilter: string | undefined = $state();
 	let destStateFilter: string | undefined = $state();
 	let trailerTypesFilter: string | undefined = $state('');
-	let fromDateRange: Date | null | undefined = $state();
-	let toDateRange: Date | null | undefined = $state();
+	let fromDateRange: Date | undefined = $state(undefined);
+	let toDateRange: Date | undefined = $state(undefined);
 	let filter: string = $state('isPublic = "true"');
 	// PocketBase
 	const PB = new PocketBase('https://bessemer-loadboard.pockethost.io');
@@ -99,49 +99,50 @@
 			return results;
 		} else {
 			records = await PB.collection('Active_Loads_Public').getFullList({});
-				const results: [TableDataTypes] = records.map((record) => {
-					return {
-						loadID: record.id,
-						loadDate: record.loadDate,
-						deliveryDate: record.deliveryDate,
-						originAddress: record.originAddress,
-						originZipCode: record.originZipCode,
-						destinationAddress: record.destinationAddress,
-						destinationZipCode: record.destinationZipCode,
-						commodity: record.commodity,
-						lengthFeet: record.lengthFeet,
-						lengthInches: record.lengthInches,
-						widthFeet: record.widthFeet,
-						widthInches: record.widthInches,
-						heightFeet: record.heightFeet,
-						heightInches: record.heightInches,
-						weightInPounds: record.weightInPounds,
-						pieceCount: record.pieceCount,
-						revenue: record.revenue,
-						notes: record.notes,
-						terminalID: record.terminalID,
-						terminalPhone: record.terminalPhone,
-						ltl: record.ltl,
-						isPublic: record.isPublic,
-						trailerTypes: record.trailerTypes,
-						miles: record.miles,
-						terminalName: record.terminalName,
-						originStateName: record.originStateName,
-						originCityName: record.originCityName,
-						originLat: record.originLat,
-						originLng: record.originLng,
-						destinationStateName: record.destinationStateName,
-						destinationCityName: record.destinationCityName,
-						destinationLat: record.destinationLat,
-						destinationLng: record.destinationLng,
-						areaLoadCount: record.areaLoadCount
-					};
-				});
+			const results: [TableDataTypes] = records.map((record) => {
+				return {
+					loadID: record.id,
+					loadDate: record.loadDate,
+					deliveryDate: record.deliveryDate,
+					originAddress: record.originAddress,
+					originZipCode: record.originZipCode,
+					destinationAddress: record.destinationAddress,
+					destinationZipCode: record.destinationZipCode,
+					commodity: record.commodity,
+					lengthFeet: record.lengthFeet,
+					lengthInches: record.lengthInches,
+					widthFeet: record.widthFeet,
+					widthInches: record.widthInches,
+					heightFeet: record.heightFeet,
+					heightInches: record.heightInches,
+					weightInPounds: record.weightInPounds,
+					pieceCount: record.pieceCount,
+					revenue: record.revenue,
+					notes: record.notes,
+					terminalID: record.terminalID,
+					terminalPhone: record.terminalPhone,
+					ltl: record.ltl,
+					isPublic: record.isPublic,
+					trailerTypes: record.trailerTypes,
+					miles: record.miles,
+					terminalName: record.terminalName,
+					originStateName: record.originStateName,
+					originCityName: record.originCityName,
+					originLat: record.originLat,
+					originLng: record.originLng,
+					destinationStateName: record.destinationStateName,
+					destinationCityName: record.destinationCityName,
+					destinationLat: record.destinationLat,
+					destinationLng: record.destinationLng,
+					areaLoadCount: record.areaLoadCount
+				};
+			});
 			return results;
 		}
-
 	}
-
+	PB.collection('Active_Loads_Public').subscribe('*', async (e) => {
+		tableData = await getRecords();
+	});
 	PB.collection('Active_Loads').subscribe('*', async (e) => {
 		tableData = await getRecords();
 	});
@@ -152,6 +153,7 @@
 
 	onDestroy(() => {
 		PB.collection('Active_Loads').unsubscribe('*');
+		PB.collection('Active_Loads_Public').unsubscribe('*');
 	});
 
 	// Cookie set up
@@ -281,18 +283,21 @@
 					bind:toDateRange
 					bind:saveSearchDialogIsShowing
 				/>
-				<SavedSearches
-					bind:originMilesFilter
-					bind:originStateFilter
-					bind:originCityFilter
-					bind:destMilesFilter
-					bind:destCityFilter
-					bind:destStateFilter
-					bind:trailerTypesFilter
-					bind:fromDateRange
-					bind:toDateRange
-					bind:manageSavedSearchIsShowing
-				/>
+				{#key manageSavedSearchIsShowing}
+					<SavedSearches
+						bind:originMilesFilter
+						bind:originStateFilter
+						bind:originCityFilter
+						bind:destMilesFilter
+						bind:destCityFilter
+						bind:destStateFilter
+						bind:trailerTypesFilter
+						bind:fromDateRange
+						bind:toDateRange
+						bind:manageSavedSearchIsShowing
+						{userId}
+					/>
+				{/key}
 			</div>
 		{/if}
 	{/if}
@@ -339,5 +344,18 @@
 		{multipleLoads}
 	/>
 	<ManageSavedSearchModal bind:manageSavedSearchIsShowing />
-	<SaveSearchDialog bind:saveSearchDialogIsShowing bind:saved />
+	<SaveSearchDialog
+		bind:saveSearchDialogIsShowing
+		bind:saved
+		{originMilesFilter}
+		{originStateFilter}
+		{originCityFilter}
+		{destMilesFilter}
+		{destCityFilter}
+		{destStateFilter}
+		{trailerTypesFilter}
+		{fromDateRange}
+		{toDateRange}
+		{userId}
+	/>
 </main>
