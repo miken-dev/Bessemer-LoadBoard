@@ -28,7 +28,7 @@
 	let detailsHidden = $state(true);
 	let tableClicked = $state(false);
 	let saved = $state(false);
-	let loggedIn = $state(true);
+	let loggedIn = $state(false);
 	let multipleLoads = $state(false);
 
 	let saveSearchDialogIsShowing: boolean = $state(false);
@@ -45,19 +45,22 @@
 	let destMilesFilter: number | undefined = $state();
 	let destCityFilter: string | undefined = $state();
 	let destStateFilter: string | undefined = $state();
-	let trailerTypesFilter: string | undefined = $state("");
+	let trailerTypesFilter: string | undefined = $state('');
 	let fromDateRange: Date | null | undefined = $state();
 	let toDateRange: Date | null | undefined = $state();
-	let filter: string = $state("")
+	let filter: string = $state('isPublic = "true"');
 	// PocketBase
 	const PB = new PocketBase('https://bessemer-loadboard.pockethost.io');
 
 	let tableData: [TableDataTypes] | [] = $state([]);
 
 	async function getRecords() {
-		let records = await PB.collection('Active_Loads').getFullList({
-			filters: `${filter}`,
-		});
+		let records;
+		if (loggedIn) {
+			records = await PB.collection('Active_Loads').getFullList({});
+		} else {
+			records = await PB.collection('Active_Loads_Public').getFullList({});
+		}
 		const results: [TableDataTypes] = records.map((record) => {
 			return {
 				loadID: record.id,
@@ -125,7 +128,7 @@
 		if (initialId !== null) {
 			userId = initialId; // Direct assignment, no .value needed
 			loggedIn = true;
-			filter = ""
+			filter = '';
 		}
 
 		const checkCookie = setInterval(() => {
@@ -133,12 +136,12 @@
 			if (currentId !== null) {
 				userId = currentId; // Direct assignment
 				loggedIn = true;
-				filter = ""
-				getRecords()
+				filter = '';
+				getRecords();
 			} else {
 				loggedIn = false;
-				filter = "isPublic = True"
-				getRecords()
+				filter = 'isPublic="True"';
+				getRecords();
 			}
 		}, 1000);
 
@@ -205,7 +208,8 @@
 			<p>
 				<strong>DEVELOPER MODE</strong> detailsHidden={detailsHidden}, selectedLoadID={selectedRow
 					? selectedRow
-					: 'null'}, tableClicked={tableClicked}, city={selectedCity}, userID={userId} multi={multipleLoads}
+					: 'null'}, tableClicked={tableClicked}, city={selectedCity}, userID={userId} multi={multipleLoads},
+				loggedIn={loggedIn}, tableLength = {tableData.length}
 			</p>
 		</div>
 	{/if}
@@ -261,7 +265,15 @@
 		{#if tableIsShowing}
 			<div class="min-h-screen {tableWidth} p-4 dark:bg-gray-800 dark:text-gray-100 md:p-8">
 				<div class="mx-auto max-w-[95rem]">
-					<DataTable {tableData} bind:selectedRow bind:detailsHidden bind:tableClicked {loggedIn} />
+					{#key tableData}
+						<DataTable
+							{tableData}
+							bind:selectedRow
+							bind:detailsHidden
+							bind:tableClicked
+							{loggedIn}
+						/>
+					{/key}
 				</div>
 			</div>
 		{/if}
