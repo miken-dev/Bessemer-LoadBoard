@@ -7,10 +7,10 @@
 	let savedSearches: [savedSearchesTypes] | [] = $state([]);
 
 	let {
-	//	originLatFilter = $bindable(),
-	//	originLngFilter = $bindable(),
-	//	destLatFilter = $bindable(),
-	//	destLngFilter = $bindable(),
+		//	originLatFilter = $bindable(),
+		//	originLngFilter = $bindable(),
+		//	destLatFilter = $bindable(),
+		//	destLngFilter = $bindable(),
 		originMilesFilter = $bindable(),
 		originStateFilter = $bindable(),
 		originCityFilter = $bindable(),
@@ -20,12 +20,13 @@
 		trailerTypesFilter = $bindable(),
 		fromDateRange = $bindable(),
 		toDateRange = $bindable(),
-		manageSavedSearchIsShowing = $bindable()
+		manageSavedSearchIsShowing = $bindable(),
+		userId
 	}: {
-	//	originLatFilter: number | undefined;
-	//	originLngFilter: number | undefined;
-	//	destLatFilter: number | undefined;
-	//	destLngFilter: number | undefined;
+		//	originLatFilter: number | undefined;
+		//	originLngFilter: number | undefined;
+		//	destLatFilter: number | undefined;
+		//	destLngFilter: number | undefined;
 		originMilesFilter: number | undefined;
 		originStateFilter: string | undefined;
 		originCityFilter: string | undefined;
@@ -36,6 +37,7 @@
 		fromDateRange: Date | null | undefined;
 		toDateRange: Date | null | undefined;
 		manageSavedSearchIsShowing: boolean;
+		userID: number;
 	} = $props();
 
 	let active = 'bg-blue-600';
@@ -43,7 +45,9 @@
 
 	const PB = new PocketBase('https://bessemer-loadboard.pockethost.io');
 	async function getRecords() {
-		const records = await PB.collection('Saved_Searches').getFullList();
+		const records = await PB.collection('Saved_Searches').getFullList({
+			filter: `userID = "${userId}"`
+		});
 		const results: [savedSearchesTypes] = records.map((record) => {
 			return {
 				id: record.id,
@@ -94,38 +98,64 @@
 <div class="m-5 w-full rounded bg-slate-200 p-5 dark:bg-gray-900">
 	<h2 class="text-2xl font-extrabold">Saved Searches</h2>
 	{#if savedSearches.length}
-		{#each savedSearches as savedSearch, index}
-			{#if index <= 4}
-				<div class="flex flex-row items-center justify-between">
-					<p>{savedSearch.name}</p>
-					<p></p>
-					<div class="flex flex-row justify-around">
-						<button
-							class="{savedSearch.textNotification
-								? active
-								: inactive} mx-1 my-3 rounded px-4 py-2 text-white">Text</button
-						>
-						<button
-							class="{savedSearch.emailNotification
-								? active
-								: inactive} mx-1 my-3 rounded px-4 py-2 text-white">Email</button
-						>
-						<button onclick={() => setFilters(savedSearch.originMiles, savedSearch.originState, savedSearch.originCity, savedSearch.destMiles, savedSearch.destState, savedSearch.destCity, savedSearch.trailerType, savedSearch.pickupDateStart, savedSearch.pickupDateEnd)} class="mx-1 my-3 rounded bg-blue-600 px-4 py-2 text-white">View</button>
-						<button class="mx-1 my-3 rounded bg-blue-600 px-4 py-2 text-white">Delete</button>
-					</div>
-				</div>
-			{/if}
-		{/each}
-		<button
-			class="mx-50 my-3 w-full rounded bg-slate-800 px-5 py-2 text-white"
-			onclick={() => {
-				manageSavedSearchIsShowing = manageSavedSearchIsShowing ? false : true;
-			}}>Manage Saved Searches</button
-		>
+		<div class="flex flex-col justify-between h-full pb-4">
+			<div>
+				{#each savedSearches as savedSearch, index}
+					{#if index <= 4}
+						<div class="flex flex-row items-center justify-between">
+							<p>{savedSearch.name}</p>
+							<p></p>
+							<div class="flex flex-row justify-around">
+								<button
+									class="{savedSearch.textNotification
+										? active
+										: inactive} mx-1 my-3 rounded px-4 py-2 text-white">Text</button
+								>
+								<button
+									class="{savedSearch.emailNotification
+										? active
+										: inactive} mx-1 my-3 rounded px-4 py-2 text-white">Email</button
+								>
+								<button
+									onclick={() =>
+										setFilters(
+											savedSearch.originMiles,
+											savedSearch.originState,
+											savedSearch.originCity,
+											savedSearch.destMiles,
+											savedSearch.destState,
+											savedSearch.destCity,
+											savedSearch.trailerType,
+											savedSearch.pickupDateStart,
+											savedSearch.pickupDateEnd
+										)}
+									class="mx-1 my-3 rounded bg-blue-600 px-4 py-2 text-white">View</button
+								>
+								<button class="mx-1 my-3 rounded bg-blue-600 px-4 py-2 text-white">Delete</button>
+							</div>
+						</div>
+					{/if}
+				{/each}
+			</div>
+
+			<div class="flex gap-3 flex-col md:flex-row ">
+				<button
+					class="mx-50 my-3 w-full rounded bg-slate-800 px-5 py-2 text-white"
+					onclick={() => {
+						manageSavedSearchIsShowing = manageSavedSearchIsShowing ? false : true;
+					}}>Manage Saved Searches</button
+				>
+				<button class="mx-50 my-3 w-full rounded bg-slate-800 px-5 py-2 text-white"
+					>Notification Preferences</button
+				>
+			</div>
+		</div>
 	{:else}
 		<div class="flex flex-col items-center justify-center">
 			<div class="m-auto text-center text-4xl">No saved searches available</div>
-			<Button outline color="blue" class="w-40 m-auto mt-10" on:click={() => getRecords()}>Refresh</Button>
+			<Button outline color="blue" class="m-auto mt-10 w-40" on:click={() => getRecords()}
+				>Refresh</Button
+			>
 		</div>
 	{/if}
 </div>
