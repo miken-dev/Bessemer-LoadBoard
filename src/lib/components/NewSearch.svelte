@@ -16,6 +16,8 @@
 	} from 'flowbite-svelte-icons';
 	import { Datepicker } from 'flowbite-svelte';
 	import locations from '$lib/assets/locations.json';
+	import SaveSearchDialog from './saveSearchDialog.svelte';
+	import type { savedSearchesTypes } from '$lib/types';
 	let miles = [5, 10, 25, 50, 100, 150, 200, 250, 300, 400, 500];
 
 	const states = [
@@ -119,7 +121,9 @@
 		trailerTypesFilter = $bindable(),
 		fromDateRange = $bindable(),
 		toDateRange = $bindable(),
-		saveSearchDialogIsShowing = $bindable()
+		saveSearchDialogIsShowing = $bindable(),
+		savedSearches = $bindable(),
+		userId
 	}: {
 		originLatFilter: number | undefined;
 		originLngFilter: number | undefined;
@@ -132,9 +136,11 @@
 		destCityFilter: string | undefined;
 		destStateFilter: string | undefined;
 		trailerTypesFilter: string | undefined;
-		fromDateRange: Date | null | undefined;
-		toDateRange: Date | null | undefined;
+		fromDateRange: Date | undefined;
+		toDateRange: Date | undefined;
 		saveSearchDialogIsShowing: boolean;
+		savedSearches: [savedSearchesTypes] | []
+		userId: string | null;
 	} = $props();
 
 	function clearSearch() {
@@ -305,3 +311,18 @@
 		>
 	</ButtonGroup>
 </div>
+
+<SaveSearchDialog
+	bind:saveSearchDialogIsShowing
+	bind:savedSearches
+	{originMilesFilter}
+	{originStateFilter}
+	{originCityFilter}
+	{destMilesFilter}
+	{destCityFilter}
+	{destStateFilter}
+	{trailerTypesFilter}
+	{fromDateRange}
+	{toDateRange}
+	{userId}
+/>
