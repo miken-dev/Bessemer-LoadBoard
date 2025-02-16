@@ -70,9 +70,6 @@
 		return () => clearInterval(checkCookie);
 	});
 
-	function useUserId(id: string | null): string {
-		return id ?? 'Not logged in';
-	}
 	//Helper functions
 	function toRadians(degrees: number): number {
 		return (degrees * Math.PI) / 180;
