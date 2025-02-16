@@ -27,7 +27,6 @@
 	let NotificationPreferencesShowing: boolean = $state(false);
 
 	// filters
-
 	let originMilesFilter: number | undefined = $state();
 	let originStateFilter: string | undefined = $state();
 	let originCityFilter: string | undefined = $state();
@@ -158,19 +157,5 @@
 		<PublicData />
 	{/if}
 	<ManageSavedSearchModal bind:manageSavedSearchIsShowing />
-	<SaveSearchDialog
-		bind:saveSearchDialogIsShowing
-		bind:saved
-		{originMilesFilter}
-		{originStateFilter}
-		{originCityFilter}
-		{destMilesFilter}
-		{destCityFilter}
-		{destStateFilter}
-		{trailerTypesFilter}
-		{fromDateRange}
-		{toDateRange}
-		{userId}
-	/>
 	<NotificationPreferencesModal {NotificationPreferencesShowing} {userId} />
 </main>
