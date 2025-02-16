@@ -1,6 +1,9 @@
 <script lang="ts">
 	import NewSearch from "./NewSearch.svelte";
 	import SavedSearches from "./SavedSearches.svelte";
+	import type { savedSearchesTypes } from '$lib/types'
+	import PocketBase from 'pocketbase'
+	import { onMount } from "svelte";
 
 	let {
 		originMilesFilter = $bindable(),
@@ -30,6 +33,37 @@
 		userId: string | null;
 	} = $props();
 
+
+	let savedSearches: [savedSearchesTypes] | [] = $state([]);
+
+	const PB = new PocketBase('https://bessemer-loadboard.pockethost.io');
+	async function getRecords() {
+		const records = await PB.collection('Saved_Searches').getFullList({
+			filter: `userID = "${userId}"`
+		});
+		const results: [savedSearchesTypes] = records.map((record) => {
+			return {
+				id: record.id,
+				name: record.name,
+				originMiles: record.originMiles,
+				originState: record.originState,
+				originCity: record.originCity,
+				destMiles: record.destMiles,
+				destState: record.destState,
+				destCity: record.destCity,
+				pickupDateStart: record.pickupDateStart,
+				pickupDateEnd: record.pickupDateEnd,
+				trailerType: record.trailerType,
+				emailNotification: record.emailNotification,
+				textNotification: record.textNotification
+			};
+		});
+		return results;
+	}
+
+	onMount(async () => {
+		savedSearches = await getRecords();
+	});
 </script>
 
 <div>
@@ -59,6 +93,7 @@
 				bind:fromDateRange
 				bind:toDateRange
 				bind:manageSavedSearchIsShowing
+				bind:savedSearches
 				{userId}
 			/>
 		{/key}
