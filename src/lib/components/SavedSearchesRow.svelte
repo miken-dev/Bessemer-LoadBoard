@@ -16,16 +16,20 @@
 	let active = 'bg-blue-600';
 	let inactive = 'bg-gray-500';
 	let {
-		title = $bindable(),
-		text = $bindable(),
+		id,
 		email = $bindable(),
+		text = $bindable(),
+		title = $bindable(),
 		setFilters
 	}: {
-		title: string;
-		text: boolean;
+		id: string 
 		email: boolean;
+		text: boolean;
+		title: string;
 		setFilters: setFilterProps["setFilters"];
 	} = $props();
+
+
 	//Pocketbase calls
 	const PB = new PocketBase('https://bessemer-loadboard.pockethost.io');
 	async function toggleEmail(currentValue: boolean, id: string ) {
