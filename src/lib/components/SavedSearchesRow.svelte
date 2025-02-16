@@ -1,4 +1,5 @@
 <script lang="ts">
+	import PocketBase from 'pocketbase'
 	type setFilterProps = {
 		setFilters: (
 			originMiles: number,
@@ -25,6 +26,14 @@
 		email: boolean;
 		setFilters: setFilterProps["setFilters"];
 	} = $props();
+	//Pocketbase calls
+	const PB = new PocketBase('https://bessemer-loadboard.pockethost.io');
+	async function toggleEmail(currentValue: boolean, id: string ) {
+		const record = await PB.collection('Saved_Searches').update(`${id}`, {
+			email: `${currentValue ? "False" : "True" }`
+		});
+
+	}
 </script>
 
 <div class="flex flex-row items-center justify-between">
@@ -32,7 +41,7 @@
 	<p></p>
 	<div class="flex flex-row justify-around">
 		<button class="{text ? active : inactive} mx-1 my-3 rounded px-4 py-2 text-white">Text</button>
-		<button class="{email ? active : inactive} mx-1 my-3 rounded px-4 py-2 text-white">Email</button
+		<button onclick={() => toggleEmail(email, id) } class="{email ? active : inactive} mx-1 my-3 rounded px-4 py-2 text-white">Email</button
 		>
 		<button onclick={setFilters} class="mx-1 my-3 rounded bg-blue-600 px-4 py-2 text-white">View</button>
 		<button class="mx-1 my-3 rounded bg-blue-600 px-4 py-2 text-white">Delete</button>
