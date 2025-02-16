@@ -134,10 +134,23 @@
 			<ChevronDownOutline class="ms-2  h-6 w-6 text-gray-800 dark:text-white" />
 		</Button>
 		{#if searchOptionsIsShowing}
-		<SearchOptions {originMilesFilter} {originStateFilter} {originCityFilter} {destMilesFilter} {destCityFilter} {destStateFilter} {trailerTypesFilter} {fromDateRange} {toDateRange} {saveSearchDialogIsShowing} {manageSavedSearchIsShowing} {userId} />
+			<SearchOptions
+				{originMilesFilter}
+				{originStateFilter}
+				{originCityFilter}
+				{destMilesFilter}
+				{destCityFilter}
+				{destStateFilter}
+				{trailerTypesFilter}
+				{fromDateRange}
+				{toDateRange}
+				{saveSearchDialogIsShowing}
+				{manageSavedSearchIsShowing}
+				{userId}
+			/>
+		{/if}
 	{/if}
-	{/if}
-	
+
 	<!-- Table and Map -->
 	{#if loggedIn}
 	<LoggedInData />
