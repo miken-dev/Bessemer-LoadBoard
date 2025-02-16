@@ -1,10 +1,11 @@
 <script lang="ts">
+	import type { savedSearchesTypes } from '$lib/types';
 	import { Toggle, Button, Modal, Label, Input, Checkbox } from 'flowbite-svelte';
 	import PocketBase from 'pocketbase';
 	import { onMount } from 'svelte';
 	let {
 		saveSearchDialogIsShowing = $bindable(),
-		saved = $bindable(),
+		savedSearches = $bindable(),
 		userId,
 		originMilesFilter = $bindable(),
 		originStateFilter = $bindable(),
@@ -17,7 +18,7 @@
 		toDateRange = $bindable(),
 	}: {
 		saveSearchDialogIsShowing: boolean;
-		saved: boolean;
+		savedSearches: [savedSearchesTypes] | []
 		userId: string | null;
 		originMilesFilter: number | undefined;
 		originStateFilter: string | undefined;
@@ -55,6 +56,31 @@
 		console.log(`${userInfo}`)
 	});
 
+	async function updateSavedSeachList() {
+		const records = await PB.collection('Saved_Searches').getFullList({
+			filter: `userID = "${userId}"`
+		});
+		const results: [savedSearchesTypes]   = records.map((record) => {
+			return {
+				id: record.id,
+				name: record.name,
+				originMiles: record.originMiles,
+				originState: record.originState,
+				originCity: record.originCity,
+				destMiles: record.destMiles,
+				destState: record.destState,
+				destCity: record.destCity,
+				pickupDateStart: record.pickupDateStart,
+				pickupDateEnd: record.pickupDateEnd,
+				trailerType: record.trailerType,
+				emailNotification: record.emailNotification,
+				textNotification: record.textNotification
+			};
+		});
+
+		return results
+	}
+
 	async function saveSearch(
 			nameSearch: string | undefined,
 			originMilesSearch: number | undefined,
@@ -86,6 +112,7 @@
 			textNotification: textNotificationSearch,
 			userID: userIdSearch 
 		});
+		savedSearches = await updateSavedSeachList()
 		return search;
 	}
 </script>
