@@ -153,9 +153,9 @@
 
 	<!-- Table and Map -->
 	{#if loggedIn}
-	<LoggedInData />
+		<LoggedInData />
 	{:else}
-	<PublicData />
+		<PublicData />
 	{/if}
 	<ManageSavedSearchModal bind:manageSavedSearchIsShowing />
 	<SaveSearchDialog
