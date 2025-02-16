@@ -1,21 +1,12 @@
 <script lang="ts">
-	// Data import
-	import type { PageData, TableDataTypes } from '$lib/types';
-
 	// framework/library imports
 	import { dev } from '$app/environment';
 	import { Button } from 'flowbite-svelte';
 	import { ChevronDownOutline } from 'flowbite-svelte-icons';
-	import { slide } from 'svelte/transition';
-	import { onMount, onDestroy } from 'svelte';
-	import PocketBase from 'pocketbase';
-	import { writable, type Writable } from 'svelte/store';
 
 	// Component imports
-	import NewSearch from '$lib/components/NewSearch.svelte';
 	import Header from '$lib/components/Header.svelte';
 	import ManageSavedSearchModal from '$lib/components/manageSavedSearchModal.svelte';
-	import SavedSearches from '$lib/components/SavedSearches.svelte';
 	import SaveSearchDialog from '$lib/components/saveSearchDialog.svelte';
 	import PublicData from '$lib/components/PublicData.svelte';
 	import LoggedInData from '$lib/components/LoggedInData.svelte';
@@ -27,7 +18,6 @@
 	let selectedCity: string | null = $state(null);
 	let detailsHidden = $state(true);
 	let tableClicked = $state(false);
-	let saved = $state(false);
 	let loggedIn = $state(false);
 	let multipleLoads = $state(false);
 
@@ -48,7 +38,6 @@
 	let fromDateRange: Date | undefined = $state(undefined);
 	let toDateRange: Date | undefined = $state(undefined);
 	let filter: string = $state('isPublic = "true"');
-	// PocketBase
 
 	// Cookie set up
 	function getUserId(): string | null {
