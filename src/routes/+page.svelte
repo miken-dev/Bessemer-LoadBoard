@@ -114,7 +114,7 @@
 				<strong>DEVELOPER MODE</strong> detailsHidden={detailsHidden}, selectedLoadID={selectedRow
 					? selectedRow
 					: 'null'}, tableClicked={tableClicked}, city={selectedCity}, userID={userId} multi={multipleLoads},
-				loggedIn={loggedIn} 
+				loggedIn={loggedIn} {manageSavedSearchIsShowing}
 			</p>
 		</div>
 	{/if}
