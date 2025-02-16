@@ -26,8 +26,8 @@
 		destCityFilter: string | undefined;
 		destStateFilter: string | undefined;
 		trailerTypesFilter: string | undefined;
-		fromDateRange: Date | null | undefined;
-		toDateRange: Date | null | undefined;
+		fromDateRange: Date | undefined;
+		toDateRange: Date | undefined;
 		saveSearchDialogIsShowing: boolean;
 		manageSavedSearchIsShowing: boolean;
 		userId: string | null;
@@ -80,6 +80,7 @@
 			bind:fromDateRange
 			bind:toDateRange
 			bind:saveSearchDialogIsShowing
+			{userId}
 		/>
 		{#key manageSavedSearchIsShowing}
 			<SavedSearches
