@@ -3,6 +3,7 @@
 	import { dev } from '$app/environment';
 	import { Button } from 'flowbite-svelte';
 	import { ChevronDownOutline } from 'flowbite-svelte-icons';
+	import { onMount } from 'svelte';
 
 	// Component imports
 	import Header from '$lib/components/Header.svelte';
