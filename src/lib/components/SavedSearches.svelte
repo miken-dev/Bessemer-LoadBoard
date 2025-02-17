@@ -177,7 +177,7 @@
 					class="mx-50 my-3 w-full rounded bg-slate-800 px-5 py-2 text-white"
 					onclick={() => {
 						manageSavedSearchIsShowing = manageSavedSearchIsShowing ? false : true;
-					}}>Manage Saved Searches</button
+					}}>View all saved searches</button
 				>
 				<button class="mx-50 my-3 w-full rounded bg-slate-800 px-5 py-2 text-white"
 					onclick={() => {
