@@ -44,7 +44,7 @@
 </script>
 
 <!-- load info -->
-<div class=" ml-3 flex {horizontal ? 'w-screen flex-row gap-x-60 pb-10 ' : 'w-9/12 flex-col'}">
+<div class=" ml-3 flex {horizontal ? 'w-screen flex-row gap-x-60 pb-10 ' : 'flex-col'}">
 	<!---
 {#each columns as column}
 <div class="flex flex-row mt-5">
@@ -66,7 +66,7 @@
 			/>
 		</div>
 	{/if}
-	<div class="max-w-48">
+	<div class="md:max-w-48">
 		<div class="my-1 mt-4 flex flex-col">
 			<h3 class="font-extrabold">Load Date:</h3>
 			<p>
@@ -122,8 +122,8 @@
 			<p>{data.pieceCount}</p>
 		</div>
 		<div class="my-1 mt-3 flex flex-col">
-			<h3 class="font-extrabold">Agent:</h3>
-			<p>AGENT NAME</p>
+			<h3 class="font-extrabold">Terminal:</h3>
+			<p>{data.terminalName}</p>
 		</div>
 		<div class="my-1 mt-3 flex flex-col">
 			<h3 class="font-extrabold">Phone Number:</h3>
