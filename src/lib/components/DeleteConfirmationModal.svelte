@@ -2,6 +2,7 @@
 	import PocketBase from 'pocketbase'
 	import type { savedSearchesTypes } from "$lib/types";
 	import { Button, Modal } from "flowbite-svelte";
+	import { onDestroy } from 'svelte';
 	let {
 		id,
 		name,
@@ -17,12 +18,22 @@
 	
 	const PB = new PocketBase('https://bessemer-loadboard.pockethost.io');
 	async function deleteRecord() {
-		 await PB.collection('Saved_Searches').delete(id)
+		await PB.collection('Saved_Searches').delete(id)
 
-		savedSearches = await getRecords()
+		removeObjectById(savedSearches, id)
+	}
+	
+	function removeObjectById(array:any, id: string) {
+		const index = array.findIndex(obj => obj.id === id)
+		if (index !== -1) {
+			array.splice(index, 1)
+		}
 	}
 
-	
+
+	onDestroy(async () => {
+		savedSearches = await getRecords()
+	})
 
 	async function getRecords() {
 		const records = await PB.collection('Saved_Searches').getFullList({
@@ -52,7 +63,7 @@
 <Modal title="Are you sure you want to delete {name}" bind:open={deleteConfirmationShowing} autoclose outsideclose>
 	<p>This cannot be undone</p>
 	<svelte:fragment slot="footer">
-		<button onclick={deleteRecord}>Delete</button>
-		<button>Cancel</button>
+		<button class="mx-1 my-3 px-4 py-2 rounded bg-red-600  text-white" onclick={deleteRecord}>Delete</button>
+		<button class="mx-1 my-3 px-4 py-2 rounded border-slate-200 bg-slate-300 dark:bg-slate-700 border text-slate-900 dark:text-slate-100">Cancel</button>
 	</svelte:fragment>
 </Modal>
