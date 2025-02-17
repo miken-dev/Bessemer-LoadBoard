@@ -53,6 +53,9 @@
 		detailsHidden = false;
 		tableClicked = true;
 	};
+
+	
+
 </script>
 
 <!--
