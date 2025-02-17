@@ -55,10 +55,6 @@
 			console.log("User exists")
 			return
 		} else {
-			console.log("User does not exist")
-			const newUser = await PB.collection('driver').create({
-				id: `"${userId}"`
-			})
 		}
 	}	
 	// Cookie set up
@@ -75,10 +71,9 @@
 			userId = initialId; // Direct assignment, no .value needed
 			loggedIn = true;
 			filter = '';
-			createUserPB(userId)
 		}
 
-		const checkCookie = setInterval(() => {
+		const checkCookie = setInterval(async () => {
 			const currentId = getUserId();
 			if (currentId !== null) {
 				userId = currentId; // Direct assignment
@@ -92,42 +87,6 @@
 
 		return () => clearInterval(checkCookie);
 	});
-	
-	//Helper functions
-	function toRadians(degrees: number): number {
-		return (degrees * Math.PI) / 180;
-	}
-	function distanceFilter(
-		dataLat: number,
-		dataLong: number,
-		filterLat: number,
-		filterLong: number
-	): number {
-		const earthRadiusKM = 6371;
-		const dataLatConverted = toRadians(dataLat);
-		const dataLongConverted = toRadians(dataLong);
-		const filterLatConverted = toRadians(filterLat);
-		const filterLongConverted = toRadians(filterLong);
-
-		const deltaLat = filterLatConverted - dataLatConverted;
-		const deltaLong = filterLongConverted - dataLongConverted;
-
-		const a =
-			Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
-			Math.cos(dataLatConverted) *
-				Math.cos(filterLatConverted) *
-				Math.sin(deltaLong / 2) *
-				Math.sin(deltaLong / 2);
-		const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-		const distance = earthRadiusKM * c;
-		const distanceMiles = distance * 0.621371;
-		return distanceMiles;
-	}
-
-	const toggleDetails = (id: string) => {
-		selectedRow = selectedRow === id ? null : id;
-	};
 </script>
 
 <header class="dark:bg-gray-800 dark:text-gray-100">
