@@ -36,13 +36,6 @@
 		duration: 200,
 		easing: sineIn
 	};
-	function singleItem(data: any) {
-		if (data.length === 1) {
-			return true;
-		}
-		return false;
-	}
-
 	const desktop = new MediaQuery('min-width: 600px');
 </script>
 
@@ -63,7 +56,12 @@
 			{/each}
 		{:else}
 			<div class="container">
-				<p>Multiple loads available in <strong>{selectedCity}</strong></p>
+				<p class="text-center text-lg">
+					Multiple loads available in <strong>{selectedCity}</strong>
+				</p>
+				<div
+					class="my-4 h-px border-t-0 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25 dark:via-neutral-400"
+				></div>
 				<DrawerCarousel>
 					{#each tableData as data}
 						{#if data.originCityName === selectedCity}
@@ -129,8 +127,5 @@
 		.container {
 			width: 390px;
 		}
-	}
-	* {
-		outline: 1px solid red
 	}
 </style>
