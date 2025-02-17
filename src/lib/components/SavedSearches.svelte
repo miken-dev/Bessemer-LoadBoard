@@ -3,9 +3,9 @@
 	import { onMount } from 'svelte';
 	import { Button } from 'flowbite-svelte';
 	import type { savedSearchesTypes } from '$lib/types';
-	import SavedSearchesRow from './SavedSearchesRow.svelte';
 	import DeleteConfirmationModal from './DeleteConfirmationModal.svelte';
-
+	import ContactInfoPreferencesModal from './ContactInfoPreferencesModal.svelte';
+	import ManageSavedSearchModal from './manageSavedSearchModal.svelte';
 	let {
 		//	originLatFilter = $bindable(),
 		//	originLngFilter = $bindable(),
@@ -22,6 +22,7 @@
 		toDateRange = $bindable(),
 		manageSavedSearchIsShowing = $bindable(),
 		savedSearches = $bindable(),
+		contactInfoPreferencesModal = $bindable(),
 		userId
 	}: {
 		//	originLatFilter: number | undefined;
@@ -38,8 +39,9 @@
 		fromDateRange: Date | null | undefined;
 		toDateRange: Date | null | undefined;
 		manageSavedSearchIsShowing: boolean;
-		userId: string | null;
 		savedSearches: [savedSearchesTypes] | [];
+		contactInfoPreferencesModal: boolean;
+		userId: string | null;
 	} = $props();
 
 	let active = 'bg-blue-600';
@@ -53,7 +55,7 @@
 		const records = await PB.collection('Saved_Searches').getFullList({
 			filter: `userID = "${userId}"`
 		});
-		const results: [savedSearchesTypes]  = records.map((record) => {
+		const results: [savedSearchesTypes] = records.map((record) => {
 			return {
 				id: record.id,
 				name: record.name,
@@ -92,7 +94,7 @@
 		deleteConfirmationShowing = true;
 		deleteID = id;
 		deleteName = name;
-		console.log(deleteName)
+		console.log(deleteName);
 	}
 	async function refresh() {
 		savedSearches = await getRecords();
@@ -121,7 +123,7 @@
 	}
 </script>
 
-<div class="m-5 w-full rounded bg-slate-200 p-5 dark:bg-gray-900">
+<div class="mt-5 w-full rounded bg-slate-200 p-5 dark:bg-gray-900 md:m-5">
 	<h2 class="text-2xl font-extrabold">Saved Searches</h2>
 	{#if savedSearches.length}
 		<div class="flex h-full flex-col justify-between pb-4">
@@ -178,6 +180,9 @@
 					}}>Manage Saved Searches</button
 				>
 				<button class="mx-50 my-3 w-full rounded bg-slate-800 px-5 py-2 text-white"
+					onclick={() => {
+						contactInfoPreferencesModal = true
+					}}
 					>Notification Preferences</button
 				>
 			</div>
@@ -190,4 +195,11 @@
 	{/if}
 </div>
 
-<DeleteConfirmationModal id={deleteID} name={deleteName} bind:deleteConfirmationShowing bind:savedSearches/>
+<DeleteConfirmationModal
+	id={deleteID}
+	name={deleteName}
+	bind:deleteConfirmationShowing
+	bind:savedSearches
+/>
+<ContactInfoPreferencesModal bind:contactInfoPreferencesModal email={true} text={true} {userId} />
+<ManageSavedSearchModal bind:originMilesFilter bind:originStateFilter bind:originCityFilter bind:destMilesFilter bind:destCityFilter bind:destStateFilter bind:trailerTypesFilter bind:fromDateRange bind:toDateRange bind:manageSavedSearchIsShowing bind:savedSearches {userId} />
