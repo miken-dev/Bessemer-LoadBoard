@@ -39,6 +39,13 @@
 	let toDateRange: Date | undefined = $state(undefined);
 	let filter: string = $state('isPublic = "true"');
 
+	let filtersActive = $derived.by(() => {
+		if(originCityFilter || destCityFilter || trailerTypesFilter || fromDateRange || toDateRange) {
+			return true
+		} else {
+			return false
+		}
+	})
 	// Cookie set up
 	function getUserId(): string | null {
 		const cookie = document.cookie.split('; ').find((row) => row.startsWith('dds_user_id='));
@@ -114,7 +121,7 @@
 				<strong>DEVELOPER MODE</strong> detailsHidden={detailsHidden}, selectedLoadID={selectedRow
 					? selectedRow
 					: 'null'}, tableClicked={tableClicked}, city={selectedCity}, userID={userId} multi={multipleLoads},
-				loggedIn={loggedIn} {manageSavedSearchIsShowing}
+				loggedIn={loggedIn} filters:{filtersActive}
 			</p>
 		</div>
 	{/if}
@@ -135,17 +142,17 @@
 		</Button>
 		{#if searchOptionsIsShowing}
 			<SearchOptions
-				{originMilesFilter}
-				{originStateFilter}
-				{originCityFilter}
-				{destMilesFilter}
-				{destCityFilter}
-				{destStateFilter}
-				{trailerTypesFilter}
-				{fromDateRange}
-				{toDateRange}
-				{saveSearchDialogIsShowing}
-				{manageSavedSearchIsShowing}
+				bind:originMilesFilter
+				bind:originStateFilter
+				bind:originCityFilter
+				bind:destMilesFilter
+				bind:destCityFilter
+				bind:destStateFilter
+				bind:trailerTypesFilter
+				bind:fromDateRange
+				bind:toDateRange
+				bind:saveSearchDialogIsShowing
+				bind:manageSavedSearchIsShowing
 				{userId}
 			/>
 		{/if}
@@ -153,7 +160,17 @@
 
 	<!-- Table and Map -->
 	{#if loggedIn}
-		<LoggedInData />
+		<LoggedInData 
+		{originMilesFilter}
+		{originStateFilter}
+		{originCityFilter}
+		{destMilesFilter}
+		{destCityFilter}
+		{destStateFilter}
+		{trailerTypesFilter}
+		{fromDateRange}
+		{toDateRange}
+			/>
 	{:else}
 		<PublicData />
 	{/if}
