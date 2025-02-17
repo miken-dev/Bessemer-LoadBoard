@@ -62,12 +62,12 @@
 	{#if totalSlides > 1}
 		<div transition:fade>
 			<!-- Previous button -->
-			<button onclick={prev} class="absolute left-2 top-1/2 -translate-y-1/2 bg-background/80 p-2 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity disabled:opacity-30 hover:bg-background" disabled={currentIndex === 0 || isAnimating}>
+			<button onclick={prev} class="absolute left-1 top-1/4 md:top-1/2 -translate-y-1/2 bg-background/80 p-2 rounded-full shadow-lg opacity-80 group-hover:opacity-80  transition-opacity disabled:opacity-30 hover:bg-background" disabled={currentIndex === 0 || isAnimating}>
 				<ChevronLeftIcon class="size-6" />
 			</button>
 
 			<!-- Next button -->
-			<button onclick={next} class="absolute right-2 top-1/2 -translate-y-1/2 bg-background/80 p-2 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity disabled:opacity-30 hover:bg-background" disabled={currentIndex === totalSlides - 1 || isAnimating}>
+			<button onclick={next} class="absolute right-1 top-1/4 md:top-1/2 -translate-y-1/2 bg-background/80 p-2 rounded-full shadow-lg opacity-80 group-hover:opacity-80 transition-opacity disabled:opacity-30 hover:bg-background" disabled={currentIndex === totalSlides - 1 || isAnimating}>
 				<ChevronRightIcon class="size-6" />
 			</button>
 		</div>
@@ -75,7 +75,7 @@
 		<!-- Indicators -->
 		<div class="absolute bottom-2 left-1/2 -translate-x-1/2 flex  gap-2">
 			{#each Array(totalSlides) as _, i}
-				<button onclick={() => goToSlide(i)} disabled={isAnimating} class={["w-2 h-2 rounded-full transition-all", currentIndex === i ? "bg-primary" : "bg-primary/30", "hover:bg-primary/60"]} />
+				<button onclick={() => goToSlide(i)} disabled={isAnimating} class={["w-3 h-4 rounded-full transition-all", currentIndex === i ? "bg-primary w-6" : "bg-primary/30", "hover:bg-primary/60"]} />
 			{/each}
 		</div>
 	{/if}
