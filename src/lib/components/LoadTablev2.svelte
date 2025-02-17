@@ -70,9 +70,6 @@
 <div
 	class="overflow-x-auto rounded-lg border border-gray-200 shadow-sm dark:bg-gray-800 dark:text-gray-100"
 >
-	{#if loggedIn}
-<div></div>
-	{/if}
 	<table class="w-full divide-y divide-gray-200">
 		<tbody class="divide-y divide-gray-200 bg-white">
 			{#each tableData as row, index}
@@ -154,8 +151,8 @@
 									</div>
 								</div>
 								<div>
-									<div class="text-xs font-medium text-gray-500 dark:text-gray-300">Agent</div>
-									<div class="mt-1 text-sm">AGENT NAME</div>
+									<div class="text-xs font-medium text-gray-500 dark:text-gray-300">Terminal</div>
+									<div class="mt-1 text-sm">{row.terminalName}</div>
 								</div>
 								<div>
 									<div class="text-xs font-medium text-gray-500 dark:text-gray-300">Phone #</div>
