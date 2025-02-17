@@ -152,7 +152,6 @@
 				bind:fromDateRange
 				bind:toDateRange
 				bind:saveSearchDialogIsShowing
-				bind:manageSavedSearchIsShowing
 				{userId}
 			/>
 		{/if}
@@ -174,6 +173,5 @@
 	{:else}
 		<PublicData />
 	{/if}
-	<ManageSavedSearchModal bind:manageSavedSearchIsShowing />
 	<NotificationPreferencesModal {NotificationPreferencesShowing} {userId} />
 </main>
