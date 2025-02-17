@@ -53,7 +53,7 @@
 </div>
 {/each} -->
 	{#if browser}
-		<div class="top-0 size-80">
+		<div class="pl-0 md:pl-10 top-0 size-80">
 			<DrawerMap
 				originLat={Number(data.originLat)}
 				originLng={Number(data.originLng)}
@@ -66,7 +66,7 @@
 			/>
 		</div>
 	{/if}
-	<div>
+	<div class="max-w-48">
 		<div class="my-1 mt-4 flex flex-col">
 			<h3 class="font-extrabold">Load Date:</h3>
 			<p>
