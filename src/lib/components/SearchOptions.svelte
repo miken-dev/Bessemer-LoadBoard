@@ -1,10 +1,10 @@
 <script lang="ts">
-	import NewSearch from "./NewSearch.svelte";
-	import SavedSearches from "./SavedSearches.svelte";
-	import type { savedSearchesTypes } from '$lib/types'
-	import PocketBase from 'pocketbase'
-	import { onMount } from "svelte";
-
+	import NewSearch from './NewSearch.svelte';
+	import SavedSearches from './SavedSearches.svelte';
+	import type { savedSearchesTypes } from '$lib/types';
+	import PocketBase from 'pocketbase';
+	import { onMount } from 'svelte';
+	import ContactInfoPreferencesModal from './ContactInfoPreferencesModal.svelte';
 	let {
 		originMilesFilter = $bindable(),
 		originStateFilter = $bindable(),
@@ -16,7 +16,7 @@
 		fromDateRange = $bindable(),
 		toDateRange = $bindable(),
 		saveSearchDialogIsShowing = $bindable(),
-		manageSavedSearchIsShowing = $bindable(),
+		manageSavedSearchIsShowing,
 		userId
 	}: {
 		originMilesFilter: number | undefined;
@@ -31,8 +31,17 @@
 		saveSearchDialogIsShowing: boolean;
 		manageSavedSearchIsShowing: boolean;
 		userId: string | null;
+		filtersActive: boolean;
 	} = $props();
+	let contactInfoPreferencesModal = $state(false);
 
+	let filtersActive = $derived.by(() => {
+		if (originCityFilter || destCityFilter || trailerTypesFilter || fromDateRange || toDateRange) {
+			return true;
+		} else {
+			return false;
+		}
+	});
 
 	let savedSearches: [savedSearchesTypes] | [] = $state([]);
 
@@ -67,8 +76,7 @@
 </script>
 
 <div>
-
-	<div class="flex flex-col md:flex-row">
+	<div class="flex max-w-full flex-col md:flex-row">
 		<NewSearch
 			bind:originMilesFilter
 			bind:originStateFilter
@@ -80,24 +88,23 @@
 			bind:fromDateRange
 			bind:toDateRange
 			bind:saveSearchDialogIsShowing
+			bind:contactInfoPreferencesModal
 			{userId}
 		/>
-		{#key manageSavedSearchIsShowing}
-			<SavedSearches
-				bind:originMilesFilter
-				bind:originStateFilter
-				bind:originCityFilter
-				bind:destMilesFilter
-				bind:destCityFilter
-				bind:destStateFilter
-				bind:trailerTypesFilter
-				bind:fromDateRange
-				bind:toDateRange
-				bind:manageSavedSearchIsShowing
-				bind:savedSearches
-				{userId}
-			/>
-		{/key}
+		<SavedSearches
+			bind:originMilesFilter
+			bind:originStateFilter
+			bind:originCityFilter
+			bind:destMilesFilter
+			bind:destCityFilter
+			bind:destStateFilter
+			bind:trailerTypesFilter
+			bind:fromDateRange
+			bind:toDateRange
+			bind:manageSavedSearchIsShowing
+			bind:savedSearches
+			bind:contactInfoPreferencesModal
+			{userId}
+		/>
 	</div>
-
-	</div>
+</div>
