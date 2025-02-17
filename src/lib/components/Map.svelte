@@ -4,14 +4,14 @@
 	import type { TableDataTypes } from '$lib/types';
 
 	let {
-		multipleLoads = $bindable(), 
+		multipleLoads = $bindable(),
 		tableData,
 		selectedCity = $bindable(),
 		selectedRow = $bindable(),
 		detailsHidden = $bindable(),
 		tableClicked = $bindable()
 	}: {
-		multipleLoads: boolean
+		multipleLoads: boolean;
 		tableData: TableDataTypes[];
 		selectedCity: string | null;
 		selectedRow: number | null;
@@ -23,8 +23,7 @@
 		if (id) {
 			selectedRow = id;
 		}
-		multipleLoads = multiLoads,
-		selectedCity = city;
+		(multipleLoads = multiLoads), (selectedCity = city);
 		console.log(city);
 		console.log(selectedCity);
 		console.log(city === selectedCity);
@@ -53,15 +52,23 @@
 						onclick={() => toggle(true, row.originCityName)}
 						latLng={[row.originLat, row.originLng]}
 						options={{
+							closeButton: false,
 							autoClose: false,
 							closeOnEscapeKey: false,
-							closeOnClick: false
+							closeOnClick: false,
+							maxWidth: 5
 						}}
 					>
-						<div class="text-2xl font-bold text-center">{row.areaLoadCount}</div>
+						<div class="text-lg text-center font-bold">{row.areaLoadCount} </div>
 					</Popup>
 				{/if}
 			{/each}
 		</Map>
 	</div>
 {/if}
+
+<style>
+	.leaflet-popup-content-wrapper {
+		box-shadow: none;
+	}
+</style>
