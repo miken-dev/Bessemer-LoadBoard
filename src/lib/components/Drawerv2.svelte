@@ -94,19 +94,26 @@
 					{/if}
 				{/each}
 			{:else}
-				<p class="text-center text-2xl">
-					Multiple loads available in <strong>{selectedCity}</strong>
-				</p>
+				<div class="w-full">
+					<p class="text-center text-3xl">
+						Multiple loads available near <strong>{selectedCity}</strong>
+					</p>
+					<div
+						class="my-12 h-2 border-t-0 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25 dark:via-neutral-400"
+					></div>
+				</div>
 				<br />
-				<DrawerCarousel>
-					{#each tableData as data}
-						{#if data.originCityName === selectedCity}
-							<div class="w-dvw">
-								<DrawerDetails {data} horizontal={true} />
-							</div>
-						{/if}
-					{/each}
-				</DrawerCarousel>
+				<div class="w-full">
+					<DrawerCarousel>
+						{#each tableData as data}
+							{#if data.originCityName === selectedCity}
+								<div class="w-dvw">
+									<DrawerDetails {data} horizontal={true} />
+								</div>
+							{/if}
+						{/each}
+					</DrawerCarousel>
+				</div>
 			{/if}
 		</div>
 	</Drawer>
