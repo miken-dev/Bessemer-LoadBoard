@@ -15,7 +15,7 @@
 		trailerTypesFilter = $bindable(),
 		fromDateRange = $bindable(),
 		toDateRange = $bindable(),
-		saveSearchDialogIsShowing,
+		saveSearchDialogIsShowing = $bindable(),
 		manageSavedSearchIsShowing = $bindable(),
 		userId
 	}: {
