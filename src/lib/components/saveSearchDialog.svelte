@@ -15,10 +15,10 @@
 		destStateFilter = $bindable(),
 		trailerTypesFilter = $bindable(),
 		fromDateRange = $bindable(),
-		toDateRange = $bindable(),
+		toDateRange = $bindable()
 	}: {
 		saveSearchDialogIsShowing: boolean;
-		savedSearches: [savedSearchesTypes] | []
+		savedSearches: [savedSearchesTypes] | [];
 		userId: string | null;
 		originMilesFilter: number | undefined;
 		originStateFilter: string | undefined;
@@ -51,16 +51,21 @@
 		return result;
 	}
 
+	async function checkIfUserExistsPB(userId: string | null) {
+		await PB.collection('driver').create({
+			id: `${userId}`
+		});
+	}
 	onMount(async () => {
 		userInfo = await getUserInfo();
-		console.log(`${userInfo}`)
+		console.log(`${userInfo}`);
 	});
 
 	async function updateSavedSeachList() {
 		const records = await PB.collection('Saved_Searches').getFullList({
 			filter: `userID = "${userId}"`
 		});
-		const results: [savedSearchesTypes]   = records.map((record) => {
+		const results: [savedSearchesTypes] = records.map((record) => {
 			return {
 				id: record.id,
 				name: record.name,
@@ -78,25 +83,28 @@
 			};
 		});
 
-		return results
+		return results;
 	}
 
 	async function saveSearch(
-			nameSearch: string | undefined,
-			originMilesSearch: number | undefined,
-			originStateSearch: string | undefined,
-			originCitySearch: string | undefined,
-			destMilesSearch: number | undefined,
-			destStateSearch: string | undefined,
-			destCitySearch: string | undefined,
-			pickupDateStartSearch: Date | undefined,
-			pickupDateEndSearch: Date | undefined,
-			trailerTypeSearch: string | undefined,
-			emailNotificationSearch: boolean,
-			textNotificationSearch: boolean,
-			userIdSearch: string | null 
+		nameSearch: string | undefined,
+		originMilesSearch: number | undefined,
+		originStateSearch: string | undefined,
+		originCitySearch: string | undefined,
+		destMilesSearch: number | undefined,
+		destStateSearch: string | undefined,
+		destCitySearch: string | undefined,
+		pickupDateStartSearch: Date | undefined,
+		pickupDateEndSearch: Date | undefined,
+		trailerTypeSearch: string | undefined,
+		emailNotificationSearch: boolean,
+		textNotificationSearch: boolean,
+		userIdSearch: string | null
 	) {
-		console.log(userIdSearch)
+		console.log(userIdSearch);
+		try {
+			await checkIfUserExistsPB(userId);
+		} catch {}
 		const search = await PB.collection('Saved_Searches').create({
 			name: nameSearch,
 			originMiles: originMilesSearch,
@@ -110,9 +118,9 @@
 			trailerType: trailerTypeSearch,
 			emailNotification: emailNotificationSearch,
 			textNotification: textNotificationSearch,
-			userID: userIdSearch 
+			userID: userIdSearch
 		});
-		savedSearches = await updateSavedSeachList()
+		savedSearches = await updateSavedSeachList();
 		return search;
 	}
 </script>
@@ -139,8 +147,20 @@
 		color="blue"
 		onclick={async () => {
 			await saveSearch(
-				name, originMilesFilter, originStateFilter, originCityFilter, destMilesFilter, destStateFilter, destCityFilter, fromDateRange, toDateRange, trailerTypesFilter, emailNotification, textNotification, userId
-			)	
+				name,
+				originMilesFilter,
+				originStateFilter,
+				originCityFilter,
+				destMilesFilter,
+				destStateFilter,
+				destCityFilter,
+				fromDateRange,
+				toDateRange,
+				trailerTypesFilter,
+				emailNotification,
+				textNotification,
+				userId
+			);
 		}}>Save</Button
 	>
 	<Button size="md" color="alternative">Cancel</Button>
