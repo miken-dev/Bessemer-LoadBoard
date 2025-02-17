@@ -21,7 +21,7 @@
 	};
 
 	let devLogin = () => {
-		document.cookie = 'dds_user_id=5244833';
+		document.cookie = 'dds_user_id=1234567';
 		invalidateAll;
 		location.reload();
 	};
