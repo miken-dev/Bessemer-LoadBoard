@@ -4,6 +4,7 @@
 	import { Button } from 'flowbite-svelte';
 	import { ChevronDownOutline } from 'flowbite-svelte-icons';
 	import { onMount } from 'svelte';
+	import PocketBase from 'pocketbase'
 
 	// Component imports
 	import Header from '$lib/components/Header.svelte';
@@ -44,8 +45,22 @@
 			return true
 		} else {
 			return false
-		}
+}
 	})
+	
+	const PB = new PocketBase('https://bessemer-loadboard.pockethost.io');
+	async function createUserPB(userId: string | undefined) {
+		const userCheck = await PB.collection('driver').getOne(String(userId))
+		if (userCheck) {
+			console.log("User exists")
+			return
+		} else {
+			console.log("User does not exist")
+			const newUser = await PB.collection('driver').create({
+				id: `"${userId}"`
+			})
+		}
+	}	
 	// Cookie set up
 	function getUserId(): string | null {
 		const cookie = document.cookie.split('; ').find((row) => row.startsWith('dds_user_id='));
@@ -60,6 +75,7 @@
 			userId = initialId; // Direct assignment, no .value needed
 			loggedIn = true;
 			filter = '';
+			createUserPB(userId)
 		}
 
 		const checkCookie = setInterval(() => {
@@ -76,7 +92,7 @@
 
 		return () => clearInterval(checkCookie);
 	});
-
+	
 	//Helper functions
 	function toRadians(degrees: number): number {
 		return (degrees * Math.PI) / 180;
