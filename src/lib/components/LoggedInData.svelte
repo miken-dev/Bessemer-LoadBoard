@@ -7,6 +7,9 @@
 	import type { TableDataTypes } from '$lib/types';
 	import LoadTableRow from './LoadTableRow.svelte';
 	import { onMount, onDestroy } from 'svelte';
+	import { filterTableData } from '$lib/filterFunction';
+	import locations from '$lib/assets/locations.json';
+	import LoadTableSkeleton from './LoadTableSkeleton.svelte';
 
 	let selectedRow = $state(0);
 	let multipleLoads = $state(false);
@@ -15,7 +18,7 @@
 	let tableClicked = $state(false);
 	let tableIsShowing = $state(true);
 	let mapIsShowing = $state(true);
-	let tableData: [TableDataTypes] | [] = $state([]);
+	let tableData: TableDataTypes[] = $state([]);
 
 	const PB = new PocketBase('https://bessemer-loadboard.pockethost.io');
 	async function getRecords() {
@@ -87,6 +90,61 @@
 			return 'w-screen';
 		}
 	};
+
+	//Filters
+
+	let {
+		originMilesFilter,
+		originStateFilter,
+		originCityFilter,
+		destMilesFilter,
+		destCityFilter,
+		destStateFilter,
+		trailerTypesFilter,
+		fromDateRange,
+		toDateRange,
+		filtersActive
+	}: {
+		originMilesFilter: number | undefined;
+		originStateFilter: string | undefined;
+		originCityFilter: string | undefined;
+		destMilesFilter: number | undefined;
+		destCityFilter: string | undefined;
+		destStateFilter: string | undefined;
+		trailerTypesFilter: string | undefined;
+		fromDateRange: Date | undefined;
+		toDateRange: Date | undefined;
+		filtersActive: boolean;
+	} = $props();
+
+	let filterValues = $state({
+		originMilesFilter,
+		originStateFilter,
+		originCityFilter,
+		destMilesFilter,
+		destCityFilter,
+		destStateFilter,
+		trailerTypesFilter,
+		fromDateRange,
+		toDateRange
+	});
+	$effect(() => {
+		filterValues = {
+			originMilesFilter,
+			originStateFilter,
+			originCityFilter,
+			destMilesFilter,
+			destCityFilter,
+			destStateFilter,
+			trailerTypesFilter,
+			fromDateRange,
+			toDateRange
+		};
+	});
+	let filteredData = $derived.by((): TableDataTypes[] => {
+		console.log('Filters changed:', $state.snapshot(filterValues));
+		return filterTableData(tableData, filterValues, locations);
+	});
 </script>
 
 <div>
@@ -96,16 +154,30 @@
 		{#if tableIsShowing}
 			<div class="min-h-screen {tableWidth} p-4 dark:bg-gray-800 dark:text-gray-100 md:p-8">
 				<div class="mx-auto max-w-[95rem]">
-					<LoadTablev2 {tableData} bind:selectedRow bind:detailsHidden bind:tableClicked />
+					{#if filteredData.length !== 0 && tableData.length !== 0}
+						<LoadTablev2
+							tableData={filteredData}
+							bind:selectedRow
+							bind:detailsHidden
+							bind:tableClicked
+						/>
+					{:else if filteredData.length === 0 && tableData.length === 0}
+						<LoadTableSkeleton />
+					{:else}
+						<div class="w-96 text-4xl flex flex-col justify-around">
+						<h3 class="text-center">No results available</h3>
+				</div>
+					{/if}
 				</div>
 			</div>
+			<!-- skeleton -->
 		{/if}
 
 		{#if mapIsShowing}
 			<div class="sticky top-0 w-11/12 md:{mapWidth} h-lvh md:h-[35rem] lg:h-[50rem]">
 				<Map
 					bind:multipleLoads
-					{tableData}
+					tableData={filteredData}
 					bind:selectedCity
 					bind:selectedRow
 					bind:detailsHidden
