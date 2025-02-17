@@ -127,7 +127,7 @@
 		</div>
 		<div class="my-1 mt-3 flex flex-col">
 			<h3 class="font-extrabold">Phone Number:</h3>
-			<p>{data.terminalPhone}</p>
+			<a class="text-blue-500 underline" href="tel:+1{data.terminalPhone}">{data.terminalPhone}</a>
 		</div>
 		<div class="my-1 mt-3 flex flex-col">
 			<h3 class="font-extrabold">Revenue:</h3>
