@@ -123,6 +123,7 @@
 		toDateRange = $bindable(),
 		saveSearchDialogIsShowing = $bindable(),
 		savedSearches = $bindable(),
+		contactInfoPreferencesModal = $bindable(),
 		userId
 	}: {
 		originLatFilter: number | undefined;
@@ -139,7 +140,8 @@
 		fromDateRange: Date | undefined;
 		toDateRange: Date | undefined;
 		saveSearchDialogIsShowing: boolean;
-		savedSearches: [savedSearchesTypes] | []
+		savedSearches: [savedSearchesTypes] | [];
+		contactInfoPreferencesModal: boolean;
 		userId: string | null;
 	} = $props();
 
@@ -177,7 +179,7 @@
 	}
 </script>
 
-<div class="m-5 flex w-full flex-col gap-5 rounded bg-slate-200 p-5 dark:bg-gray-900">
+<div class="mt-5 flex w-full flex-col gap-5 rounded bg-slate-200 p-5 dark:bg-gray-900 md:m-5">
 	<h2 class="text-2xl font-extrabold">New Search</h2>
 	<!-- TODO: Add divider -->
 	<div class="flex flex-col items-center justify-start gap-3 md:flex-row">
