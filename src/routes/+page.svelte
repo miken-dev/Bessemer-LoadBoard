@@ -41,16 +41,13 @@
 	let filter: string = $state('isPublic = "true"');
 
 	let filtersActive = $derived.by(() => {
-		if(originCityFilter || destCityFilter || trailerTypesFilter || fromDateRange || toDateRange) {
-			return true
+		if (originCityFilter || destCityFilter || trailerTypesFilter || fromDateRange || toDateRange) {
+			return true;
 		} else {
-			return false
-}
-	})
-	
-		} else {
+			return false;
 		}
-	}	
+	});
+
 	// Cookie set up
 	function getUserId(): string | null {
 		const cookie = document.cookie.split('; ').find((row) => row.startsWith('dds_user_id='));
