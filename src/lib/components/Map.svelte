@@ -37,7 +37,9 @@
 		<Map
 			options={{
 				center: [44.67498, -103.856037],
-				zoom: 4.4
+				zoom: 4.4,
+				minZoom: 3.2
+
 			}}
 		>
 			<TileLayer url={'https://tile.openstreetmap.org/{z}/{x}/{y}.png'} />
