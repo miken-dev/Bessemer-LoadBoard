@@ -65,6 +65,7 @@
 		});
 		return results;
 	}
+
 	onMount(async () => {
 		savedSearches = await getRecords()
 	})
