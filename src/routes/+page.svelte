@@ -4,7 +4,7 @@
 	import { Button } from 'flowbite-svelte';
 	import { ChevronDownOutline } from 'flowbite-svelte-icons';
 	import { onMount } from 'svelte';
-	import PocketBase from 'pocketbase'
+	import PocketBase from 'pocketbase';
 
 	// Component imports
 	import Header from '$lib/components/Header.svelte';
@@ -48,12 +48,6 @@
 }
 	})
 	
-	const PB = new PocketBase('https://bessemer-loadboard.pockethost.io');
-	async function createUserPB(userId: string | undefined) {
-		const userCheck = await PB.collection('driver').getOne(String(userId))
-		if (userCheck) {
-			console.log("User exists")
-			return
 		} else {
 		}
 	}	
