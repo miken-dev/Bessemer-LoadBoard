@@ -246,7 +246,7 @@
 		{/if}
 
 		{#if mapIsShowing}
-			<div class="sticky top-0 w-11/12 md:{mapWidth} h-lvh md:h-[35rem] lg:h-[50rem]">
+			<div class="sticky mt-10 top-0 w-11/12 md:{mapWidth} h-lvh md:h-[35rem] lg:h-[50rem]">
 				<Map
 					bind:multipleLoads
 					tableData={filteredData}
