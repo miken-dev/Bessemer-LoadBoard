@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Map, TileLayer, Tooltip } from 'sveaflet';
+	import { Map, TileLayer, Popup } from 'sveaflet';
  	
 	let {
 		originLat,
@@ -43,17 +43,24 @@
 		}}
 	>
 		<TileLayer url={'https://tile.openstreetmap.org/{z}/{x}/{y}.png'} />
-		<Tooltip
+		<Popup
 			latLng={[originLat, originLng]}
 			options={{
 				content: `<strong>Origin:</strong><br> ${originCity}, ${originState}`,
-				permanent: false
+				closeButton: false,
+				autoClose: false,
+				closeOnEscapeKey: false,
+				closeOnClick: false,
 			}}
 		/>
-		<Tooltip
+		<Popup
 			latLng={[destLat, destLng]}
 			options={{
-				content: `<strong>Destination:</strong><br> ${destCity}, ${destState}`
+				content: `<strong>Destination:</strong><br> ${destCity}, ${destState}`,
+				closeButton: false,
+				autoClose: false,
+				closeOnEscapeKey: false,
+				closeOnClick: false,
 			}}
 		/>
 	</Map>
