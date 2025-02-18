@@ -18,6 +18,7 @@
 	import locations from '$lib/assets/locations.json';
 	import SaveSearchDialog from './saveSearchDialog.svelte';
 	import type { savedSearchesTypes } from '$lib/types';
+	import ContactInfoPreferencesModal from './ContactInfoPreferencesModal.svelte';
 	let miles = [5, 10, 25, 50, 100, 150, 200, 250, 300, 400, 500];
 
 	const states = [
@@ -177,6 +178,16 @@
 			return (trailerTypesFilter += `${trailerType}, `);
 		}
 	}
+
+	//state
+	let email = $state(false);
+	let text = $state(false);
+	let originMilesShowing = $state(false);
+	let originStateShowing = $state(false);
+	let originCityShowing = $state(false);
+	let destMilesShowing = $state(false);
+	let destStateShowing = $state(false);
+	let destCityShowing = $state(false);
 </script>
 
 <div class="mt-5 flex w-full flex-col gap-5 rounded bg-slate-200 p-5 dark:bg-gray-900 md:m-5">
@@ -191,9 +202,14 @@
 					class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
 				/></Button
 			>
-			<Dropdown class="max-h-48 w-48 overflow-y-auto py-1">
+			<Dropdown bind:open={originMilesShowing} class="max-h-48 w-48 overflow-y-auto py-1">
 				{#each miles as mile}
-					<DropdownItem on:click={() => (originMilesFilter = mile)}>{mile}</DropdownItem>
+					<DropdownItem
+						on:click={() => {
+							originMilesFilter = mile;
+							originMilesShowing = false;
+						}}>{mile}</DropdownItem
+					>
 				{/each}
 			</Dropdown>
 			<p>of</p>
@@ -202,9 +218,14 @@
 					class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
 				/></Button
 			>
-			<Dropdown class="max-h-48 w-48 overflow-y-auto py-1">
+			<Dropdown bind:open={originStateShowing} class="max-h-48 w-48 overflow-y-auto py-1">
 				{#each states as state}
-					<DropdownItem on:click={() => (originStateFilter = state)}>{state}</DropdownItem>
+					<DropdownItem
+						on:click={() => {
+							originStateFilter = state;
+							originStateShowing = false;
+						}}>{state}</DropdownItem
+					>
 				{/each}
 			</Dropdown>
 			<Button size="xs" color="light"
@@ -212,12 +233,14 @@
 					class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
 				/></Button
 			>
-			<Dropdown class="max-h-48 w-48 overflow-y-auto py-1">
+			<Dropdown bind:open={originCityShowing} class="max-h-48 w-48 overflow-y-auto py-1">
 				{#each locations as location}
 					{#if location.state === originStateFilter}
 						<DropdownItem
-							on:click={() => setOriginAddress(location.lat, location.lng, location.city)}
-							>{location.city}</DropdownItem
+							on:click={() => {
+								setOriginAddress(location.lat, location.lng, location.city);
+								originCityShowing = false
+							}}>{location.city}</DropdownItem
 						>
 					{/if}
 				{/each}
@@ -233,9 +256,12 @@
 					class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
 				/></Button
 			>
-			<Dropdown class="max-h-48 w-48 overflow-y-auto py-1">
+			<Dropdown bind:open={destMilesShowing} class="max-h-48 w-48 overflow-y-auto py-1">
 				{#each miles as mile}
-					<DropdownItem on:click={() => (destMilesFilter = mile)}>{mile}</DropdownItem>
+					<DropdownItem on:click={() => {
+						(destMilesFilter = mile)
+						destMilesShowing = false
+					}}>{mile}</DropdownItem>
 				{/each}
 			</Dropdown>
 			<p>of</p>
@@ -244,9 +270,12 @@
 					class="text-gratext-gratext-gratext-gratext-gratext-gratext-gratext-gray-800 ms-2 h-6 w-6 dark:text-white"
 				/></Button
 			>
-			<Dropdown class="max-h-48 w-48 overflow-y-auto py-1">
+			<Dropdown bind:open={destStateShowing} class="max-h-48 w-48 overflow-y-auto py-1">
 				{#each states as state}
-					<DropdownItem on:click={() => (destStateFilter = state)}>{state}</DropdownItem>
+					<DropdownItem on:click={() => {
+						(destStateFilter = state)
+						destStateShowing = false
+					}}>{state}</DropdownItem>
 				{/each}
 			</Dropdown>
 			<Button size="xs" color="light"
@@ -254,12 +283,15 @@
 					class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
 				/></Button
 			>
-			<Dropdown class="max-h-48 w-48 overflow-y-auto py-1">
+			<Dropdown bind:open={destCityShowing} class="max-h-48 w-48 overflow-y-auto py-1">
 				{#each locations as location}
 					{#if location.state === destStateFilter}
 						<DropdownItem
-							on:click={() => setDestinationAddress(location.lat, location.lng, location.city)}
-							>{location.city}</DropdownItem
+							on:click={() => {
+							setDestinationAddress(location.lat, location.lng, location.city)
+							destCityShowing = false
+							}}	
+						>{location.city}</DropdownItem
 						>
 					{/if}
 				{/each}
@@ -328,3 +360,5 @@
 	{toDateRange}
 	{userId}
 />
+
+<ContactInfoPreferencesModal bind:contactInfoPreferencesModal {email} {text} {userId} />
