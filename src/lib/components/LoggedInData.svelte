@@ -5,12 +5,15 @@
 	import Map from './Map.svelte';
 	import PocketBase from 'pocketbase';
 	import type { TableDataTypes } from '$lib/types';
-	import LoadTableRow from './LoadTableRow.svelte';
 	import { onMount, onDestroy } from 'svelte';
-	import { filterTableData } from '$lib/filterFunction';
+	import { filterAndSortTableData } from '$lib/filterFunction';
+	import type { SortOptions } from '$lib/filterFunction';
 	import locations from '$lib/assets/locations.json';
 	import LoadTableSkeleton from './LoadTableSkeleton.svelte';
+	import { Dropdown, DropdownItem, Button } from 'flowbite-svelte';
+	import { ChevronUpOutline, ChevronDownOutline } from 'flowbite-svelte-icons';
 
+	//state
 	let selectedRow = $state(0);
 	let multipleLoads = $state(false);
 	let selectedCity = $state('');
@@ -18,6 +21,34 @@
 	let tableClicked = $state(false);
 	let tableIsShowing = $state(true);
 	let mapIsShowing = $state(true);
+	let sortDropdownOpen = $state(false);
+
+	//sorting
+	let currentSort = $state({
+		field: 'loadDate',
+		direction: 'desc'
+	} as SortOptions);
+
+	const sortOptions = [
+		{ label: 'Origin State', value: 'originState' },
+		{ label: 'Origin City', value: 'originCity' },
+		{ label: 'Destination State', value: 'destinationState' },
+		{ label: 'Destination City', value: 'destinationCity' },
+		{ label: 'Load Date (Oldest First)', value: 'loadDate-asc' },
+		{ label: 'Load Date (Newest First)', value: 'loadDate-desc' },
+		{ label: 'Revenue (High to Low)', value: 'revenue-desc' },
+		{ label: 'Revenue (Low to High)', value: 'revenue-asc' },
+		{ label: 'Terminal', value: 'terminal' }
+	];
+	function handleSort(value: string) {
+		const [field, direction] = value.split('-');
+		currentSort = {
+			field: field as SortOptions['field'],
+			direction: (direction || 'asc') as 'asc' | 'desc'
+		};
+	}
+
+	//tableData
 	let tableData: TableDataTypes[] = $state([]);
 
 	const PB = new PocketBase('https://bessemer-loadboard.pockethost.io');
@@ -141,9 +172,25 @@
 			toDateRange
 		};
 	});
+
+	function updateSort(field: SortOptions['field']) {
+		if (currentSort.field === field) {
+			// Toggle direction if clicking same field
+			currentSort = {
+				field,
+				direction: currentSort.direction === 'asc' ? 'desc' : 'asc'
+			};
+		} else {
+			// Set new field with default direction
+			currentSort = {
+				field,
+				direction: 'asc'
+			};
+		}
+	}
+
 	let filteredData = $derived.by((): TableDataTypes[] => {
-		console.log('Filters changed:', $state.snapshot(filterValues));
-		return filterTableData(tableData, filterValues, locations);
+		return filterAndSortTableData(tableData, filterValues, locations, currentSort);
 	});
 </script>
 
@@ -152,22 +199,47 @@
 
 	<div class="flex flex-col items-start justify-center md:flex-row">
 		{#if tableIsShowing}
-			<div class="min-h-screen {tableWidth} p-4 dark:bg-gray-800 dark:text-gray-100 md:p-8">
-				<div class="mx-auto max-w-[95rem]">
-					{#if filteredData.length !== 0 && tableData.length !== 0}
-						<LoadTablev2
-							tableData={filteredData}
-							bind:selectedRow
-							bind:detailsHidden
-							bind:tableClicked
-						/>
-					{:else if filteredData.length === 0 && tableData.length === 0}
-						<LoadTableSkeleton />
-					{:else}
-						<div class="w-96 text-4xl flex flex-col justify-around">
-						<h3 class="text-center">No results available</h3>
+			<div class="flex flex-col">
+				<div class="p-0 md:pl-8">
+					<Button color="blue" class="w-80"
+						>Sort by: {sortOptions.find((opt) => opt.value.startsWith(currentSort.field))?.label ||
+							'Select...'}
+						{#if sortDropdownOpen}
+							<ChevronUpOutline />
+						{:else}
+							<ChevronDownOutline />
+						{/if}
+					</Button>
+					<Dropdown bind:open={sortDropdownOpen}>
+						{#each sortOptions as option}
+							<DropdownItem
+								on:click={() => {
+									handleSort(option.value);
+									sortDropdownOpen = false;
+								}}
+							>
+								{option.label}
+							</DropdownItem>
+						{/each}
+					</Dropdown>
 				</div>
-					{/if}
+				<div class="min-h-screen {tableWidth} p-4 dark:bg-gray-800 dark:text-gray-100 md:p-8">
+					<div class="mx-auto max-w-[95rem]">
+						{#if filteredData.length !== 0 && tableData.length !== 0}
+							<LoadTablev2
+								tableData={filteredData}
+								bind:selectedRow
+								bind:detailsHidden
+								bind:tableClicked
+							/>
+						{:else if filteredData.length === 0 && tableData.length === 0}
+							<LoadTableSkeleton />
+						{:else}
+							<div class="flex w-96 flex-col justify-around text-4xl">
+								<h3 class="text-center">No results available</h3>
+							</div>
+						{/if}
+					</div>
 				</div>
 			</div>
 			<!-- skeleton -->
