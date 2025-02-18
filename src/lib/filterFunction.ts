@@ -1,18 +1,6 @@
 import type { Location } from './types';
 import type { TableDataTypes } from './types';
 
-interface FilterParams {
-    originMilesFilter?: number;
-    originStateFilter?: string;
-    originCityFilter?: string;
-    destMilesFilter?: number;
-    destCityFilter?: string;
-    destStateFilter?: string;
-    trailerTypesFilter?: string;
-    fromDateRange?: Date;
-    toDateRange?: Date;
-}
-
 // Haversine formula to calculate distance between two points
 function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
     const R = 3959; // Earth's radius in miles
@@ -26,12 +14,30 @@ function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: numbe
     return R * c;
 }
 
-export function filterTableData(
+interface FilterParams {
+	originMilesFilter?: number;
+	originStateFilter?: string;
+	originCityFilter?: string;
+	destMilesFilter?: number;
+	destCityFilter?: string;
+	destStateFilter?: string;
+	trailerTypesFilter?: string;
+	fromDateRange?: Date;
+	toDateRange?: Date;
+}
+export interface SortOptions {
+    field: 'originState' | 'originCity' | 'destinationState' | 'destinationCity' | 'loadDate' | 'revenue' | 'terminal';
+    direction: 'asc' | 'desc';
+}
+
+export function filterAndSortTableData(
     tableData: TableDataTypes[],
     filters: FilterParams,
-    locations: Location[]
+    locations: Location[],
+    sortOption?: SortOptions
 ): TableDataTypes[] {
-    return tableData.filter(row => {
+    // First apply filters
+    let filteredData = tableData.filter(row => {
         // Date range filter
         if (filters.fromDateRange || filters.toDateRange) {
             const loadDate = new Date(row.loadDate);
@@ -47,7 +53,6 @@ export function filterTableData(
 
         // Trailer types filter
         if (filters.trailerTypesFilter) {
-			
             const trailerTypes = filters.trailerTypesFilter.split(', ');
             if (!trailerTypes.some(type => row.trailerTypes.includes(type))) {
                 return false;
@@ -102,5 +107,53 @@ export function filterTableData(
 
         return true;
     });
-}
 
+    // Then apply sorting if a sort option is provided
+    if (sortOption) {
+        filteredData.sort((a, b) => {
+            switch (sortOption.field) {
+                case 'originState':
+                    return sortOption.direction === 'asc' 
+                        ? a.originStateName.localeCompare(b.originStateName)
+                        : b.originStateName.localeCompare(a.originStateName);
+                
+                case 'originCity':
+                    return sortOption.direction === 'asc'
+                        ? a.originCityName.localeCompare(b.originCityName)
+                        : b.originCityName.localeCompare(a.originCityName);
+                
+                case 'destinationState':
+                    return sortOption.direction === 'asc'
+                        ? a.destinationStateName.localeCompare(b.destinationStateName)
+                        : b.destinationStateName.localeCompare(a.destinationStateName);
+                
+                case 'destinationCity':
+                    return sortOption.direction === 'asc'
+                        ? a.destinationCityName.localeCompare(b.destinationCityName)
+                        : b.destinationCityName.localeCompare(a.destinationCityName);
+                
+                case 'loadDate':
+                    const dateA = new Date(a.loadDate);
+                    const dateB = new Date(b.loadDate);
+                    return sortOption.direction === 'asc'
+                        ? dateA.getTime() - dateB.getTime()
+                        : dateB.getTime() - dateA.getTime();
+                
+                case 'revenue':
+                    return sortOption.direction === 'asc'
+                        ? a.revenue - b.revenue
+                        : b.revenue - a.revenue;
+                
+                case 'terminal':
+                    return sortOption.direction === 'asc'
+                        ? a.terminalName.localeCompare(b.terminalName)
+                        : b.terminalName.localeCompare(a.terminalName);
+                
+                default:
+                    return 0;
+            }
+        });
+    }
+
+    return filteredData;
+}
