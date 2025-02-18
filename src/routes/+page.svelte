@@ -126,17 +126,17 @@
 
 	<!-- Table and Map -->
 	{#if loggedIn}
-		<LoggedInData 
-		{originMilesFilter}
-		{originStateFilter}
-		{originCityFilter}
-		{destMilesFilter}
-		{destCityFilter}
-		{destStateFilter}
-		{trailerTypesFilter}
-		{fromDateRange}
-		{toDateRange}
-			/>
+		<LoggedInData
+			{originMilesFilter}
+			{originStateFilter}
+			{originCityFilter}
+			{destMilesFilter}
+			{destCityFilter}
+			{destStateFilter}
+			{trailerTypesFilter}
+			{fromDateRange}
+			{toDateRange}
+		/>
 	{:else}
 		<PublicData />
 	{/if}
