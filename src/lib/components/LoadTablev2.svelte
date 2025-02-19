@@ -31,7 +31,7 @@
 		'September',
 		'October',
 		'November',
-		'december'
+		'December'
 	];
 	const day = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 	const dateOrdinals = (d: number) => {
