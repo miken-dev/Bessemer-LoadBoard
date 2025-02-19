@@ -1,6 +1,6 @@
 export type TableDataTypes = {
 	loadID: number;
-	loadDate: string;
+	loadDate: Date;
 	deliveryDate: string;
 	originAddress: string;
 	originZipCodeID: number;
@@ -70,4 +70,6 @@ export type savedSearchesTypes = {
 	trailerType: string;
 	emailNotification: boolean;
 	textNotification: boolean;
+	loadsNotified: string;
+	userID: string;
 };
