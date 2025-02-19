@@ -73,3 +73,10 @@ export type savedSearchesTypes = {
 	loadsNotified: string;
 	userID: string;
 };
+
+export type Notifications = {
+	userID: string,
+	textNotification: boolean,
+	emailNotification: boolean,
+	message: string
+}
