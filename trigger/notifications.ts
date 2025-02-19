@@ -6,7 +6,10 @@ import locations from '../src/lib/assets/locations.json';
 export const bessemerLoadboardTask = schedules.task({
 	id: 'bessemer-loadboard-tasks',
 	// Every hour
-	cron: '0 * * * *',
+	cron: {
+		pattern: '0 8-18 * * *',
+		timezone: "America/New_York"
+	},
 	// Set an optional maxDuration to prevent tasks from running indefinitely
 	maxDuration: 30, // Stop executing after 300 secs (5 mins) of compute
 	run: async (payload, { ctx }) => {
@@ -53,6 +56,13 @@ export const bessemerLoadboardTask = schedules.task({
 			});
 			return results;
 		}
+		async function markLoadAsNotified(userID: string, loadID: string) {
+			const oldRecord = await PB.collection('driver').getOne(`${userID}`);
+			const loadsNotified = oldRecord.loadsNotified || '';
+			const newRecord = await PB.collection('driver').update(`${userID}`, {
+				loadsNotified: `${loadsNotified}|${loadID}`,
+			});
+		}
 		async function getSavedSearches() {
 			let records = await PB.collection('Saved_Searches').getFullList();
 			const results: [savedSearchesTypes] = records.map((record) => {
@@ -82,13 +92,38 @@ export const bessemerLoadboardTask = schedules.task({
 				return {
 					id: record.id,
 					phone: record.phone,
-					email: record.email
+					email: record.email,
+					loadsNotified: record.loadsNotified
+
 				};
 			});
 			return results;
 		}
-		async function sendEmail(emailAddress: string, message: string) { }
-		async function sendText(phoneNumber: string, message: string) { }
+		async function sendEmail(emailAddress: string, message: string) {
+			await fetch('https://bessemer-loadboard.pockethost.io/api/notificationsender/email', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					toAddress: emailAddress,
+					message: message
+				})
+			});
+		}
+		async function sendText(phoneNumber: string, message: string) { 
+			
+			await fetch('https://bessemer-loadboard.pockethost.io/api/notificationsender/text', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					toAddress: phoneNumber,
+					message: message
+				})
+			});
+		}
 		function getDistance(lat1: string, lon1: string, lat2: number, lon2: number) {
 			const R = 3958.8; // Radius of the Earth in miles
 			const toRad = (angle) => (Math.PI * angle) / 180;
@@ -143,22 +178,34 @@ export const bessemerLoadboardTask = schedules.task({
 		let activeLoads = await getActiveLoads();
 		let savedSearches = await getSavedSearches();
 		let users = await getUsers();
-		//Main loop
+
+		// Create a map to store notifications per user
+		const userNotifications = new Map();
+
+		// Main loop
 		for (const user of users) {
-			//let loadsToNotify: [Notifications]
 			for (const activeLoad of activeLoads) {
 				for (const savedSearch of savedSearches) {
+					if (savedSearch.userID !== user.id) continue; // Skip if not user's saved search
+					
 					let searchResults = {
 						withinRangeOrigin: false,
 						withinRangeDest: false,
 						range: 0,
 						withinDateRange: false,
 						trailerTypeMatch: false,
-						emailNotification: false,
-						textNotification: false,
-						hasBeenNotified: false,
-						userId: ''
+						emailNotification: savedSearch.emailNotification,
+						textNotification: savedSearch.textNotification,
+						hasBeenNotified: false
 					};
+
+					// Check if load has been notified at the start
+					const loadsNotifiedArray = (user.loadsNotified || '').split('|').filter(id => id !== '');
+					if (loadsNotifiedArray.includes(String(activeLoad.loadID))) {
+						searchResults.hasBeenNotified = true;
+						continue; // Skip this load if already notified
+					}
+
 					//WITHIN RANGE ORIGIN
 					if (
 						getDistance(
@@ -210,21 +257,8 @@ export const bessemerLoadboardTask = schedules.task({
 					} else {
 						searchResults.trailerTypeMatch = true
 					}
-					if (savedSearch.emailNotification) {
-						searchResults.emailNotification = true;
-					}
-					if (savedSearch.textNotification) {
-						searchResults.textNotification = true;
-					}
-					let loadsNotifiedArray = splitString(savedSearch.loadsNotified);
-					for (const notified in loadsNotifiedArray) {
-						if (notified === String(activeLoad.loadID)) {
-							searchResults.hasBeenNotified = true;
-						}
-					}
-					//		 console.log(
-					//				  `Final Check: searchName: ${savedSearch.name} userId: ${savedSearch.userID}, email: ${savedSearch.emailNotification}, text: ${savedSearch.textNotification} loadsNotified: ${savedSearch.loadsNotified}... ${savedSearch.originCity}, ${savedSearch.originState} ${searchResults.withinRange ? "is" : "is not"} within ${savedSearch.originMiles} of ${activeLoad.originCityName}, ${activeLoad.originStateName}... activeLoadTrailer: ${activeLoad.trailerTypes}, savedTrailer: ${savedSearch.trailerType} withinRange: ${searchResults.withinRange}, withinDateRange: ${searchResults.withinDateRange}, trailerTypeMatch: ${searchResults.trailerTypeMatch}, hasBeenNotified: ${searchResults.hasBeenNotified}`,
-					//					 );
+
+					// If all conditions match and hasn't been notified
 					if (
 						searchResults.withinRangeOrigin &&
 						searchResults.withinRangeDest &&
@@ -232,15 +266,80 @@ export const bessemerLoadboardTask = schedules.task({
 						searchResults.trailerTypeMatch &&
 						!searchResults.hasBeenNotified
 					) {
-						if (savedSearch.emailNotification) {
-							console.log(
-								`email sent: searchName: ${savedSearch.name} userId: ${savedSearch.userID}, email: ${savedSearch.emailNotification}, text: ${savedSearch.textNotification} loadsNotified: ${savedSearch.loadsNotified}... ${savedSearch.originCity}, ${savedSearch.originState} ${searchResults.withinRangeOrigin ? 'is' : 'is not'} within ${savedSearch.originMiles} of ${activeLoad.originCityName}, ${activeLoad.originStateName}... activeLoadTrailer: ${activeLoad.trailerTypes}, savedTrailer: ${savedSearch.trailerType}`
-							);
+						// Initialize user's notification collection if it doesn't exist
+						if (!userNotifications.has(user.id)) {
+							userNotifications.set(user.id, {
+								user,
+								loads: new Set(),
+								shouldEmail: false,
+								shouldText: false
+							});
 						}
-					} else {
-						console.log(` ❌❌❌❌❌ NOT ADDED: searchName: ${savedSearch.name} userId: ${savedSearch.userID},withinRangeOrigin ${searchResults.withinRangeOrigin}: result is ${searchResults.range} miles,withinRangeDest: ${searchResults.withinRangeDest}, withinDateRange: ${searchResults.withinDateRange}, trailerTypeMatch: ${searchResults.trailerTypeMatch} ,hasbeenNotified: ${searchResults}`)
-					}
 
+						const userNotif = userNotifications.get(user.id);
+						userNotif.loads.add(activeLoad);
+						userNotif.shouldEmail = userNotif.shouldEmail || searchResults.emailNotification;
+						userNotif.shouldText = userNotif.shouldText || searchResults.textNotification;
+					}
+				}
+			}
+		}
+
+		// Send consolidated notifications
+		for (const [userId, notification] of userNotifications) {
+			if (notification.loads.size === 0) continue;
+
+			const loadsArray = Array.from(notification.loads) as TableDataTypes[];
+			
+			type LoadAccumulator = {
+				[key: string]: { load: TableDataTypes; count: number };
+			};
+
+			const titleCase = (str: string) => 
+				str.toLowerCase().split(' ').map(word => 
+					word.charAt(0).toUpperCase() + word.slice(1)
+				).join(' ');
+
+			// Group identical loads
+			const groupedLoads = loadsArray.reduce<LoadAccumulator>((acc, load: TableDataTypes) => {
+				const key = `${titleCase(load.originCityName)}|${load.originStateName}|${titleCase(load.destinationCityName)}|${load.destinationStateName}`;
+				if (!acc[key]) {
+					acc[key] = { 
+						load: {
+							...load,
+							originCityName: titleCase(load.originCityName),
+							destinationCityName: titleCase(load.destinationCityName)
+						}, 
+						count: 0 
+					};
+				}
+				acc[key].count++;
+				return acc;
+			}, {});
+
+			const message = `New matching loads found:\n${Object.values(groupedLoads)
+				.map(({ load, count }) => 
+					count > 1 
+						? `- ${count} loads from ${titleCase(load.originCityName)}, ${load.originStateName} to ${titleCase(load.destinationCityName)}, ${load.destinationStateName}`
+						: `- 1 load from ${titleCase(load.originCityName)}, ${load.originStateName} to ${titleCase(load.destinationCityName)}, ${load.destinationStateName}`
+				)
+				.join('\n')}\n\nView your saved searches at test-loadboard.dds-express.com`.replace(/\n/g, '\n');
+
+			// If either notification type is sent, mark all loads as notified
+			if (notification.shouldEmail || notification.shouldText) {
+				// Mark each load as notified
+				for (const load of loadsArray) {
+					await markLoadAsNotified(userId, String(load.loadID));
+				}
+
+				if (notification.shouldEmail) {
+					console.log(`Sending email to ${notification.user.email}:\n${message}`);
+					await sendEmail(notification.user.email, message);
+				}
+
+				if (notification.shouldText) {
+					console.log(`Sending text to ${notification.user.phone}:\n${message}`);
+					await sendText(notification.user.phone, message);
 				}
 			}
 		}
