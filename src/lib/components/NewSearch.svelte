@@ -191,11 +191,23 @@
 </script>
 
 <div class="mt-5 flex w-full flex-col gap-5 rounded bg-slate-200 p-5 dark:bg-gray-900 md:m-5">
+
 	<h2 class="text-2xl font-extrabold">New Search</h2>
+
+
+	<!-- DATE RANGE -->
+	<div class="flex items-center justify-start gap-8">
+		<p class=" justify-self-start">Pick up Date/Range:</p>
+		<div class="w-1/2">
+			<Datepicker range bind:rangeFrom={fromDateRange} bind:rangeTo={toDateRange} color="blue" />
+		</div>
+	</div>
+	
+	<!-- ORIGIN -->
 	<!-- TODO: Add divider -->
 	<div class="flex flex-col items-center justify-start gap-3 md:flex-row">
-		<p class="flex-1 justify-self-start">Origin:</p>
-		<div class="flex gap-3">
+		<p class="justify-self-start">Origin:</p>
+		<div class="flex gap-3 items-center">
 			<p>Within</p>
 			<Button size="xs" color="light"
 				>{originMilesFilter} Miles<ChevronDownOutline
@@ -247,9 +259,11 @@
 			</Dropdown>
 		</div>
 	</div>
-	<div class="flex flex-col items-center justify-start gap-3 md:flex-row">
-		<p class="flex-1 justify-self-start">Destination:</p>
-		<div class="flex gap-3">
+
+	<!-- DESTINATION -->
+	<div class="flex flex-col items-center justify-start gap-8 md:flex-row">
+		<p class=" justify-self-start">Destination:</p>
+		<div class="flex gap-3 items-center">
 			<p>Within</p>
 			<Button size="xs" color="light"
 				>{destMilesFilter} Miles<ChevronDownOutline
@@ -299,13 +313,9 @@
 		</div>
 	</div>
 
-	<div class="flex items-center justify-between gap-3">
-		<p class=" justify-self-start">Pick up:</p>
-		<div class="w-2/3">
-			<Datepicker range bind:rangeFrom={fromDateRange} bind:rangeTo={toDateRange} color="blue" />
-		</div>
-	</div>
-	<div class="flex items-center justify-between gap-3">
+	
+	<!-- TRAILER TYPE -->
+	<div class="flex items-center justify-start gap-3">
 		<p class="justify-self-start">Trailer Type:</p>
 		<Button size="md" color="light"
 			>{trailerTypesFilter ? trailerTypesFilter : 'Pick a type'}<ChevronDownOutline
@@ -329,7 +339,8 @@
 		</Dropdown>
 	</div>
 
-	<ButtonGroup divClass="flex justify-end">
+	<!-- BUTTONS -->
+	<ButtonGroup divClass="flex justify-start">
 		<Button
 			color="blue"
 			onclick={() => {
