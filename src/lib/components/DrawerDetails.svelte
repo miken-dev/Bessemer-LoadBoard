@@ -41,6 +41,10 @@
 				return 'th';
 		}
 	};
+
+	function numberWithCommas(number: number) {
+		return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+	}
 </script>
 
 <!-- load info -->
@@ -104,7 +108,7 @@
 		</div>
 		<div class="my-1 mt-3 flex flex-col">
 			<h3 class="font-extrabold">Weight:</h3>
-			<p>{`${data.weightInPounds}lbs.`}</p>
+			<p>{`${numberWithCommas(data.weightInPounds)}lbs.`}</p>
 		</div>
 		<div class="my-1 mt-3 flex flex-col">
 			<h3 class="font-extrabold">Trailer Types:</h3>
@@ -131,7 +135,7 @@
 		</div>
 		<div class="my-1 mt-3 flex flex-col">
 			<h3 class="font-extrabold">Revenue:</h3>
-			<p>{`$${data.revenue}`}</p>
+			<p>{`$${numberWithCommas(data.revenue)}`}</p>
 		</div>
 		<div class="my-1 mt-3 flex flex-col">
 			<h3 class="font-extrabold">Miles:</h3>
@@ -139,13 +143,13 @@
 				{#if data.miles == 0 || data.miles === -1}
 					Not Available
 				{:else}
-					{data.miles}
+					{numberWithCommas(data.miles)}
 				{/if}
 			</p>
 		</div>
 		<div class="my-1 mt-3 flex flex-col">
 			<h3 class="font-extrabold">LTL:</h3>
-			<p>{data.ltl}</p>
+			<p>{data.ltl ? "Yes" : "No"}</p>
 		</div>
 		<div class="my-1 mt-3 flex max-w-80 flex-col">
 			<h3 class="font-extrabold">Notes:</h3>
