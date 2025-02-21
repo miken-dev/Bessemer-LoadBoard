@@ -300,6 +300,7 @@
 							destMilesFilter = mile;
 							destMilesShowing = false;
 						}}>{mile}</DropdownItem
+					>
 				{/each}
 			</Dropdown>
 			<p>of</p>
@@ -310,10 +311,12 @@
 			>
 			<Dropdown bind:open={destStateShowing} class="max-h-48 w-48 overflow-y-auto py-1">
 				{#each states as state}
-					<DropdownItem on:click={() => {
-						(destStateFilter = state)
-						destStateShowing = false
-					}}>{state}</DropdownItem>
+					<DropdownItem
+						on:click={() => {
+							destStateFilter = state;
+							destStateShowing = false;
+						}}>{state}</DropdownItem
+					>
 				{/each}
 			</Dropdown>
 			<Button size="xs" color="light"
