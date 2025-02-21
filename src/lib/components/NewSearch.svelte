@@ -295,10 +295,11 @@
 			>
 			<Dropdown bind:open={destMilesShowing} class="max-h-48 w-48 overflow-y-auto py-1">
 				{#each miles as mile}
-					<DropdownItem on:click={() => {
-						(destMilesFilter = mile)
-						destMilesShowing = false
-					}}>{mile}</DropdownItem>
+					<DropdownItem
+						on:click={() => {
+							destMilesFilter = mile;
+							destMilesShowing = false;
+						}}>{mile}</DropdownItem
 				{/each}
 			</Dropdown>
 			<p>of</p>
