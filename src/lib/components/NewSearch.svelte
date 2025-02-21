@@ -225,12 +225,12 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<!-- ORIGIN -->
 	<!-- TODO: Add divider -->
 	<div class="flex flex-col items-center justify-start gap-3 md:flex-row">
 		<p class="justify-self-start">Origin:</p>
-		<div class="flex gap-3 items-center">
+		<div class="flex items-center gap-3">
 			<p>Within</p>
 			<Button size="xs" color="light"
 				>{originMilesFilter} Miles<ChevronDownOutline
@@ -274,7 +274,7 @@
 						<DropdownItem
 							on:click={() => {
 								setOriginAddress(location.lat, location.lng, location.city);
-								originCityShowing = false
+								originCityShowing = false;
 							}}>{location.city}</DropdownItem
 						>
 					{/if}
@@ -286,7 +286,7 @@
 	<!-- DESTINATION -->
 	<div class="flex flex-col items-center justify-start gap-8 md:flex-row">
 		<p class=" justify-self-start">Destination:</p>
-		<div class="flex gap-3 items-center">
+		<div class="flex items-center gap-3">
 			<p>Within</p>
 			<Button size="xs" color="light"
 				>{destMilesFilter} Miles<ChevronDownOutline
