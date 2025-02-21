@@ -178,6 +178,17 @@
 			return (trailerTypesFilter += `${trailerType}, `);
 		}
 	}
+	function handleClear() {
+		lastAction = 'Cleared';
+	}
+	function handleFromApply(event) {
+		lastAction = 'Applied';
+		fromDateRange = event.detail;
+	}
+	function handleToApply(event) {
+		lastAction = 'Applied';
+		toDateRange = event.detail;
+	}
 
 	//state
 	let email = $state(false);
@@ -188,6 +199,7 @@
 	let destMilesShowing = $state(false);
 	let destStateShowing = $state(false);
 	let destCityShowing = $state(false);
+	let lastAction = $state('');
 </script>
 
 <div class="mt-5 flex w-full flex-col gap-5 rounded bg-slate-200 p-5 dark:bg-gray-900 md:m-5">
