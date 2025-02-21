@@ -178,18 +178,6 @@
 			return (trailerTypesFilter += `${trailerType}, `);
 		}
 	}
-	function handleClear() {
-		lastAction = 'Cleared';
-	}
-	function handleFromApply(event) {
-		lastAction = 'Applied';
-		fromDateRange = event.detail;
-	}
-	function handleToApply(event) {
-		lastAction = 'Applied';
-		toDateRange = event.detail;
-	}
-
 	//state
 	let email = $state(false);
 	let text = $state(false);
