@@ -208,10 +208,21 @@
 
 
 	<!-- DATE RANGE -->
-	<div class="flex items-center justify-start gap-8">
+	<div class="flex flex-col items-center justify-start gap-4 md:flex-row">
 		<p class=" justify-self-start">Pick up Date/Range:</p>
-		<div class="w-1/2">
-			<Datepicker range bind:rangeFrom={fromDateRange} bind:rangeTo={toDateRange} color="blue" />
+		<div class="flex flex-col md:flex-row w-full items-center gap-3">
+			<div class="flex items-center gap-3">
+				<p>from:</p>
+				<div class="">
+					<Datepicker bind:value={fromDateRange} bind:rangeTo={toDateRange} color="blue" />
+				</div>
+			</div>
+			<div class="flex items-center gap-3">
+				<p>to:</p>
+				<div class="">
+					<Datepicker bind:value={fromDateRange} bind:rangeTo={toDateRange} color="blue" />
+				</div>
+			</div>
 		</div>
 	</div>
 	
