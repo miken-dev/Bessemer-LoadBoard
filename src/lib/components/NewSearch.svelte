@@ -203,9 +203,7 @@
 </script>
 
 <div class="mt-5 flex w-full flex-col gap-5 rounded bg-slate-200 p-5 dark:bg-gray-900 md:m-5">
-
 	<h2 class="text-2xl font-extrabold">New Search</h2>
-
 
 	<!-- DATE RANGE -->
 	<div class="flex flex-col items-center justify-start gap-4 md:flex-row">
@@ -329,10 +327,9 @@
 					{#if location.state === destStateFilter}
 						<DropdownItem
 							on:click={() => {
-							setDestinationAddress(location.lat, location.lng, location.city)
-							destCityShowing = false
-							}}	
-						>{location.city}</DropdownItem
+								setDestinationAddress(location.lat, location.lng, location.city);
+								destCityShowing = false;
+							}}>{location.city}</DropdownItem
 						>
 					{/if}
 				{/each}
@@ -340,7 +337,6 @@
 		</div>
 	</div>
 
-	
 	<!-- TRAILER TYPE -->
 	<div class="flex items-center justify-start gap-3">
 		<p class="justify-self-start">Trailer Type:</p>
