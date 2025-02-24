@@ -89,7 +89,7 @@
 					<td>
 						<div class="space-y-4 py-3">
 							<div
-								class="mx-7 grid grid-cols-2 justify-items-start gap-5 py-5 align-top md:grid-cols-3 lg:grid-cols-5"
+								class="mx-7 grid grid-cols-2 justify-items-start gap-2 py-2 align-top md:grid-cols-3 lg:grid-cols-5"
 							>
 								<!-- Origin -->
 								<div>
