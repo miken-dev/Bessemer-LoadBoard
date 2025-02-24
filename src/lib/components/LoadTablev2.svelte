@@ -59,6 +59,7 @@
 		return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 	}
 
+
 </script>
 
 <!--
@@ -95,7 +96,7 @@
 								<div>
 									<div class="text-xs font-medium text-gray-500 dark:text-gray-300">Load Date</div>
 									<div class="mt-1 text-sm">
-										{`${day[new Date(row.loadDate).getDay()]}, ${month[new Date(row.loadDate).getMonth()]} ${new Date(row.loadDate).getDate()}${dateOrdinals(new Date(row.loadDate).getDate())} ${new Date(row.loadDate).getFullYear()}`}
+										{`${new Date(row.loadDate).getMonth() + 1}/${new Date(row.loadDate).getDate()}/${new Date(row.loadDate).getFullYear()}`}
 									</div>
 								</div>
 								<div>
