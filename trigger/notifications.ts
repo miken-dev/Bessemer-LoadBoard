@@ -318,7 +318,7 @@ export const bessemerLoadboardTask = schedules.task({
 				return acc;
 			}, {});
 
-			const message = `New matching loads found:\n${Object.values(groupedLoads)
+			const baseMessage = `DD&S Load Board - New matching loads found:\n${Object.values(groupedLoads)
 				.map(({ load, count }) => 
 					count > 1 
 						? `- ${count} loads from ${titleCase(load.originCityName)}, ${load.originStateName} to ${titleCase(load.destinationCityName)}, ${load.destinationStateName}`
