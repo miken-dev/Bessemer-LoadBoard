@@ -194,7 +194,7 @@
 	<h2 class="text-2xl font-extrabold">New Search</h2>
 
 	<!-- DATE RANGE -->
-	<div class="flex flex-col items-center justify-start gap-4 md:flex-row">
+	<div class="flex flex-col items-center w-full justify-start gap-4 md:flex-row">
 		<p class=" justify-self-start">Pick up Date/Range:</p>
 		<div class="flex flex-col md:flex-row w-full items-center gap-3">
 			<div class="flex items-center gap-3">
