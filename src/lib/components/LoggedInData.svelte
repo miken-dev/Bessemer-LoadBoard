@@ -249,6 +249,7 @@
 		{/if}
 
 		{#if mapIsShowing}
+			{#if tableIsShowing}
 			<div class="sticky mt-10 top-0 w-11/12 md:{mapWidth} h-lvh md:h-[35rem] lg:h-[50rem]">
 				<Map
 					bind:multipleLoads
@@ -259,6 +260,18 @@
 					bind:tableClicked
 				/>
 			</div>
+			{:else}
+				<div class="sticky mt-10 top-0 w-11/12 md:{mapWidth} h-lvh md:h-[35rem] lg:h-[50rem]">
+					<Map
+						bind:multipleLoads
+						tableData={filteredData}
+						bind:selectedCity
+						bind:selectedRow
+						bind:detailsHidden
+						bind:tableClicked
+					/>
+				</div>
+			{/if}
 		{/if}
 	</div>
 </div>
