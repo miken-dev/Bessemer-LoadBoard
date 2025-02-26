@@ -334,13 +334,15 @@ export const bessemerLoadboardTask = schedules.task({
 				}
 
 				if (notification.shouldEmail) {
-					console.log(`Sending email to ${notification.user.email}:\n${message}`);
-					await sendEmail(notification.user.email, message);
+					const emailMessage = baseMessage.replace(/\n/g, '<br>');
+					console.log(`Sending email to ${notification.user.email}:\n${emailMessage}`);
+					await sendEmail(notification.user.email, emailMessage);
 				}
 
 				if (notification.shouldText) {
-					console.log(`Sending text to ${notification.user.phone}:\n${message}`);
-					await sendText(notification.user.phone, message);
+					const textMessage = baseMessage.replace(/\n/g, '\n');
+					console.log(`Sending text to ${notification.user.phone}:\n${textMessage}`);
+					await sendText(notification.user.phone, textMessage);
 				}
 			}
 		}
