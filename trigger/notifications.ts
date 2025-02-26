@@ -321,10 +321,10 @@ export const bessemerLoadboardTask = schedules.task({
 			const baseMessage = `DD&S Load Board - New matching loads found:\n${Object.values(groupedLoads)
 				.map(({ load, count }) => 
 					count > 1 
-						? `- ${count} loads from ${titleCase(load.originCityName)}, ${load.originStateName} to ${titleCase(load.destinationCityName)}, ${load.destinationStateName}`
-						: `- 1 load from ${titleCase(load.originCityName)}, ${load.originStateName} to ${titleCase(load.destinationCityName)}, ${load.destinationStateName}`
+						? `- ${count} loads from ${titleCase(load.originCityName)}, ${load.originStateName} to ${titleCase(load.destinationCityName)}, ${load.destinationStateName} (from your "${notification.searchName}" saved search)`
+						: `- Load from ${titleCase(load.originCityName)}, ${load.originStateName} to ${titleCase(load.destinationCityName)}, ${load.destinationStateName} (from your "${notification.searchName}" saved search)`
 				)
-				.join('\n')}\n\nView your saved searches at test-loadboard.dds-express.com`.replace(/\n/g, '\n');
+				.join('\n')}\n\nView your saved searches at test-loadboard.dds-express.com`;
 
 			// If either notification type is sent, mark all loads as notified
 			if (notification.shouldEmail || notification.shouldText) {
