@@ -7,7 +7,7 @@ export const bessemerLoadboardTask = schedules.task({
 	id: 'bessemer-loadboard-tasks',
 	// Every hour
 	cron: {
-		pattern: '0 8-18 * * *',
+		pattern: '*/15 6-22 * * *',
 		timezone: "America/New_York"
 	},
 	// Set an optional maxDuration to prevent tasks from running indefinitely
