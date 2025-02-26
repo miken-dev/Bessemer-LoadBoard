@@ -272,7 +272,8 @@ export const bessemerLoadboardTask = schedules.task({
 								user,
 								loads: new Set(),
 								shouldEmail: false,
-								shouldText: false
+								shouldText: false,
+								searchName: savedSearch.name
 							});
 						}
 
