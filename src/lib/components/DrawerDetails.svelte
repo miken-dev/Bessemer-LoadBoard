@@ -122,7 +122,7 @@
 			<p>{data.pieceCount}</p>
 		</div>
 		<div class="my-1 mt-3 flex flex-col">
-			<h3 class="font-extrabold">Terminal:</h3>
+			<h3 class="font-extrabold">Terminal Posting Load:</h3>
 			<p>{data.terminalName}</p>
 		</div>
 		<div class="my-1 mt-3 flex flex-col">
