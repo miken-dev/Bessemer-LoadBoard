@@ -194,7 +194,7 @@
 		return filterAndSortTableData(tableData, filterValues, locations, currentSort);
 	});
 	function numberWithCommas(number: number) {
-		return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+		return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 	}
 </script>
 
