@@ -9,6 +9,7 @@
 	let {
 		tableData,
 		selectedCity,
+		selectedState,
 		selectedRow = $bindable(),
 		detailsHidden = $bindable(),
 		tableClicked,
@@ -16,6 +17,7 @@
 	}: {
 		tableData: any;
 		selectedCity: string | null;
+		selectedState: string | null;
 		selectedRow: number | null;
 		detailsHidden: boolean;
 		tableClicked: boolean;
@@ -57,7 +59,7 @@
 		{:else}
 			<div class="container">
 				<p class="text-center text-lg">
-					Multiple loads available in <strong>{selectedCity}</strong>
+					Multiple loads available in <strong>{selectedCity}, {selectedState}</strong>
 				</p>
 				<div
 					class="my-4 h-px border-t-0 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25 dark:via-neutral-400"
@@ -94,7 +96,7 @@
 			{:else}
 				<div class="w-full">
 					<p class="text-center text-3xl">
-						Multiple loads available near <strong>{selectedCity}</strong>
+						Multiple loads available near <strong>{selectedCity}, {selectedState}</strong>
 					</p>
 					<div
 						class="my-12 h-2 border-t-0 bg-transparent bg-gradient-to-r from-transparent via-neutral-500 to-transparent opacity-25 dark:via-neutral-400"
