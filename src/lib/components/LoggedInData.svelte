@@ -230,12 +230,21 @@
 				<div class="min-h-screen {tableWidth} p-4 dark:bg-gray-800 dark:text-gray-100 md:p-8">
 					<div class="mx-auto max-w-[95rem]">
 						{#if filteredData.length !== 0 && tableData.length !== 0}
-							<LoadTablev2
-								tableData={filteredData}
-								bind:selectedRow
-								bind:detailsHidden
-								bind:tableClicked
-							/>
+							{#if originStateFilter || originMilesFilter || originCityFilter || destMilesFilter || destCityFilter || destStateFilter || trailerTypesFilter || fromDateRange || toDateRange}
+								<LoadTablev2
+									tableData={filteredData}
+									bind:selectedRow
+									bind:detailsHidden
+									bind:tableClicked
+								/>
+							{:else}
+								<LoadTablev2
+									tableData={filteredData}
+									bind:selectedRow
+									bind:detailsHidden
+									bind:tableClicked
+								/>
+							{/if}
 						{:else if filteredData.length === 0 && tableData.length === 0}
 							<LoadTableSkeleton />
 						{:else}
