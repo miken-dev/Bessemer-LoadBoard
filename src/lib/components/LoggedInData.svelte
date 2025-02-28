@@ -17,6 +17,7 @@
 	let selectedRow = $state(0);
 	let multipleLoads = $state(false);
 	let selectedCity = $state('');
+	let selectedState: string | null = $state(null);
 	let detailsHidden = $state(true);
 	let tableClicked = $state(false);
 	let tableIsShowing = $state(true);
@@ -250,22 +251,24 @@
 
 		{#if mapIsShowing}
 			{#if tableIsShowing}
-			<div class="sticky mt-10 top-0 w-11/12 md:{mapWidth} h-lvh md:h-[35rem] lg:h-[50rem]">
-				<Map
-					bind:multipleLoads
-					tableData={filteredData}
-					bind:selectedCity
-					bind:selectedRow
-					bind:detailsHidden
-					bind:tableClicked
-				/>
-			</div>
-			{:else}
-				<div class="sticky mt-10 top-0 w-11/12 md:{mapWidth} h-lvh md:h-[35rem] lg:h-[50rem]">
+				<div class="sticky top-0 mt-10 w-11/12 md:{mapWidth} h-lvh md:h-[35rem] lg:h-[50rem]">
 					<Map
 						bind:multipleLoads
 						tableData={filteredData}
 						bind:selectedCity
+						bind:selectedState
+						bind:selectedRow
+						bind:detailsHidden
+						bind:tableClicked
+					/>
+				</div>
+			{:else}
+				<div class="sticky top-0 mt-10 w-11/12 md:{mapWidth} h-lvh md:h-[35rem] lg:h-[50rem]">
+					<Map
+						bind:multipleLoads
+						tableData={filteredData}
+						bind:selectedCity
+						bind:selectedState
 						bind:selectedRow
 						bind:detailsHidden
 						bind:tableClicked
@@ -278,6 +281,7 @@
 <Drawerv2
 	{tableData}
 	{selectedCity}
+	{selectedState}
 	bind:selectedRow
 	bind:detailsHidden
 	{tableClicked}
