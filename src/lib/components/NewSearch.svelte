@@ -342,7 +342,7 @@
 				class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
 			/></Button
 		>
-		<Dropdown class="h-48 w-60 overflow-y-auto py-1">
+		<Dropdown bind:open={trailerTypesShowing} class="h-48 w-60 overflow-y-auto py-1">
 			{#each trailerTypes as trailerType}
 				<li>
 					{#if trailerTypesFilter.includes(trailerType)}
