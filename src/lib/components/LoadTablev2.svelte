@@ -111,7 +111,7 @@
 										Delivery Date
 									</div>
 									<div class="mt-1 text-sm">
-										{`${day[new Date(row.deliveryDate).getDay()]}, ${month[new Date(row.deliveryDate).getMonth()]} ${new Date(row.deliveryDate).getDate()}${dateOrdinals(new Date(row.deliveryDate).getDate())} ${new Date(row.deliveryDate).getFullYear()}`}
+										{`${new Date(row.deliveryDate).getMonth() + 1}/${new Date(row.deliveryDate).getDate()}/${new Date(row.deliveryDate).getFullYear()}`}
 									</div>
 								</div>
 								<div>
