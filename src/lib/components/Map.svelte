@@ -7,6 +7,7 @@
 		multipleLoads = $bindable(),
 		tableData,
 		selectedCity = $bindable(),
+		selectedState = $bindable(),
 		selectedRow = $bindable(),
 		detailsHidden = $bindable(),
 		tableClicked = $bindable()
@@ -14,19 +15,17 @@
 		multipleLoads: boolean;
 		tableData: TableDataTypes[];
 		selectedCity: string | null;
+		selectedState: string | null;
 		selectedRow: number | null;
 		detailsHidden: boolean;
 		tableClicked: boolean;
 	} = $props();
 
-	const toggle = (multiLoads: boolean, city: string, id?: number) => {
+	const toggle = (multiLoads: boolean, city: string, state: string, id?: number) => {
 		if (id) {
 			selectedRow = id;
 		}
-		(multipleLoads = multiLoads), (selectedCity = city);
-		console.log(city);
-		console.log(selectedCity);
-		console.log(city === selectedCity);
+		(multipleLoads = multiLoads), (selectedCity = city), (selectedState = state);
 		detailsHidden = false;
 		tableClicked = false;
 	};
@@ -46,12 +45,12 @@
 			{#each tableData as row}
 				{#if row.areaLoadCount === 1}
 					<Marker
-						onclick={() => toggle(false, row.originCityName, row.loadID)}
+						onclick={() => toggle(false, row.originCityName, row.originStateName, row.loadID)}
 						latLng={[row.originLat, row.originLng]}
 					/>
 				{:else}
 					<Popup
-						onclick={() => toggle(true, row.originCityName)}
+						onclick={() => toggle(true, row.originCityName, row.originStateName)}
 						latLng={[row.originLat, row.originLng]}
 						options={{
 							closeButton: false,
