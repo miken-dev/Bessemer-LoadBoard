@@ -15,7 +15,7 @@
 		destStateFilter = $bindable(),
 		trailerTypesFilter = $bindable(),
 		fromDateRange = $bindable(),
-		toDateRange = $bindable()
+		toDateRange = $bindable(),
 	}: {
 		saveSearchDialogIsShowing: boolean;
 		savedSearches: [savedSearchesTypes] | [];
