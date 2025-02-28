@@ -85,7 +85,7 @@
 		<div class="my-1 mt-3 flex flex-col">
 			<h3 class="font-extrabold">Delivery Date:</h3>
 			<p>
-				{`${day[new Date(data.deliveryDate).getDay()]}, ${month[new Date(data.deliveryDate).getMonth()]} ${new Date(data.deliveryDate).getDate()}${dateOrdinals(new Date(data.deliveryDate).getDate())} ${new Date(data.deliveryDate).getFullYear()}`}
+										{`${new Date(data.deliveryDate).getMonth() + 1}/${new Date(data.deliveryDate).getDate()}/${new Date(data.deliveryDate).getFullYear()}`}
 			</p>
 		</div>
 		<div class="my-1 mt-3 flex flex-col">
