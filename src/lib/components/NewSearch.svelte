@@ -209,13 +209,13 @@
 			<div class="flex items-center gap-3">
 				<p>from:</p>
 				<div class="w-72">
-					<Datepicker bind:value={fromDateRange} bind:rangeTo={toDateRange} color="blue" />
+					<Datepicker bind:value={fromDateRange} color="blue" />
 				</div>
 			</div>
 			<div class="flex items-center gap-3">
 				<p>to:</p>
 				<div class="w-72">
-					<Datepicker bind:value={fromDateRange} bind:rangeTo={toDateRange} color="blue" />
+					<Datepicker bind:value={toDateRange} color="blue" />
 				</div>
 			</div>
 		</div>
