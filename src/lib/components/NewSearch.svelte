@@ -196,11 +196,12 @@
 	let trailerTypesShowing = $state(false);
 	let trailerTypesSearch = $state('')
 	let lastAction = $state('');
+
 </script>
 
 <div class="mt-5 flex w-full flex-col gap-5 rounded bg-slate-200 p-5 dark:bg-gray-900 md:m-5">
 	<h2 class="text-2xl font-extrabold">New Search</h2>
-
+	<p>trailershowing: {trailerTypesShowing}</p>
 	<!-- DATE RANGE -->
 	<div class="flex flex-col items-center w-full justify-start gap-4 md:flex-row">
 		<p class=" justify-self-start">Pick up Date/Range:</p>
