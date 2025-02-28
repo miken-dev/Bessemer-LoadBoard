@@ -118,8 +118,8 @@
 		destStateFilter = destState;
 		destCityFilter = destCity;
 		trailerTypesFilter = trailerTypes;
-		fromDateRange = fromDate;
-		toDateRange = toDate;
+		fromDateRange = new Date(fromDate);
+		toDateRange = new Date(toDate);
 	}
 </script>
 
