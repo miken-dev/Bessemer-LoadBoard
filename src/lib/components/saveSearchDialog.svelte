@@ -59,6 +59,8 @@
 	onMount(async () => {
 		userInfo = await getUserInfo();
 		console.log(`${userInfo}`);
+
+		return async () => savedSearches = await updateSavedSeachList()
 	});
 
 	async function updateSavedSeachList() {
