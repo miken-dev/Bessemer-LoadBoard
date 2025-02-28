@@ -21,6 +21,8 @@
 	import ContactInfoPreferencesModal from './ContactInfoPreferencesModal.svelte';
 	let miles = [5, 10, 25, 50, 100, 150, 200, 250, 300, 400, 500];
 
+
+
 	const states = [
 		'Alabama',
 		'Alaska',
@@ -183,10 +185,16 @@
 	let text = $state(false);
 	let originMilesShowing = $state(false);
 	let originStateShowing = $state(false);
+	let originStateSearch = $state('')
 	let originCityShowing = $state(false);
+	let originCitySearch = $state('')
 	let destMilesShowing = $state(false);
 	let destStateShowing = $state(false);
+	let destStateSearch = $state('')
 	let destCityShowing = $state(false);
+	let destCitySearch = $state('')
+	let trailerTypesShowing = $state(false);
+	let trailerTypesSearch = $state('')
 	let lastAction = $state('');
 </script>
 
