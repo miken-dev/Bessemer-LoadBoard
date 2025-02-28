@@ -88,6 +88,7 @@
 			bind:fromDateRange
 			bind:toDateRange
 			bind:saveSearchDialogIsShowing
+			bind:savedSearches
 			bind:contactInfoPreferencesModal
 			{userId}
 		/>
