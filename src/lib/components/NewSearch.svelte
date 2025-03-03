@@ -235,7 +235,7 @@
 		destMilesFilter: number | undefined;
 		destCityFilter: string | undefined;
 		destStateFilter: string | undefined;
-		trailerTypesFilter: string | undefined;
+		trailerTypesFilter: string;
 		fromDateRange: Date | undefined;
 		toDateRange: Date | undefined;
 		saveSearchDialogIsShowing: boolean;
@@ -255,9 +255,10 @@
 		destMilesFilter = undefined;
 		destCityFilter = undefined;
 		destStateFilter = undefined;
-		trailerTypesFilter = undefined;
+		trailerTypesFilter = '';
 		fromDateRange = undefined;
 		toDateRange = undefined;
+		trailerTypesFilterArray = ['']
 	}
 	function setOriginAddress(lat: string, lng: string, city: string) {
 		originLatFilter = Number(lat);
