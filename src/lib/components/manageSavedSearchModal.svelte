@@ -68,11 +68,12 @@
 	}
 
 	onMount(async () => {
-		savedSearches = await getRecords()
-	})
-	onDestroy(async () => {
-		savedSearches = await getRecords()
-	})
+		savedSearches = await getRecords();
+
+	});
+	onMount(async () => {
+		return refresh() 
+	});
 
 	async function toggleEmail(currentValue: boolean, id: string) {
 		const record = await PB.collection('Saved_Searches').update(`${id}`, {
@@ -93,7 +94,7 @@
 		deleteConfirmationShowing = true;
 		deleteID = id;
 		deleteName = name;
-		console.log(deleteName)
+		console.log(deleteName);
 	}
 	async function refresh() {
 		savedSearches = await getRecords();
