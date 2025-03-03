@@ -6,7 +6,8 @@
 		Dropdown,
 		DropdownItem,
 		DropdownDivider,
-		DropdownHeader
+		DropdownHeader,
+		Search
 	} from 'flowbite-svelte';
 	import {
 		ChevronDownOutline,
