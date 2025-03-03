@@ -37,7 +37,8 @@
 			options={{
 				center: [44.67498, -103.856037],
 				zoom: 4.4,
-				minZoom: 3.2
+				minZoom: 3.2,
+				scrollWheelZoom: false
 
 			}}
 		>
