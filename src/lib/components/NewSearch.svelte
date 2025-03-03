@@ -304,7 +304,30 @@
 	let destCityShowing = $state(false);
 	let destCitySearch = $state('');
 	let trailerTypesShowing = $state(false);
+	let trailerTypesSearch = $state('');
 
+	let originStateFiltered = $derived(
+		states.filter((state) => state.toLowerCase().includes(originStateSearch.toLowerCase()))
+	);
+
+	let originCityFiltered = $derived(
+		locations.filter((location) =>
+			location.city.toLowerCase().includes(originCitySearch.toLowerCase())
+		)
+	);
+	let destStateFiltered = $derived(
+		states.filter((state) => state.toLowerCase().includes(destStateSearch.toLowerCase()))
+	);
+	let destCityFiltered = $derived(
+		locations.filter((location) =>
+			location.city.toLowerCase().includes(destCitySearch.toLowerCase())
+		)
+	);
+	let trailerTypeFiltered = $derived(
+		trailerTypes.filter((trailerType) =>
+			trailerType.type.toLowerCase().includes(trailerTypesSearch.toLowerCase())
+		)
+	);
 </script>
 
 <div class="mt-5 flex w-full flex-col gap-5 rounded bg-slate-200 p-5 dark:bg-gray-900 md:m-5">
