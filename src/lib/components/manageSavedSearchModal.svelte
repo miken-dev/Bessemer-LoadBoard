@@ -42,7 +42,7 @@
 
 	const PB = new PocketBase('https://bessemer-loadboard.pockethost.io');
 	async function getRecords() {
-		console.log(userId)
+		console.log(userId);
 		const records = await PB.collection('Saved_Searches').getFullList({
 			filter: `userID = "${userId}"`
 		});
