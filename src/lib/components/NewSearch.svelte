@@ -368,6 +368,7 @@
 						on:click={() => {
 							originMilesFilter = mile;
 							originMilesShowing = false;
+							trailerTypesShowing = false;
 						}}>{mile}</DropdownItem
 					>
 				{/each}
