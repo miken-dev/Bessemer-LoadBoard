@@ -31,10 +31,10 @@
 	} as SortOptions);
 
 	const sortOptions = [
+		{ label: 'default', value: ''},
 		{ label: 'Origin State', value: 'originState' },
-		{ label: 'Origin City', value: 'originCity' },
-		{ label: 'Destination State', value: 'destinationState' },
-		{ label: 'Destination City', value: 'destinationCity' },
+		{ label: 'Origin (state, city), Origin (state, city)', value: 'originCity' },
+		{ label: 'Destination (state, city), Origin (state, city)', value: 'destinationCity' },
 		{ label: 'Load Date (Oldest First)', value: 'loadDate-asc' },
 		{ label: 'Load Date (Newest First)', value: 'loadDate-desc' },
 		{ label: 'Revenue (High to Low)', value: 'revenue-desc' },
@@ -191,6 +191,7 @@
 	}
 
 	let filteredData = $derived.by((): TableDataTypes[] => {
+		console.log(`filterValues: ${filterValues.trailerTypesFilter}`)
 		return filterAndSortTableData(tableData, filterValues, locations, currentSort);
 	});
 	function numberWithCommas(number: number) {
