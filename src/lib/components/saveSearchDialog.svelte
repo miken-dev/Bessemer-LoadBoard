@@ -15,7 +15,7 @@
 		destStateFilter = $bindable(),
 		trailerTypesFilter = $bindable(),
 		fromDateRange = $bindable(),
-		toDateRange = $bindable(),
+		toDateRange = $bindable()
 	}: {
 		saveSearchDialogIsShowing: boolean;
 		savedSearches: [savedSearchesTypes] | [];
@@ -34,21 +34,25 @@
 	let name: string = $state('');
 	let emailNotification: boolean = $state(false);
 	let textNotification: boolean = $state(false);
-	let userInfo;
+	let userInfo = $state();
+
+	let emailAddress = $state('');
+	let phoneNumber = $state('');
 
 	const PB = new PocketBase('https://bessemer-loadboard.pockethost.io');
 	async function getUserInfo() {
-		const user = await PB.collection('driver').getFullList({
-			filter: `id = "${userId}"`
+		const user = await PB.collection('driver').getOne(userId);
+
+		emailAddress = user.email;
+		phoneNumber = user.phone;
+		return user;
+	}
+
+	async function saveUserInfo(userId: string, emailAddress: string, phoneNumber: string) {
+		const userInfo = await PB.collection('driver').update(userId, {
+			phone: phoneNumber,
+			email: emailAddress
 		});
-		const result = user.map((user) => {
-			return {
-				id: user.id,
-				phone: user.phone,
-				email: user.email
-			};
-		});
-		return result;
 	}
 
 	async function checkIfUserExistsPB(userId: string | null) {
@@ -58,9 +62,9 @@
 	}
 	onMount(async () => {
 		userInfo = await getUserInfo();
-		console.log(`${userInfo}`);
-
-		return async () => savedSearches = await updateSavedSeachList()
+	});
+	onMount(() => {
+		return async () => (savedSearches = await updateSavedSeachList());
 	});
 
 	async function updateSavedSeachList() {
@@ -125,6 +129,44 @@
 		savedSearches = await updateSavedSeachList();
 		return search;
 	}
+	function saveButtonEnable(): boolean {
+		let result = false;
+		if (!emailNotification) {
+			result = true
+			console.log(0)
+		}
+		if (!textNotification) {
+			result = true
+			console.log(3)
+		}
+		if (!userInfo.email && !emailAddress && emailNotification) {
+			result = false;
+			console.log(1)
+		}
+		if (!userInfo.email && !emailAddress.includes('\@') && emailNotification) {
+			result = false;
+			console.log("2a")
+		}
+		if (!userInfo.email && emailAddress.includes('\@') && emailNotification) {
+			result = true;
+			console.log(2)
+		}
+		if (!userInfo.phone && !phoneNumber && textNotification) {
+			result = false;
+			console.log(4)
+		}
+		if (!userInfo.phone && phoneNumber && textNotification) {
+			result = true;
+			console.log(5)
+		}
+
+		if (name == '') {
+			result = false;
+			console.log(6)
+		}
+		console.log(result)
+		return result;
+	}
 </script>
 
 <Modal
@@ -137,33 +179,53 @@
 	<Label for="name" class="mb-2 block">Name your saved search</Label>
 	<Input id="name" placeholder="" bind:value={name} />
 	<div>Notifications</div>
-	<div class="flex h-14 gap-6">
+	<div class="flex h-14 items-center gap-6">
 		<Toggle color="blue" bind:checked={emailNotification}>Email</Toggle>
+		{#if emailNotification && !userInfo.email}
+			<div>
+				<Label for="emailAddress" class="mb-2 block">Email Address</Label>
+
+				<Input id="emailAddress" placeholder="" bind:value={emailAddress} />
+			</div>
+		{/if}
 	</div>
-	<div class="flex h-14 gap-6">
+	<div class="flex h-14 items-center gap-6">
 		<Toggle color="blue" bind:checked={textNotification}>Text Messages</Toggle>
+		{#if textNotification && !userInfo.phone}
+			<div>
+				<Label for="phoneNumber" class="mb-2 block">Phone Number</Label>
+				<Input id="phoneNumber" placeholder="" bind:value={phoneNumber} />
+			</div>
+		{/if}
 	</div>
 
-	<Button
-		size="md"
-		color="blue"
-		onclick={async () => {
-			await saveSearch(
-				name,
-				originMilesFilter,
-				originStateFilter,
-				originCityFilter,
-				destMilesFilter,
-				destStateFilter,
-				destCityFilter,
-				fromDateRange,
-				toDateRange,
-				trailerTypesFilter,
-				emailNotification,
-				textNotification,
-				userId
-			);
-		}}>Save</Button
-	>
+	{#if !saveButtonEnable()}
+		<Button size="md" color="alternative" disabled>Save</Button>
+	{:else}
+		<Button
+			size="md"
+			color="blue"
+			onclick={async () => {
+				await saveSearch(
+					name,
+					originMilesFilter,
+					originStateFilter,
+					originCityFilter,
+					destMilesFilter,
+					destStateFilter,
+					destCityFilter,
+					fromDateRange,
+					toDateRange,
+					trailerTypesFilter,
+					emailNotification,
+					textNotification,
+					userId
+				);
+				if (emailAddress || phoneNumber) {
+					await saveUserInfo(userId, emailAddress, phoneNumber);
+				}
+			}}>Save</Button
+		>
+	{/if}
 	<Button size="md" color="alternative">Cancel</Button>
 </Modal>
