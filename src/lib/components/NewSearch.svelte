@@ -21,8 +21,6 @@
 	import ContactInfoPreferencesModal from './ContactInfoPreferencesModal.svelte';
 	let miles = [5, 10, 25, 50, 100, 150, 200, 250, 300, 400, 500];
 
-
-
 	const states = [
 		'Alabama',
 		'Alaska',
@@ -477,19 +475,30 @@
 				class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
 			/></Button
 		>
+
 		<Dropdown bind:open={trailerTypesShowing} class="h-48 w-60 overflow-y-auto py-1">
-			{#each trailerTypes as trailerType}
-				<li>
-					{#if trailerTypesFilter.includes(trailerType)}
-						<Checkbox class="px-3" checked color="blue" on:click={() => addTrailerType(trailerType)}
-							>{trailerType}</Checkbox
-						>
-					{:else}
-						<Checkbox class="px-3" color="blue" on:click={() => addTrailerType(trailerType)}
-							>{trailerType}</Checkbox
-						>
-					{/if}
-				</li>
+			<Search size="sm" bind:value={trailerTypesSearch} />
+			{#each trailerTypeFiltered as trailerType}
+				{#if trailerTypesFilterArray.includes(trailerType.type)}
+					<Checkbox
+						class="px-3"
+						color="blue"
+						checked
+						on:click={() => {
+							trailerType.enabled = trailerType.enabled ? false : true;
+							toggleTrailerType(trailerType.type);
+						}}>{trailerType.type}</Checkbox
+					>
+				{:else}
+					<Checkbox
+						class="px-3"
+						color="blue"
+						on:click={() => {
+							trailerType.enabled = trailerType.enabled ? false : true;
+							toggleTrailerType(trailerType.type);
+						}}>{trailerType.type}</Checkbox
+					>
+				{/if}
 			{/each}
 		</Dropdown>
 	</div>
