@@ -136,7 +136,7 @@
 		<div class="flex h-full flex-col justify-between pb-4">
 			<div>
 				{#each savedSearches as savedSearch, index}
-					{#if index <= 4}
+					{#if index <= 3}
 						<div class="flex flex-row items-center justify-between">
 							<p>{savedSearch.name}</p>
 							<p></p>
