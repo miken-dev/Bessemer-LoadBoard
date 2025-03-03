@@ -295,17 +295,15 @@
 	let text = $state(false);
 	let originMilesShowing = $state(false);
 	let originStateShowing = $state(false);
-	let originStateSearch = $state('')
+	let originStateSearch = $state('');
 	let originCityShowing = $state(false);
-	let originCitySearch = $state('')
+	let originCitySearch = $state('');
 	let destMilesShowing = $state(false);
 	let destStateShowing = $state(false);
-	let destStateSearch = $state('')
+	let destStateSearch = $state('');
 	let destCityShowing = $state(false);
-	let destCitySearch = $state('')
+	let destCitySearch = $state('');
 	let trailerTypesShowing = $state(false);
-	let trailerTypesSearch = $state('')
-	let lastAction = $state('');
 
 </script>
 
