@@ -49,6 +49,13 @@
 	let deleteConfirmationShowing = $state(false);
 	let deleteID = $state('');
 	let deleteName = $state('');
+	let updateOnModalClose = $derived.by(async () => {
+		if (manageSavedSearchIsShowing) {
+			savedSearches = await getRecords()
+		} else {
+			savedSearches = await getRecords()
+		}
+	})
 
 	const PB = new PocketBase('https://bessemer-loadboard.pockethost.io');
 	async function getRecords() {
