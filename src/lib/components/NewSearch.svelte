@@ -270,11 +270,24 @@
 		destLngFilter = Number(lng);
 		destCityFilter = city;
 	}
-	function addTrailerType(trailerType: string) {
-		if (trailerTypesFilter?.includes(trailerType)) {
-			trailerTypesFilter.replace(`${trailerType}, `, '');
+	let trailerTypesFilterArray: string[] = $state([''])
+	function toggleTrailerType(trailerType: string) {
+		trailerTypesFilterArray = trailerTypesFilter.split(", ")
+		if (trailerTypesFilterArray.includes(trailerType)) {
+			let index = trailerTypesFilterArray.indexOf(trailerType)
+			if (index > -1) {
+				trailerTypesFilterArray.splice(index, 1);
+				trailerTypesFilter = trailerTypesFilterArray.join(", ")
+				console.log(`first: ${trailerType}, ttf:${trailerTypesFilterArray}`);
+			}
 		} else {
-			return (trailerTypesFilter += `${trailerType}, `);
+			trailerTypesFilterArray.push(trailerType);
+			trailerTypesFilter = trailerTypesFilterArray.join(", ")
+			console.log(`third, tts:${trailerTypesFilterArray}`);
+		}
+	}
+	function removeTrailerType(trailerType: string) {
+		if (trailerTypesFilter?.includes(trailerType)) {
 		}
 	}
 	//state
