@@ -178,15 +178,5 @@
 		{/if}
 	</div>
 
-		</div>
-	{:else}
-		<div class="flex flex-col items-center justify-center">
-			<div class="m-auto text-center text-4xl">No saved searches available</div>
-			<Button outline color="blue" class="m-auto mt-10 w-40" on:click={refresh}>Refresh</Button>
-		</div>
-	{/if}
-</div>
-
-<DeleteConfirmationModal id={deleteID} name={deleteName} bind:deleteConfirmationShowing bind:savedSearches/>
 
 </Modal>
