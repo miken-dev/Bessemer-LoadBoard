@@ -380,7 +380,8 @@
 				/></Button
 			>
 			<Dropdown bind:open={originStateShowing} class="max-h-48 w-48 overflow-y-auto py-1">
-				{#each states as state}
+				<Search size="sm" bind:value={originStateSearch} />
+				{#each originStateFiltered as state}
 					<DropdownItem
 						on:click={() => {
 							originStateFilter = state;
@@ -395,7 +396,8 @@
 				/></Button
 			>
 			<Dropdown bind:open={originCityShowing} class="max-h-48 w-48 overflow-y-auto py-1">
-				{#each locations as location}
+				<Search size="sm" bind:value={originCitySearch} />
+				{#each originCityFiltered as location}
 					{#if location.state === originStateFilter}
 						<DropdownItem
 							on:click={() => {
@@ -436,7 +438,8 @@
 				/></Button
 			>
 			<Dropdown bind:open={destStateShowing} class="max-h-48 w-48 overflow-y-auto py-1">
-				{#each states as state}
+				<Search size="sm" bind:value={destStateSearch} />
+				{#each destStateFiltered as state}
 					<DropdownItem
 						on:click={() => {
 							destStateFilter = state;
@@ -451,7 +454,8 @@
 				/></Button
 			>
 			<Dropdown bind:open={destCityShowing} class="max-h-48 w-48 overflow-y-auto py-1">
-				{#each locations as location}
+				<Search size="sm" bind:value={destCitySearch} />
+				{#each destCityFiltered as location}
 					{#if location.state === destStateFilter}
 						<DropdownItem
 							on:click={() => {
