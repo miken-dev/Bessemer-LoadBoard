@@ -77,38 +77,134 @@
 	];
 
 	let trailerTypes = [
-		'Beam Trailer',
-		'Boat',
-		'Booster',
-		'Bottom Hopper',
-		'Conestoga',
-		'Conestoga With Heat',
-		'Dolly',
-		'Double Drop',
-		'Double Drop Stretch',
-		'Drop Side RGN',
-		'Flat Stretch',
-		'Flatbed',
-		'Flatbed w/ Sides',
-		'Flatbed w/sides; heated',
-		'Flip Axle',
-		'Hot Shot',
-		'Hydraulic Platform',
-		'Jeep',
-		'Joe Dog',
-		'LowPro Step Deck',
-		'LowPro Step Deck Stretch',
-		'Michigan Train',
-		'Perimeter',
-		'Power Only',
-		'Reefer',
-		'RGN',
-		'RGN Stretch',
-		'Sled',
-		'Step Deck',
-		'Step Deck Stretch',
-		'Stinger',
-		'Van'
+		{
+			type: 'Beam Trailer',
+			enabled: false
+		},
+		{
+			type: 'Boat',
+			enabled: false
+		},
+		{
+			type: 'Booster',
+			enabled: false
+		},
+		{
+			type: 'Bottom Hopper',
+			enabled: false
+		},
+		{
+			type: 'Conestoga',
+			enabled: false
+		},
+		{
+			type: 'Conestoga With Heat',
+			enabled: false
+		},
+		{
+			type: 'Dolly',
+			enabled: false
+		},
+		{
+			type: 'Double Drop',
+			enabled: false
+		},
+		{
+			type: 'Double Drop Stretch',
+			enabled: false
+		},
+		{
+			type: 'Drop Side RGN',
+			enabled: false
+		},
+		{
+			type: 'Flat Stretch',
+			enabled: false
+		},
+		{
+			type: 'Flatbed',
+			enabled: false
+		},
+		{
+			type: 'Flatbed w/ Sides',
+			enabled: false
+		},
+		{
+			type: 'Flatbed w/sides; heated',
+			enabled: false
+		},
+		{
+			type: 'Flip Axle',
+			enabled: false
+		},
+		{
+			type: 'Hot Shot',
+			enabled: false
+		},
+		{
+			type: 'Hydraulic Platform',
+			enabled: false
+		},
+		{
+			type: 'Jeep',
+			enabled: false
+		},
+		{
+			type: 'Joe Dog',
+			enabled: false
+		},
+		{
+			type: 'LowPro Step Deck',
+			enabled: false
+		},
+		{
+			type: 'LowPro Step Deck Stretch',
+			enabled: false
+		},
+		{
+			type: 'Michigan Train',
+			enabled: false
+		},
+		{
+			type: 'Perimeter',
+			enabled: false
+		},
+		{
+			type: 'Power Only',
+			enabled: false
+		},
+		{
+			type: 'Reefer',
+			enabled: false
+		},
+		{
+			type: 'RGN',
+			enabled: false
+		},
+		{
+			type: 'RGN Stretch',
+			enabled: false
+		},
+		{
+			type: 'Sled',
+			enabled: false
+		},
+		{
+			type: 'Step Deck',
+			enabled: false
+		},
+		{
+			type: 'Step Deck Stretch',
+			enabled: false
+		},
+		{
+			type: 'Stinger',
+			enabled: false
+		},
+		{
+			type: 'Van',
+			enabled: false
+		}
 	];
 	let {
 		originLatFilter = $bindable(),
