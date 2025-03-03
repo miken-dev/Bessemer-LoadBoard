@@ -39,23 +39,44 @@ export function filterAndSortTableData(
     // First apply filters
     let filteredData = tableData.filter(row => {
         // Date range filter
-        if (filters.fromDateRange || filters.toDateRange) {
-            const loadDate = new Date(row.loadDate);
-            
-            if (filters.fromDateRange && loadDate < filters.fromDateRange) {
+        const loadDate = new Date(row.loadDate);
+        
+        // Validate dates and convert to midnight UTC for consistent comparison
+        const fromDate = filters.fromDateRange ? new Date(filters.fromDateRange.setHours(0, 0, 0, 0)) : null;
+        const toDate = filters.toDateRange ? new Date(filters.toDateRange.setHours(0, 0, 0, 0)) : null;
+        const compareDate = new Date(loadDate.setHours(0, 0, 0, 0));
+
+        if (fromDate && toDate) {
+            // Both dates set - show results between and including both dates
+            if (compareDate < fromDate || compareDate > toDate) {
                 return false;
             }
-            
-            if (filters.toDateRange && loadDate > filters.toDateRange) {
+        } else if (fromDate) {
+            // Only from date set - show results after and including fromDateRange
+            if (compareDate < fromDate) {
+                return false;
+            }
+        } else if (toDate) {
+            // Only to date set - show results before and including toDateRange
+            if (compareDate > toDate) {
                 return false;
             }
         }
+        // If neither date is set, continue to next filter (show all results)
 
         // Trailer types filter
         if (filters.trailerTypesFilter) {
             const trailerTypes = filters.trailerTypesFilter.split(', ');
-            if (!trailerTypes.some(type => row.trailerTypes.includes(type))) {
-                return false;
+	
+			let filter = false 
+			for (const trailerType of trailerTypes) {
+				if (row.trailerTypes.includes(trailerType) && trailerType) {
+					filter = true;
+				}
+			}
+			if (!filter) {
+				return false
+			//if (!trailerTypes.some(type => row.trailerTypes.includes(type))) {
             }
         }
 
