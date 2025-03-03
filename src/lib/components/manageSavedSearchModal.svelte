@@ -123,14 +123,12 @@
 	}
 </script>
 
-<Modal title="Manage Saved Searches" size="lg" bind:open={manageSavedSearchIsShowing}  outsideclose> 
-	
-<div class="mt-5 md:m-5 w-full rounded h-3/4 p-5 ">
-	{#if savedSearches != undefined }
-		<div class="flex h-full flex-col justify-between pb-4">
-			<div>
-				{#each savedSearches as savedSearch, index}
-					{#if index <= 4}
+<Modal title="Manage Saved Searches" size="lg" bind:open={manageSavedSearchIsShowing} outsideclose>
+	<div class="mt-5 h-3/4 w-full rounded p-5 md:m-5">
+		{#if savedSearches != undefined}
+			<div class="flex h-full flex-col justify-between pb-4">
+				<div>
+					{#each savedSearches as savedSearch, index}
 						<div class="flex flex-row items-center justify-between">
 							<p>{savedSearch.name}</p>
 							<p></p>
