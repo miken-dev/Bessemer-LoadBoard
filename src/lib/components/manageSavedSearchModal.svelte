@@ -178,5 +178,10 @@
 		{/if}
 	</div>
 
-
+	<DeleteConfirmationModal
+		id={deleteID}
+		name={deleteName}
+		bind:deleteConfirmationShowing
+		bind:savedSearches
+	/>
 </Modal>
