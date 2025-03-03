@@ -28,6 +28,8 @@
 	let searchOptionsIsShowing: boolean = $state(true);
 	let NotificationPreferencesShowing: boolean = $state(false);
 
+	let searchTerm = ""
+
 	// filters
 	let originMilesFilter: number | undefined = $state();
 	let originStateFilter: string | undefined = $state();
@@ -35,7 +37,7 @@
 	let destMilesFilter: number | undefined = $state();
 	let destCityFilter: string | undefined = $state();
 	let destStateFilter: string | undefined = $state();
-	let trailerTypesFilter: string | undefined = $state('');
+	let trailerTypesFilter: string = $state('');
 	let fromDateRange: Date | undefined = $state(undefined);
 	let toDateRange: Date | undefined = $state(undefined);
 	let filter: string = $state('isPublic = "true"');
