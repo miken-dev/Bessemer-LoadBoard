@@ -46,7 +46,7 @@
 		const records = await PB.collection('Saved_Searches').getFullList({
 			filter: `userID = "${userId}"`
 		});
-		const results: [savedSearchesTypes]  = records.map((record) => {
+		const results: [savedSearchesTypes] = records.map((record) => {
 			return {
 				id: record.id,
 				name: record.name,
@@ -63,6 +63,7 @@
 				textNotification: record.textNotification
 			};
 		});
+		console.log(`got ${results.length} records`)
 		return results;
 	}
 
