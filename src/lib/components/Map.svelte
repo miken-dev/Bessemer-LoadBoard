@@ -39,30 +39,31 @@
 				zoom: 4.4,
 				minZoom: 3.2,
 				scrollWheelZoom: false
-
 			}}
 		>
 			<TileLayer url={'https://tile.openstreetmap.org/{z}/{x}/{y}.png'} />
 			{#each tableData as row}
-				{#if row.areaLoadCount === 1}
-					<Marker
-						onclick={() => toggle(false, row.originCityName, row.originStateName, row.loadID)}
-						latLng={[row.originLat, row.originLng]}
-					/>
-				{:else}
-					<Popup
-						onclick={() => toggle(true, row.originCityName, row.originStateName)}
-						latLng={[row.originLat, row.originLng]}
-						options={{
-							closeButton: false,
-							autoClose: false,
-							closeOnEscapeKey: false,
-							closeOnClick: false,
-							maxWidth: 5
-						}}
-					>
-						<div class="text-lg text-center font-bold">{row.areaLoadCount} </div>
-					</Popup>
+				{#if !(row.originLat === 0 && row.originLng === 0)}
+					{#if row.areaLoadCount === 1}
+						<Marker
+							onclick={() => toggle(false, row.originCityName, row.originStateName, row.loadID)}
+							latLng={[row.originLat, row.originLng]}
+						/>
+					{:else}
+						<Popup
+							onclick={() => toggle(true, row.originCityName, row.originStateName)}
+							latLng={[row.originLat, row.originLng]}
+							options={{
+								closeButton: false,
+								autoClose: false,
+								closeOnEscapeKey: false,
+								closeOnClick: false,
+								maxWidth: 5
+							}}
+						>
+							<div class="text-center text-lg font-bold">{row.areaLoadCount}</div>
+						</Popup>
+					{/if}
 				{/if}
 			{/each}
 		</Map>
