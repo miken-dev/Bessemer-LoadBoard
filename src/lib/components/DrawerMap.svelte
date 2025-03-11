@@ -43,6 +43,7 @@
 		}}
 	>
 		<TileLayer url={'https://tile.openstreetmap.org/{z}/{x}/{y}.png'} />
+		{#if !(originLat === 0 && originLng === 0)}
 		<Popup
 			latLng={[originLat, originLng]}
 			options={{
@@ -53,6 +54,8 @@
 				closeOnClick: false,
 			}}
 		/>
+		 {/if}
+		{#if !(destLat === 0 && destLng === 0)}
 		<Popup
 			latLng={[destLat, destLng]}
 			options={{
@@ -63,5 +66,6 @@
 				closeOnClick: false,
 			}}
 		/>
+{/if}
 	</Map>
 </div>
