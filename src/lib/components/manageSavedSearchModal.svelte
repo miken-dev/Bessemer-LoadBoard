@@ -97,6 +97,7 @@
 		console.log(deleteName);
 	}
 	async function refresh() {
+		console.log("refreshing")
 		savedSearches = await getRecords();
 	}
 
