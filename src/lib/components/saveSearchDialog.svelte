@@ -130,42 +130,48 @@
 		return search;
 	}
 	function saveButtonEnable(): boolean {
-		let result = false;
-		if (!emailNotification) {
-			result = true
-			console.log(0)
-		}
-		if (!textNotification) {
-			result = true
-			console.log(3)
-		}
-		if (!userInfo.email && !emailAddress && emailNotification) {
-			result = false;
-			console.log(1)
-		}
-		if (!userInfo.email && !emailAddress.includes('\@') && emailNotification) {
-			result = false;
-			console.log("2a")
-		}
-		if (!userInfo.email && emailAddress.includes('\@') && emailNotification) {
-			result = true;
-			console.log(2)
-		}
-		if (!userInfo.phone && !phoneNumber && textNotification) {
-			result = false;
-			console.log(4)
-		}
-		if (!userInfo.phone && phoneNumber && textNotification) {
-			result = true;
-			console.log(5)
+		// Name is required in all cases
+		if (!name) return false;
+
+		// Helper function to validate email format
+		const isValidEmail = (email: string) => {
+			return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+		};
+
+		// Helper function to validate phone format (accepts formats like: 123-456-7890, (123) 456-7890, 1234567890)
+		const isValidPhone = (phone: string) => {
+			return /^\+?[\d\s-()]{10,}$/.test(phone);
+		};
+
+		// If no notifications are enabled, only name is required
+		if (!emailNotification && !textNotification) {
+			return true;
 		}
 
-		if (name == '') {
-			result = false;
-			console.log(6)
+		// Check email notification requirements
+		if (emailNotification) {
+			// Check if user has existing email or valid new email
+			const hasValidExistingEmail = userInfo?.email && isValidEmail(userInfo.email);
+			const hasValidNewEmail = emailAddress && isValidEmail(emailAddress);
+			
+			if (!hasValidExistingEmail && !hasValidNewEmail) {
+				return false;
+			}
 		}
-		console.log(result)
-		return result;
+
+		// Check text notification requirements
+		if (textNotification) {
+			// Check if user has existing phone or valid new phone
+			const hasValidExistingPhone = userInfo?.phone && isValidPhone(userInfo.phone);
+			const hasValidNewPhone = phoneNumber && isValidPhone(phoneNumber);
+			
+			if (!hasValidExistingPhone && !hasValidNewPhone) {
+				return false;
+			}
+		}
+
+		// All checks passed
+		return true;
 	}
 </script>
 
