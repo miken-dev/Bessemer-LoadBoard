@@ -29,7 +29,7 @@
 
 <div class="flex w-screen items-center justify-between border-b-4 border-sky-400 p-5">
 	<div>
-		<img src={logo} />
+		<img class="w-1/2" alt="DD&S Express Logo" src={logo} />
 	</div>
 	<div>
 		<!--	<button class="rounded bg-gray-500 px-4 py-2 font-bold text-white hover:bg-blue-600"
