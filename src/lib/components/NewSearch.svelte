@@ -257,7 +257,7 @@
 		trailerTypesFilter = '';
 		fromDateRange = undefined;
 		toDateRange = undefined;
-		trailerTypesFilterArray = ['']
+		trailerTypesFilterArray = [''];
 	}
 	function setOriginAddress(lat: string, lng: string, city: string) {
 		originLatFilter = Number(lat);
@@ -269,19 +269,19 @@
 		destLngFilter = Number(lng);
 		destCityFilter = city;
 	}
-	let trailerTypesFilterArray: string[] = $state([''])
+	let trailerTypesFilterArray: string[] = $state(['']);
 	function toggleTrailerType(trailerType: string) {
-		trailerTypesFilterArray = trailerTypesFilter.split(", ")
+		trailerTypesFilterArray = trailerTypesFilter.split(', ');
 		if (trailerTypesFilterArray.includes(trailerType)) {
-			let index = trailerTypesFilterArray.indexOf(trailerType)
+			let index = trailerTypesFilterArray.indexOf(trailerType);
 			if (index > -1) {
 				trailerTypesFilterArray.splice(index, 1);
-				trailerTypesFilter = trailerTypesFilterArray.join(", ")
+				trailerTypesFilter = trailerTypesFilterArray.join(', ');
 				console.log(`first: ${trailerType}, ttf:${trailerTypesFilterArray}`);
 			}
 		} else {
 			trailerTypesFilterArray.push(trailerType);
-			trailerTypesFilter = trailerTypesFilterArray.join(", ")
+			trailerTypesFilter = trailerTypesFilterArray.join(', ');
 			console.log(`third, tts:${trailerTypesFilterArray}`);
 		}
 	}
@@ -330,6 +330,7 @@
 </script>
 
 <div class="mt-5 flex w-full flex-col gap-5 rounded bg-slate-200 p-5 dark:bg-gray-900 md:m-5">
+	<p>{String(fromDateRange)} {String(toDateRange)}</p>
 	<h2 class="text-2xl font-extrabold">New Search</h2>
 	<!-- DATE RANGE -->
 	<div class="flex w-full flex-col items-center justify-start gap-4 md:flex-row">
@@ -351,7 +352,7 @@
 	</div>
 
 	<!-- ORIGIN -->
-		<!-- TODO: Add divider -->
+	<!-- TODO: Add divider -->
 	<div class="flex flex-col items-center justify-start gap-3 md:flex-row">
 		<p class="justify-self-start">Origin:</p>
 		<div class="flex items-center gap-3">
@@ -385,6 +386,7 @@
 						on:click={() => {
 							originStateFilter = state;
 							originStateShowing = false;
+							originCityFilter = undefined;
 						}}>{state}</DropdownItem
 					>
 				{/each}
@@ -443,6 +445,7 @@
 						on:click={() => {
 							destStateFilter = state;
 							destStateShowing = false;
+							destCityFilter = undefined;
 						}}>{state}</DropdownItem
 					>
 				{/each}
@@ -476,11 +479,11 @@
 				class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
 			/></Button
 		>
-
+		{#if trailerTypesFilter}
 		<Dropdown bind:open={trailerTypesShowing} class="h-48 w-60 overflow-y-auto py-1">
 			<Search size="sm" bind:value={trailerTypesSearch} />
 			{#each trailerTypeFiltered as trailerType}
-				{#if trailerTypesFilterArray.includes(trailerType.type)}
+				{#if trailerTypesFilterArray.includes(trailerType.type) || trailerTypesFilter.includes(trailerType.type)}
 					<Checkbox
 						class="px-3"
 						color="blue"
@@ -502,6 +505,33 @@
 				{/if}
 			{/each}
 		</Dropdown>
+		{:else}
+		<Dropdown bind:open={trailerTypesShowing} class="h-48 w-60 overflow-y-auto py-1">
+			<Search size="sm" bind:value={trailerTypesSearch} />
+			{#each trailerTypeFiltered as trailerType}
+				{#if trailerTypesFilterArray.includes(trailerType.type) || trailerTypesFilter.includes(trailerType.type)}
+					<Checkbox
+						class="px-3"
+						color="blue"
+						checked
+						on:click={() => {
+							trailerType.enabled = trailerType.enabled ? false : true;
+							toggleTrailerType(trailerType.type);
+						}}>{trailerType.type}</Checkbox
+					>
+				{:else}
+					<Checkbox
+						class="px-3"
+						color="blue"
+						on:click={() => {
+							trailerType.enabled = trailerType.enabled ? false : true;
+							toggleTrailerType(trailerType.type);
+						}}>{trailerType.type}</Checkbox
+					>
+				{/if}
+			{/each}
+		</Dropdown>
+		{/if}
 	</div>
 
 	<!-- BUTTONS -->
