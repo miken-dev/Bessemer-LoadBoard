@@ -2,6 +2,9 @@
 	import { Map, TileLayer, Marker, Popup } from 'sveaflet';
 	import { browser } from '$app/environment';
 	import type { TableDataTypes } from '$lib/types';
+	import { GestureHandling } from 'leaflet-gesture-handling';
+	import "leaflet/dist/leaflet.css"
+	import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css"
 
 	let {
 		multipleLoads = $bindable(),
@@ -31,6 +34,7 @@
 	};
 </script>
 
+
 {#if browser}
 	<div class="mt-8 h-full w-full">
 		<Map
@@ -38,7 +42,7 @@
 				center: [44.67498, -103.856037],
 				zoom: 4.4,
 				minZoom: 3.2,
-				scrollWheelZoom: false
+				gestureHandling: true
 			}}
 		>
 			<TileLayer url={'https://tile.openstreetmap.org/{z}/{x}/{y}.png'} />
