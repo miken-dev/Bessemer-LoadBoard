@@ -49,13 +49,17 @@
 		class="w-100 mobile"
 		id="loadDetailsDrawerMobile"
 	>
-		<CloseButton on:click={() => (detailsHidden = true)} class="mb-4, dark:text-white" />
+		<div class="fixed top-0">
+			<CloseButton on:click={() => (detailsHidden = true)} class="mb-4, dark:text-white" />
+		</div>
 		{#if tableClicked || !multipleLoads}
+			<div class="my-4 mx-5">
 			{#each tableData as data}
 				{#if data.loadID === selectedRow}
 					<DrawerDetails {data} horizontal={false} />
 				{/if}
 			{/each}
+		</div>
 		{:else}
 			<div class="container">
 				<p class="text-center text-lg">
