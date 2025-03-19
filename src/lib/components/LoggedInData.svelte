@@ -197,6 +197,7 @@
 	function numberWithCommas(number: number) {
 		return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 	}
+	let sortName = $state("")
 </script>
 
 <div>
@@ -207,8 +208,7 @@
 			<div class="flex flex-col">
 				<div class="p-0 md:pl-8">
 					<Button color="blue" class="w-80"
-						>Sort by: {sortOptions.find((opt) => opt.value.startsWith(currentSort.field))?.label ||
-							'Select...'}
+						>Sort by: {sortName}
 						{#if sortDropdownOpen}
 							<ChevronUpOutline />
 						{:else}
@@ -221,6 +221,7 @@
 								on:click={() => {
 									handleSort(option.value);
 									sortDropdownOpen = false;
+									sortName = option.label
 								}}
 							>
 								{option.label}
