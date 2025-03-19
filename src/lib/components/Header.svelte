@@ -40,7 +40,7 @@
 			<Button on:click={devLogin} color="blue">Log in (DEV)</Button>
 		{/if} -->
 		{#if loggedIn}
-			<Button on:click={logout} color="blue">Log Out</Button>
+			<Button size="sm" on:click={logout} color="blue">Log Out</Button>
 		{:else}
 			<Button href="https://operator.ddsexpress.com/user-login/" color="blue">Log In</Button>
 		{/if}
