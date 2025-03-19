@@ -51,11 +51,11 @@
 	let deleteName = $state('');
 	let updateOnModalClose = $derived.by(async () => {
 		if (manageSavedSearchIsShowing) {
-			savedSearches = await getRecords()
+			savedSearches = await getRecords();
 		} else {
-			savedSearches = await getRecords()
+			savedSearches = await getRecords();
 		}
-	})
+	});
 
 	const PB = new PocketBase('https://bessemer-loadboard.pockethost.io');
 	async function getRecords() {
@@ -107,6 +107,7 @@
 		savedSearches = await getRecords();
 	}
 
+
 	function setFilters(
 		originMiles: number,
 		originState: string,
@@ -115,9 +116,18 @@
 		destState: string,
 		destCity: string,
 		trailerTypes: string,
-		fromDate: Date,
-		toDate: Date
+		fromDate?: Date,
+		toDate?: Date
 	) {
+		fromDateRange = undefined
+		toDateRange = undefined
+		originMilesFilter = undefined
+		originStateFilter = undefined
+		originCityFilter = undefined
+		destMilesFilter = undefined
+		destStateFilter = undefined
+		destCityFilter = undefined
+		trailerTypesFilter = undefined
 		originMilesFilter = originMiles;
 		originStateFilter = originState;
 		originCityFilter = originCity;
@@ -125,8 +135,12 @@
 		destStateFilter = destState;
 		destCityFilter = destCity;
 		trailerTypesFilter = trailerTypes;
-		fromDateRange = new Date(fromDate);
-		toDateRange = new Date(toDate);
+		if (fromDate) {
+			fromDateRange = new Date(fromDate);
+		}
+		if (toDate) {
+			toDateRange = new Date(toDate);
+		}
 	}
 </script>
 
@@ -153,6 +167,7 @@
 										? active
 										: inactive} mx-1 my-3 rounded px-4 py-2 text-white">Email</button
 								>
+								{#if savedSearch.pickupDateStart && savedSearch.pickupDateEnd}
 								<button
 									onclick={() =>
 										setFilters(
@@ -168,6 +183,54 @@
 										)}
 									class="mx-1 my-3 rounded bg-blue-600 px-4 py-2 text-white">View</button
 								>
+			{:else if savedSearch.pickupDateStart && !savedSearch.pickupDateEnd}
+
+									<button
+										onclick={() =>
+											setFilters(
+												savedSearch.originMiles,
+												savedSearch.originState,
+												savedSearch.originCity,
+												savedSearch.destMiles,
+												savedSearch.destState,
+												savedSearch.destCity,
+												savedSearch.trailerType,
+												savedSearch.pickupDateStart
+											)}
+										class="mx-1 my-3 rounded bg-blue-600 px-4 py-2 text-white">View</button
+									>
+			{:else if !savedSearch.pickupDateStart && savedSearch.pickupDateEnd}
+
+									<button
+										onclick={() =>
+											setFilters(
+												savedSearch.originMiles,
+												savedSearch.originState,
+												savedSearch.originCity,
+												savedSearch.destMiles,
+												savedSearch.destState,
+												savedSearch.destCity,
+												savedSearch.trailerType,
+												savedSearch.pickupDateEnd
+											)}
+										class="mx-1 my-3 rounded bg-blue-600 px-4 py-2 text-white">View</button
+									>
+			{:else}
+
+									<button
+										onclick={() =>
+											setFilters(
+												savedSearch.originMiles,
+												savedSearch.originState,
+												savedSearch.originCity,
+												savedSearch.destMiles,
+												savedSearch.destState,
+												savedSearch.destCity,
+												savedSearch.trailerType,
+											)}
+										class="mx-1 my-3 rounded bg-blue-600 px-4 py-2 text-white">View</button
+									>
+			{/if}
 								<button
 									onclick={() => deleteRow(savedSearch.id, savedSearch.name)}
 									class="mx-1 my-3 rounded border border-red-600 px-4 py-2 text-red-600 hover:bg-red-600 hover:text-white"
@@ -186,11 +249,11 @@
 						manageSavedSearchIsShowing = manageSavedSearchIsShowing ? false : true;
 					}}>View all saved searches</button
 				>
-				<button class="mx-50 my-3 w-full rounded bg-slate-800 px-5 py-2 text-white"
+				<button
+					class="mx-50 my-3 w-full rounded bg-slate-800 px-5 py-2 text-white"
 					onclick={() => {
-						contactInfoPreferencesModal = true
-					}}
-					>Notification Preferences</button
+						contactInfoPreferencesModal = true;
+					}}>Notification Preferences</button
 				>
 			</div>
 		</div>
@@ -209,4 +272,17 @@
 	bind:savedSearches
 />
 <ContactInfoPreferencesModal bind:contactInfoPreferencesModal email={true} text={true} {userId} />
-<ManageSavedSearchModal bind:originMilesFilter bind:originStateFilter bind:originCityFilter bind:destMilesFilter bind:destCityFilter bind:destStateFilter bind:trailerTypesFilter bind:fromDateRange bind:toDateRange bind:manageSavedSearchIsShowing bind:savedSearches {userId} />
+<ManageSavedSearchModal
+	bind:originMilesFilter
+	bind:originStateFilter
+	bind:originCityFilter
+	bind:destMilesFilter
+	bind:destCityFilter
+	bind:destStateFilter
+	bind:trailerTypesFilter
+	bind:fromDateRange
+	bind:toDateRange
+	bind:manageSavedSearchIsShowing
+	bind:savedSearches
+	{userId}
+/>
