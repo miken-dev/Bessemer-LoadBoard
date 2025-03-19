@@ -33,8 +33,9 @@
 	</div>
 	<div class="flex">
 		<DarkMode class="pt-2 dark:text-gray-100" />
+		{#if dev}
 			<Button on:click={devLogin} color="blue">Log in (DEV)</Button>
-		{/if} -->
+		{/if} 
 		{#if loggedIn}
 			<Button size="sm" on:click={logout} color="blue">Log Out</Button>
 		{:else}
