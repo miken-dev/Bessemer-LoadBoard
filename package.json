@@ -48,6 +48,7 @@
 		"@tailwindcss/typography": "^0.5.15",
 		"@trigger.dev/sdk": "^3.3.16",
 		"leaflet": "^1.9.4",
+		"leaflet-gesture-handling": "^1.2.2",
 		"lucide-svelte": "^0.474.0",
 		"pocketbase": "^0.25.1",
 		"sveaflet": "^0.1.1"
