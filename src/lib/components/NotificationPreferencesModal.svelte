@@ -69,6 +69,51 @@
 		});
 		return search;
 	}
+
+	function saveButtonEnable(): boolean {
+		// Name is required in all cases
+		if (!name) return false;
+
+		// Helper function to validate email format
+		const isValidEmail = (email: string) => {
+			return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+		};
+
+		// Helper function to validate phone format (accepts formats like: 123-456-7890, (123) 456-7890, 1234567890)
+		const isValidPhone = (phone: string) => {
+			return /^\+?[\d\s-()]{10,}$/.test(phone);
+		};
+
+		// If no notifications are enabled, only name is required
+		if (!emailNotification && !textNotification) {
+			return true;
+		}
+
+		// Check email notification requirements
+		if (emailNotification) {
+			// Check if user has existing email or valid new email
+			const hasValidExistingEmail = userInfo?.email && isValidEmail(userInfo.email);
+			const hasValidNewEmail = emailAddress && isValidEmail(emailAddress);
+
+			if (!hasValidExistingEmail && !hasValidNewEmail) {
+				return false;
+			}
+		}
+
+		// Check text notification requirements
+		if (textNotification) {
+			// Check if user has existing phone or valid new phone
+			const hasValidExistingPhone = userInfo?.phone && isValidPhone(userInfo.phone);
+			const hasValidNewPhone = phoneNumber && isValidPhone(phoneNumber);
+
+			if (!hasValidExistingPhone && !hasValidNewPhone) {
+				return false;
+			}
+		}
+
+		// All checks passed
+		return true;
+	}
 </script>
 
 <Modal
