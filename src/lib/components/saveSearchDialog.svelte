@@ -201,6 +201,7 @@
 >
 	<Label for="name" class="mb-2 block">Name your saved search</Label>
 	<Input id="name" placeholder="" bind:value={name} />
+	<p class="text-red-500">{error}</p>
 	<div>Notifications</div>
 	<div class="flex h-14 items-center gap-6">
 		<Toggle color="blue" bind:checked={emailNotification}>Email</Toggle>
