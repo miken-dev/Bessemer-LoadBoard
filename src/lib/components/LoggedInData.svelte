@@ -207,7 +207,7 @@
 		{#if tableIsShowing}
 			<div class="flex flex-col">
 				<div class="p-0 md:pl-8">
-					<Button color="blue" class="w-80"
+					<Button color="blue" class="px-10 md:whitespace-nowrap"
 						>Sort by: {sortName}
 						{#if sortDropdownOpen}
 							<ChevronUpOutline />
