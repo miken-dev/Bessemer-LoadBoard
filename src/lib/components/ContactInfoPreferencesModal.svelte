@@ -88,13 +88,13 @@
 	{#if !saveButtonEnable()}
 		<Button size="md" color="alternative" disabled>Save</Button>
 	{:else}
-	<Button
-		size="md"
-		color="blue"
-		onclick={async () => {
-			await save();
-		}}>Save</Button
-	>
+		<Button
+			size="md"
+			color="blue"
+			onclick={async () => {
+				await save();
+			}}>Save</Button
+		>
 	{/if}
-		<Button size="md" color="alternative">Cancel</Button>
+	<Button size="md" color="alternative">Cancel</Button>
 </Modal>
