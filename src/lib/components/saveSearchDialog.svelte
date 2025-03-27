@@ -30,7 +30,6 @@
 		fromDateRange: Date | undefined;
 		toDateRange: Date | undefined;
 	} = $props();
-
 	let name: string = $state('');
 	let emailNotification: boolean = $state(false);
 	let textNotification: boolean = $state(false);
@@ -38,7 +37,7 @@
 
 	let emailAddress = $state('');
 	let phoneNumber = $state('');
-
+	let error = $state('')
 	const PB = new PocketBase('https://bessemer-loadboard.pockethost.io');
 	async function getUserInfo() {
 		const user = await PB.collection('driver').getOne(userId);
@@ -66,7 +65,16 @@
 	onMount(() => {
 		return async () => (savedSearches = await updateSavedSeachList());
 	});
-
+	function checkSavedSearchName(name: String): Boolean {
+		for (const savedSearch in savedSearches) {
+			if (savedSearch.name === name) {
+				error = "Please enter a unique name"
+				return false
+			}
+		}
+	error = ""
+	return true
+	}
 	async function updateSavedSeachList() {
 		const records = await PB.collection('Saved_Searches').getFullList({
 			filter: `userID = "${userId}"`
@@ -143,6 +151,15 @@
 			return /^\+?[\d\s-()]{10,}$/.test(phone);
 		};
 
+		for (const savedSearch of savedSearches) {
+			console.log("running comparison")
+			if (savedSearch.name === name) {
+				console.log(`${savedSearch.name} === ${name} ${savedSearch.name === name}`)
+				error = "Please enter a unique name"
+				return false
+			}
+		}
+		error = ""
 		// If no notifications are enabled, only name is required
 		if (!emailNotification && !textNotification) {
 			return true;
@@ -169,7 +186,7 @@
 				return false;
 			}
 		}
-
+		return true
 		// All checks passed
 		return true;
 	}
@@ -205,7 +222,7 @@
 		{/if}
 	</div>
 
-	{#if !saveButtonEnable()}
+	{#if !saveButtonEnable() }
 		<Button size="md" color="alternative" disabled>Save</Button>
 	{:else}
 		<Button
