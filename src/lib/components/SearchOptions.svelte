@@ -16,6 +16,7 @@
 		fromDateRange = $bindable(),
 		toDateRange = $bindable(),
 		saveSearchDialogIsShowing = $bindable(),
+		loggedIn,
 		manageSavedSearchIsShowing,
 		userId
 	}: {
@@ -29,6 +30,7 @@
 		fromDateRange: Date | undefined;
 		toDateRange: Date | undefined;
 		saveSearchDialogIsShowing: boolean;
+		loggedIn: boolean	
 		manageSavedSearchIsShowing: boolean;
 		userId: string | null;
 		filtersActive: boolean;
@@ -76,7 +78,8 @@
 </script>
 
 <div>
-	<div class="flex max-w-full flex-col md:flex-row">
+<div class="flex max-w-full flex-col md:flex-row">
+	{#if loggedIn}
 		<NewSearch
 			bind:originMilesFilter
 			bind:originStateFilter
@@ -90,6 +93,7 @@
 			bind:saveSearchDialogIsShowing
 			bind:savedSearches
 			bind:contactInfoPreferencesModal
+			saveEnabled = {true}
 			{userId}
 		/>
 		<SavedSearches
@@ -107,5 +111,25 @@
 			bind:contactInfoPreferencesModal
 			{userId}
 		/>
+{:else}
+	<div class="md:w-1/2">	
+	<NewSearch
+		bind:originMilesFilter
+		bind:originStateFilter
+		bind:originCityFilter
+		bind:destMilesFilter
+		bind:destCityFilter
+		bind:destStateFilter
+		bind:trailerTypesFilter
+		bind:fromDateRange
+		bind:toDateRange
+		bind:saveSearchDialogIsShowing
+		bind:savedSearches
+		bind:contactInfoPreferencesModal
+		saveEnabled = {false}
+		{userId}
+	/>
 	</div>
+{/if}
+</div>
 </div>
