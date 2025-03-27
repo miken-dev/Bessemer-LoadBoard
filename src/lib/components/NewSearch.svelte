@@ -222,6 +222,7 @@
 		saveSearchDialogIsShowing = $bindable(),
 		savedSearches = $bindable(),
 		contactInfoPreferencesModal = $bindable(),
+		saveEnabled,
 		userId
 	}: {
 		originLatFilter: number | undefined;
@@ -240,6 +241,7 @@
 		saveSearchDialogIsShowing: boolean;
 		savedSearches: [savedSearchesTypes] | [];
 		contactInfoPreferencesModal: boolean;
+		saveEnabled: boolean
 		userId: string | null;
 	} = $props();
 
@@ -534,7 +536,8 @@
 	</div>
 
 	<!-- BUTTONS -->
-	<ButtonGroup divClass="flex justify-start">
+	<ButtonGroup divClass="flex justify-start"> 
+		{#if saveEnabled}
 		<Button
 			color="blue"
 			onclick={() => {
@@ -544,6 +547,7 @@
 			<FloppyDiskSolid class="me-2 h-4 w-4" />
 			Save Search
 		</Button>
+{/if}
 		<Button color="dark" on:click={clearSearch}>
 			<DeleteRowOutline class="me-2 h-4 w-4" />
 			Clear Search</Button
