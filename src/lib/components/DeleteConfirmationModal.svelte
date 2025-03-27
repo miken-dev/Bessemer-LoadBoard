@@ -31,9 +31,6 @@
 	}
 
 
-	onDestroy(async () => {
-		savedSearches = await getRecords()
-	})
 
 	async function getRecords() {
 		const records = await PB.collection('Saved_Searches').getFullList({
