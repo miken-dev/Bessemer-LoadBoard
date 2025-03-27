@@ -97,7 +97,6 @@
 	<Header {loggedIn} />
 </header>
 <main class="gray-800 min-h-lvh w-full px-5 pt-5 dark:bg-gray-800 dark:text-gray-100 md:px-20">
-	{#if loggedIn}
 		<Button
 			outline
 			onclick={() => {
@@ -121,10 +120,11 @@
 				bind:fromDateRange
 				bind:toDateRange
 				bind:saveSearchDialogIsShowing
+				{loggedIn}
 				{userId}
 			/>
 		{/if}
-	{/if}
+	
 
 	<!-- Table and Map -->
 	{#if loggedIn}
