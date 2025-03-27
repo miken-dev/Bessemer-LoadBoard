@@ -31,9 +31,8 @@
 	} as SortOptions);
 
 	const sortOptions = [
-		{ label: 'default', value: ''},
 		{ label: 'Origin State', value: 'originState' },
-		{ label: 'Origin (state, city), Origin (state, city)', value: 'originCity' },
+		{ label: 'Origin (state, city), Destination (state, city)', value: 'originCity' },
 		{ label: 'Destination (state, city), Origin (state, city)', value: 'destinationCity' },
 		{ label: 'Load Date (Oldest First)', value: 'loadDate-asc' },
 		{ label: 'Load Date (Newest First)', value: 'loadDate-desc' },
