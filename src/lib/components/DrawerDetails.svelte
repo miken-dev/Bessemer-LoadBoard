@@ -147,7 +147,7 @@
 			<h3 class="font-extrabold">LTL:</h3>
 			<p>{data.ltl ? "Yes" : "No"}</p>
 		</div>
-		<div class="my-1 mt-3 flex max-w-80 flex-col">
+		<div class="my-1 mb-10 mt-3 flex max-w-80 flex-col">
 			<h3 class="font-extrabold">Notes:</h3>
 			<p>{data.notes}</p>
 		</div>
