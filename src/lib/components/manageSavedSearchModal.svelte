@@ -5,7 +5,7 @@
 	import type { savedSearchesTypes } from '$lib/types';
 	import DeleteConfirmationModal from './DeleteConfirmationModal.svelte';
 	import { Modal } from 'flowbite-svelte';
-
+	
 	let {
 		originMilesFilter = $bindable(),
 		originStateFilter = $bindable(),
@@ -81,7 +81,7 @@
 		});
 
 		savedSearches = await getRecords();
-	}
+ 	}
 
 	async function toggleText(currentValue: boolean, id: string) {
 		const record = await PB.collection('Saved_Searches').update(`${id}`, {
