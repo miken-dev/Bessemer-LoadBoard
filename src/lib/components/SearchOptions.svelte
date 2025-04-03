@@ -78,7 +78,7 @@
 </script>
 
 <div>
-<div class="flex max-w-full flex-col md:flex-row">
+<div class="flex max-w-full flex-col lg:flex-row">
 	{#if loggedIn}
 		<NewSearch
 			bind:originMilesFilter
