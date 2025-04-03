@@ -326,6 +326,25 @@
 	interface IndexableData extends Array<LocationEntry> {
 		stateIndex?: StateIndex;
 	}
+
+	// Create an index for faster lookups
+	function createStateIndex(data: LocationEntry[]): StateIndex {
+		const stateIndex: StateIndex = {};
+
+		for (let i = 0; i < data.length; i++) {
+			const entry = data[i];
+			const state = entry.state;
+
+			if (!stateIndex[state]) {
+				stateIndex[state] = [];
+			}
+
+			stateIndex[state].push(entry);
+		}
+
+		return stateIndex;
+	}
+
 	let originStateFiltered = $derived(
 		states.filter((state) => state.toLowerCase().includes(originStateSearch.toLowerCase()))
 	);
