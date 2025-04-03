@@ -403,7 +403,6 @@
 	</div>
 
 	<!-- ORIGIN -->
-	<!-- TODO: Add divider -->
 	<div class="flex flex-col items-center justify-start gap-3 md:flex-row">
 		<p class="justify-self-start">Origin:</p>
 		<div class="flex items-center gap-3">
@@ -425,7 +424,14 @@
 				{/each}
 			</Dropdown>
 			<p>of</p>
-			<Button size="xs" color="light"
+			<Button
+				size="xs"
+				color="light"
+				on:click={() => {
+					setTimeout(() => {
+						document.querySelector<HTMLInputElement>('.originStateSearch')?.focus();
+					}, 155);
+				}}
 				>{originStateFilter ? originStateFilter : 'State'}<ChevronDownOutline
 					class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
 				/></Button
