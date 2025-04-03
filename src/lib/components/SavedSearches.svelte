@@ -144,7 +144,7 @@
 		</div>
 	{:else if savedSearches.length}
 		{#if savedSearches.length > 4}
-			<p>Showing your 4 most recent searches</p>
+			<p>Showing your 4 most recent saved searches</p>
 		{/if}
 		<div class="flex h-full flex-col justify-between pb-4">
 			<div>
