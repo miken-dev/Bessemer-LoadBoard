@@ -134,6 +134,7 @@
 		if (toDate) {
 			toDateRange = new Date(toDate);
 		}
+		manageSavedSearchIsShowing = false
 	}
 </script>
 
@@ -171,7 +172,8 @@
 											savedSearch.trailerType,
 											savedSearch.pickupDateStart,
 											savedSearch.pickupDateEnd
-										)}
+										)
+									}
 									class="mx-1 my-3 rounded bg-blue-600 px-4 py-2 text-white">View</button
 								>
 								<button
