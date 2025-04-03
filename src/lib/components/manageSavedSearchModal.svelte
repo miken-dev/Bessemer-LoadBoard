@@ -64,7 +64,7 @@
 			};
 		});
 		console.log(`got ${results.length} records`)
-		return results;
+		return results.reverse();
 	}
 
 	onMount(async () => {
