@@ -308,6 +308,24 @@
 	let trailerTypesShowing = $state(false);
 	let trailerTypesSearch = $state('');
 
+	// Define the data interface
+	interface LocationEntry {
+		city: string;
+		state: string;
+		lat: number;
+		lng: number;
+		zips: string;
+	}
+
+	// Define the interface for the index
+	interface StateIndex {
+		[state: string]: LocationEntry[];
+	}
+
+	// Define the interface for data with optional index
+	interface IndexableData extends Array<LocationEntry> {
+		stateIndex?: StateIndex;
+	}
 	let originStateFiltered = $derived(
 		states.filter((state) => state.toLowerCase().includes(originStateSearch.toLowerCase()))
 	);
