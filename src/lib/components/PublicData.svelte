@@ -1,4 +1,3 @@
-
 <script lang="ts">
 	import ViewsBar from './ViewsBar.svelte';
 	import LoadTablev2 from './LoadTablev2.svelte';
@@ -14,116 +13,6 @@
 	import { Dropdown, DropdownItem, Button } from 'flowbite-svelte';
 	import { ChevronUpOutline, ChevronDownOutline } from 'flowbite-svelte-icons';
 
-	//state
-	let selectedRow = $state(0);
-	let multipleLoads = $state(false);
-	let selectedCity = $state('');
-	let selectedState: string | null = $state(null);
-	let detailsHidden = $state(true);
-	let tableClicked = $state(false);
-	let tableIsShowing = $state(true);
-	let mapIsShowing = $state(true);
-	let sortDropdownOpen = $state(false);
-
-	//sorting
-	let currentSort = $state({
-		field: 'loadDate',
-		direction: 'desc'
-	} as SortOptions);
-
-	const sortOptions = [
-		{ label: 'Origin State', value: 'originState' },
-		{ label: 'Origin (state, city), Origin (state, city)', value: 'originCity' },
-		{ label: 'Destination (state, city), Origin (state, city)', value: 'destinationCity' },
-		{ label: 'Load Date (Oldest First)', value: 'loadDate-asc' },
-		{ label: 'Load Date (Newest First)', value: 'loadDate-desc' },
-		{ label: 'Revenue (High to Low)', value: 'revenue-desc' },
-		{ label: 'Revenue (Low to High)', value: 'revenue-asc' },
-		{ label: 'Terminal', value: 'terminal' }
-	];
-	function handleSort(value: string) {
-		const [field, direction] = value.split('-');
-		currentSort = {
-			field: field as SortOptions['field'],
-			direction: (direction || 'asc') as 'asc' | 'desc'
-		};
-	}
-
-	//tableData
-	let tableData: TableDataTypes[] = $state([]);
-
-const PB = new PocketBase('https://bessemer-loadboard.pockethost.io');
-async function getRecords() {
-	let records = await PB.collection('Active_Loads_Public').getFullList({});
-	const results: [TableDataTypes] = records.map((record) => {
-		return {
-			loadID: record.id,
-			loadDate: record.loadDate,
-			deliveryDate: record.deliveryDate,
-			originAddress: record.originAddress,
-			originZipCode: record.originZipCode,
-			destinationAddress: record.destinationAddress,
-			destinationZipCode: record.destinationZipCode,
-			commodity: record.commodity,
-			lengthFeet: record.lengthFeet,
-			lengthInches: record.lengthInches,
-			widthFeet: record.widthFeet,
-			widthInches: record.widthInches,
-			heightFeet: record.heightFeet,
-			heightInches: record.heightInches,
-			weightInPounds: record.weightInPounds,
-			pieceCount: record.pieceCount,
-			revenue: record.revenue,
-			notes: record.notes,
-			terminalID: record.terminalID,
-			terminalPhone: record.terminalPhone,
-			ltl: record.ltl,
-			isPublic: record.isPublic,
-			trailerTypes: record.trailerTypes,
-			miles: record.miles,
-			terminalName: record.terminalName,
-			originStateName: record.originStateName,
-			originCityName: record.originCityName,
-			originLat: record.originLat,
-			originLng: record.originLng,
-			destinationStateName: record.destinationStateName,
-			destinationCityName: record.destinationCityName,
-			destinationLat: record.destinationLat,
-			destinationLng: record.destinationLng,
-			areaLoadCount: record.areaLoadCount
-		};
-	});
-	return results;
-}
-PB.collection('Active_Loads_Public').subscribe('*', async (e) => {
-	tableData = await getRecords();
-});
-
-onMount(async () => {
-	tableData = await getRecords();
-});
-
-onDestroy(() => {
-	PB.collection('Active_Loads_Public').unsubscribe('*');
-});
-
-	let tableWidth = (): string => {
-		if (tableIsShowing) {
-			return 'w-1/2';
-		} else {
-			return 'w-max m-auto';
-		}
-	};
-	let mapWidth = (): string => {
-		if (tableIsShowing) {
-			return 'w-1/3';
-		} else {
-			return 'w-screen';
-		}
-	};
-
-	//Filters
-
 	let {
 		originMilesFilter,
 		originStateFilter,
@@ -134,7 +23,8 @@ onDestroy(() => {
 		trailerTypesFilter,
 		fromDateRange,
 		toDateRange,
-		filtersActive
+		filtersActive,
+		cleared = $bindable()
 	}: {
 		originMilesFilter: number | undefined;
 		originStateFilter: string | undefined;
@@ -146,6 +36,7 @@ onDestroy(() => {
 		fromDateRange: Date | undefined;
 		toDateRange: Date | undefined;
 		filtersActive: boolean;
+		cleared: boolean
 	} = $props();
 
 	let filterValues = $state({
@@ -172,6 +63,113 @@ onDestroy(() => {
 			toDateRange
 		};
 	});
+	//state
+	let selectedRow = $state(0);
+	let multipleLoads = $state(false);
+	let selectedCity = $state('');
+	let selectedState: string | null = $state(null);
+	let detailsHidden = $state(true);
+	let tableClicked = $state(false);
+	let tableIsShowing = $state(true);
+	let mapIsShowing = $state(true);
+	let sortDropdownOpen = $state(false);
+
+	//sorting
+	let currentSort = $state({
+		field: 'loadDate',
+		direction: 'desc'
+	} as SortOptions);
+
+	const sortOptions = [
+		{ label: 'Origin State', value: 'originState' },
+		{ label: 'Origin (state, city), Destination (state, city)', value: 'originCity' },
+		{ label: 'Destination (state, city), Origin (state, city)', value: 'destinationCity' },
+		{ label: 'Load Date (Oldest First), Origin State, Origin City', value: 'loadDate-asc' },
+		{ label: 'Load Date (Newest First), Origin State, Origin City', value: 'loadDate-desc' },
+		{ label: 'Revenue (High to Low)', value: 'revenue-desc' },
+		{ label: 'Revenue (Low to High)', value: 'revenue-asc' },
+		{ label: 'Terminal', value: 'terminal' }
+	];
+	function handleSort(value: string) {
+		const [field, direction] = value.split('-');
+		currentSort = {
+			field: field as SortOptions['field'],
+			direction: (direction || 'asc') as 'asc' | 'desc'
+		};
+	}
+
+	//tableData
+	let tableData: TableDataTypes[] = $state([]);
+
+	const PB = new PocketBase('https://bessemer-loadboard.pockethost.io');
+	async function getRecords() {
+		let records = await PB.collection('Active_Loads_Public').getFullList({});
+		const results: [TableDataTypes] = records.map((record) => {
+			return {
+				loadID: record.id,
+				loadDate: record.loadDate,
+				deliveryDate: record.deliveryDate,
+				originAddress: record.originAddress,
+				originZipCode: record.originZipCode,
+				destinationAddress: record.destinationAddress,
+				destinationZipCode: record.destinationZipCode,
+				commodity: record.commodity,
+				lengthFeet: record.lengthFeet,
+				lengthInches: record.lengthInches,
+				widthFeet: record.widthFeet,
+				widthInches: record.widthInches,
+				heightFeet: record.heightFeet,
+				heightInches: record.heightInches,
+				weightInPounds: record.weightInPounds,
+				pieceCount: record.pieceCount,
+				revenue: record.revenue,
+				notes: record.notes,
+				terminalID: record.terminalID,
+				terminalPhone: record.terminalPhone,
+				ltl: record.ltl,
+				isPublic: record.isPublic,
+				trailerTypes: record.trailerTypes,
+				miles: record.miles,
+				terminalName: record.terminalName,
+				originStateName: record.originStateName,
+				originCityName: record.originCityName,
+				originLat: record.originLat,
+				originLng: record.originLng,
+				destinationStateName: record.destinationStateName,
+				destinationCityName: record.destinationCityName,
+				destinationLat: record.destinationLat,
+				destinationLng: record.destinationLng,
+				areaLoadCount: record.areaLoadCount
+			};
+		});
+		return results;
+	}
+	PB.collection('Active_Loads_Public').subscribe('*', async (e) => {
+		tableData = await getRecords();
+	});
+
+	onMount(async () => {
+		tableData = await getRecords();
+	});
+
+	onDestroy(() => {
+		PB.collection('Active_Loads_Public').unsubscribe('*');
+	});
+
+	let tableWidth = (): string => {
+		if (tableIsShowing) {
+			return 'w-1/2';
+		} else {
+			return 'w-max m-auto';
+		}
+	};
+	let mapWidth = (): string => {
+		if (tableIsShowing) {
+			return 'w-1/3';
+		} else {
+			return 'w-screen';
+		}
+	};
 
 	function updateSort(field: SortOptions['field']) {
 		if (currentSort.field === field) {
@@ -190,13 +188,25 @@ onDestroy(() => {
 	}
 
 	let filteredData = $derived.by((): TableDataTypes[] => {
-		console.log(`filterValues: ${filterValues.trailerTypesFilter}`)
+		console.log(`filterValues: ${filterValues.trailerTypesFilter}`);
 		return filterAndSortTableData(tableData, filterValues, locations, currentSort);
 	});
 	function numberWithCommas(number: number) {
 		return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 	}
-	let sortName = $state("")
+	let sortName = $state('');
+	onMount(() => {
+		handleSort('loadDate-asc');
+		sortName = 'Load Date (Oldest First), Origin State, Origin City';
+	});
+
+	$effect(() => {
+		if (cleared) {
+			handleSort("loadDate-asc");
+			sortName = "Load Date (Oldest First), Origin State, Origin City";
+			cleared = false
+		}
+	})
 </script>
 
 <div>
@@ -220,7 +230,7 @@ onDestroy(() => {
 								on:click={() => {
 									handleSort(option.value);
 									sortDropdownOpen = false;
-									sortName = option.label
+									sortName = option.label;
 								}}
 							>
 								{option.label}
