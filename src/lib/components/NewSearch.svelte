@@ -361,15 +361,16 @@
 	);
 
 	let originCityFiltered = $derived(
-		locations.filter((location) =>
-			location.city.toLowerCase().includes(originCitySearch.toLowerCase())
+		filterByState(locations, originStateFilter).filter(
+			(location) =>
+				location.city.toLowerCase().includes(originCitySearch.toLowerCase())
 		)
 	);
 	let destStateFiltered = $derived(
 		states.filter((state) => state.toLowerCase().includes(destStateSearch.toLowerCase()))
 	);
 	let destCityFiltered = $derived(
-		locations.filter((location) =>
+		filterByState(locations, destStateFilter).filter((location) =>
 			location.city.toLowerCase().includes(destCitySearch.toLowerCase())
 		)
 	);
