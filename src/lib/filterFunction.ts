@@ -156,9 +156,21 @@ export function filterAndSortTableData(
                 case 'loadDate':
                     const dateA = new Date(a.loadDate);
                     const dateB = new Date(b.loadDate);
-                    return sortOption.direction === 'asc'
+                    const dateCompare = sortOption.direction === 'asc'
                         ? dateA.getTime() - dateB.getTime()
                         : dateB.getTime() - dateA.getTime();
+                    if (dateCompare !== 0) return dateCompare;
+                    
+                    // Secondary sort by originStateName
+                    const stateCompare = sortOption.direction === 'asc'
+                        ? a.originStateName.localeCompare(b.originStateName)
+                        : b.originStateName.localeCompare(a.originStateName);
+                    if (stateCompare !== 0) return stateCompare;
+                    
+                    // Tertiary sort by originCityName
+                    return sortOption.direction === 'asc'
+                        ? a.originCityName.localeCompare(b.originCityName)
+                        : b.originCityName.localeCompare(a.originCityName);
                 
                 case 'revenue':
                     return sortOption.direction === 'asc'
