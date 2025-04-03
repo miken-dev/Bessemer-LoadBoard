@@ -84,7 +84,7 @@ export const bessemerLoadboardTask = schedules.task({
 					userID: record.userID
 				};
 			});
-			return results;
+			return results.reverse();
 		}
 		async function getUsers() {
 			let records = await PB.collection('driver').getFullList();
