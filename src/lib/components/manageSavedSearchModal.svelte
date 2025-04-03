@@ -109,9 +109,18 @@
 		destState: string,
 		destCity: string,
 		trailerTypes: string,
-		fromDate: Date,
-		toDate: Date
+		fromDate?: Date,
+		toDate?: Date
 	) {
+		fromDateRange = undefined
+		toDateRange = undefined
+		originMilesFilter = undefined
+		originStateFilter = undefined
+		originCityFilter = undefined
+		destMilesFilter = undefined
+		destStateFilter = undefined
+		destCityFilter = undefined
+		trailerTypesFilter = undefined
 		originMilesFilter = originMiles;
 		originStateFilter = originState;
 		originCityFilter = originCity;
@@ -119,8 +128,12 @@
 		destStateFilter = destState;
 		destCityFilter = destCity;
 		trailerTypesFilter = trailerTypes;
-		fromDateRange = fromDate;
-		toDateRange = toDate;
+		if (fromDate) {
+			fromDateRange = new Date(fromDate);
+		}
+		if (toDate) {
+			toDateRange = new Date(toDate);
+		}
 	}
 </script>
 
