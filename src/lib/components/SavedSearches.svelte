@@ -72,7 +72,7 @@
 				textNotification: record.textNotification
 			};
 		});
-		return results;
+		return results.reverse();
 	}
 
 	async function toggleEmail(currentValue: boolean, id: string) {
