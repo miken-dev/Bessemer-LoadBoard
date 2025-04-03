@@ -2,7 +2,6 @@
 	import DrawerMap from './DrawerMap.svelte';
 	import { browser } from '$app/environment';
 	import type { TableDataTypes } from '$lib/types';
-	import InfoDisplay from './InfoDisplay.svelte';
 	let {
 		data,
 		horizontal
