@@ -7,10 +7,6 @@
 	import ContactInfoPreferencesModal from './ContactInfoPreferencesModal.svelte';
 	import ManageSavedSearchModal from './manageSavedSearchModal.svelte';
 	let {
-		//	originLatFilter = $bindable(),
-		//	originLngFilter = $bindable(),
-		//	destLatFilter = $bindable(),
-		//	destLngFilter = $bindable(),
 		originMilesFilter = $bindable(),
 		originStateFilter = $bindable(),
 		originCityFilter = $bindable(),
@@ -25,10 +21,6 @@
 		contactInfoPreferencesModal = $bindable(),
 		userId
 	}: {
-		//	originLatFilter: number | undefined;
-		//	originLngFilter: number | undefined;
-		//	destLatFilter: number | undefined;
-		//	destLngFilter: number | undefined;
 		originMilesFilter: number | undefined;
 		originStateFilter: string | undefined;
 		originCityFilter: string | undefined;
@@ -106,7 +98,6 @@
 	async function refresh() {
 		savedSearches = await getRecords();
 	}
-
 
 	function setFilters(
 		originMiles: number,
@@ -264,7 +255,6 @@
 		</div>
 	{/if}
 </div>
-
 <DeleteConfirmationModal
 	id={deleteID}
 	name={deleteName}
@@ -285,4 +275,4 @@
 	bind:manageSavedSearchIsShowing
 	bind:savedSearches
 	{userId}
-/>
+/> 
