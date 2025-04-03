@@ -34,8 +34,8 @@
 		{ label: 'Origin State', value: 'originState' },
 		{ label: 'Origin (state, city), Destination (state, city)', value: 'originCity' },
 		{ label: 'Destination (state, city), Origin (state, city)', value: 'destinationCity' },
-		{ label: 'Load Date (Oldest First)', value: 'loadDate-asc' },
-		{ label: 'Load Date (Newest First)', value: 'loadDate-desc' },
+		{ label: 'Load Date (Oldest First), Origin State, Origin City', value: 'loadDate-asc' },
+		{ label: 'Load Date (Newest First), Origin State, Origin City', value: 'loadDate-desc' },
 		{ label: 'Revenue (High to Low)', value: 'revenue-desc' },
 		{ label: 'Revenue (Low to High)', value: 'revenue-asc' },
 		{ label: 'Terminal', value: 'terminal' }
@@ -134,7 +134,8 @@
 		trailerTypesFilter,
 		fromDateRange,
 		toDateRange,
-		filtersActive
+		filtersActive,
+		cleared = $bindable()
 	}: {
 		originMilesFilter: number | undefined;
 		originStateFilter: string | undefined;
@@ -146,6 +147,7 @@
 		fromDateRange: Date | undefined;
 		toDateRange: Date | undefined;
 		filtersActive: boolean;
+		cleared: boolean
 	} = $props();
 
 	let filterValues = $state({
