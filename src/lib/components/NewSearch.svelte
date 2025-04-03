@@ -20,6 +20,7 @@
 	import SaveSearchDialog from './saveSearchDialog.svelte';
 	import type { savedSearchesTypes } from '$lib/types';
 	import ContactInfoPreferencesModal from './ContactInfoPreferencesModal.svelte';
+	import SearchBar from './SearchBar.svelte';
 	let miles = [5, 10, 25, 50, 100, 150, 200, 250, 300, 400, 500];
 
 	const states = [
