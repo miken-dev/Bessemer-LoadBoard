@@ -62,9 +62,7 @@
 	onMount(async () => {
 		userInfo = await getUserInfo();
 	});
-	onMount(() => {
-		return async () => (savedSearches = await updateSavedSeachList());
-	});
+	
 	function checkSavedSearchName(name: String): Boolean {
 		for (const savedSearch in savedSearches) {
 			if (savedSearch.name === name) {
