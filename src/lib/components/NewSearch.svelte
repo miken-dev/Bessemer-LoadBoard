@@ -437,7 +437,7 @@
 				/></Button
 			>
 			<Dropdown bind:open={originStateShowing} class="max-h-48 w-48 overflow-y-auto py-1">
-				<Search size="sm" bind:value={originStateSearch} />
+				<Search size="sm" bind:value={originStateSearch} class="originStateSearch" />
 				{#each originStateFiltered as state}
 					<DropdownItem
 						on:click={() => {
@@ -448,24 +448,37 @@
 					>
 				{/each}
 			</Dropdown>
-			<Button size="xs" color="light"
-				>{originCityFilter ? originCityFilter : 'City'}<ChevronDownOutline
-					class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
-				/></Button
-			>
-			<Dropdown bind:open={originCityShowing} class="max-h-48 w-48 overflow-y-auto py-1">
-				<Search size="sm" bind:value={originCitySearch} />
-				{#each originCityFiltered as location}
-					{#if location.state === originStateFilter}
-						<DropdownItem
-							on:click={() => {
-								setOriginAddress(location.lat, location.lng, location.city);
-								originCityShowing = false;
-							}}>{location.city}</DropdownItem
-						>
-					{/if}
-				{/each}
-			</Dropdown>
+			{#if originStateFilter}
+				<Button
+					size="xs"
+					color="light"
+					on:click={() => {
+						setTimeout(() => {
+							document.querySelector<HTMLInputElement>('.originCitySearch')?.focus();
+						}, 155);
+					}}
+					>{originCityFilter ? originCityFilter : 'City'}<ChevronDownOutline
+						class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
+					/></Button
+				>
+				<Dropdown bind:open={originCityShowing} class="max-h-48 w-48 overflow-y-auto py-1">
+					<Search size="sm" bind:value={originCitySearch} class="originCitySearch" />
+					{#each originCityFiltered as location}
+						{#if location.state === originStateFilter}
+							<DropdownItem
+								on:click={() => {
+									setOriginAddress(location.lat, location.lng, location.city);
+									originCityShowing = false;
+								}}>{location.city}</DropdownItem
+							>
+						{/if}
+					{/each}
+				</Dropdown>
+			{:else}
+				<Button disabled size="xs" color="light"
+					>City<ChevronDownOutline class="ms-2 h-6 w-6 text-gray-800 dark:text-white" /></Button
+				>
+			{/if}
 		</div>
 	</div>
 
@@ -491,12 +504,14 @@
 			</Dropdown>
 			<p>of</p>
 			<Button size="xs" color="light"
+				on:click={() => {
+					setTimeout(() => { document.querySelector<HTMLInputElement>('.destStateSearch')?.focus()}, 155);
 				>{destStateFilter ? destStateFilter : 'State'}<ChevronDownOutline
 					class="text-gratext-gratext-gratext-gratext-gratext-gratext-gratext-gray-800 ms-2 h-6 w-6 dark:text-white"
 				/></Button
 			>
 			<Dropdown bind:open={destStateShowing} class="max-h-48 w-48 overflow-y-auto py-1">
-				<Search size="sm" bind:value={destStateSearch} />
+				<Search size="sm" bind:value={destStateSearch} class="destStateSearch" />
 				{#each destStateFiltered as state}
 					<DropdownItem
 						on:click={() => {
@@ -507,13 +522,17 @@
 					>
 				{/each}
 			</Dropdown>
+			{#if destStateFilter}
 			<Button size="xs" color="light"
+					on:click={() => {
+						setTimeout(() => { document.querySelector<HTMLInputElement>('.destCitySearch')?.focus()}, 155);
+					}}
 				>{destCityFilter ? destCityFilter : 'City'}<ChevronDownOutline
 					class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
 				/></Button
 			>
 			<Dropdown bind:open={destCityShowing} class="max-h-48 w-48 overflow-y-auto py-1">
-				<Search size="sm" bind:value={destCitySearch} />
+				<Search size="sm" bind:value={destCitySearch} class="destCitySearch"/>
 				{#each destCityFiltered as location}
 					{#if location.state === destStateFilter}
 						<DropdownItem
@@ -525,6 +544,13 @@
 					{/if}
 				{/each}
 			</Dropdown>
+{:else}
+				<Button size="xs" color="light" disabled
+				>City<ChevronDownOutline
+						class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
+					/></Button
+				>
+{/if}
 		</div>
 	</div>
 
@@ -537,57 +563,57 @@
 			/></Button
 		>
 		{#if trailerTypesFilter}
-		<Dropdown bind:open={trailerTypesShowing} class="h-48 w-60 overflow-y-auto py-1">
-			<Search size="sm" bind:value={trailerTypesSearch} />
-			{#each trailerTypeFiltered as trailerType}
-				{#if trailerTypesFilterArray.includes(trailerType.type) || trailerTypesFilter.includes(trailerType.type)}
-					<Checkbox
-						class="px-3"
-						color="blue"
-						checked
-						on:click={() => {
-							trailerType.enabled = trailerType.enabled ? false : true;
-							toggleTrailerType(trailerType.type);
-						}}>{trailerType.type}</Checkbox
-					>
-				{:else}
-					<Checkbox
-						class="px-3"
-						color="blue"
-						on:click={() => {
-							trailerType.enabled = trailerType.enabled ? false : true;
-							toggleTrailerType(trailerType.type);
-						}}>{trailerType.type}</Checkbox
-					>
-				{/if}
-			{/each}
-		</Dropdown>
+			<Dropdown bind:open={trailerTypesShowing} class="h-48 w-60 overflow-y-auto py-1">
+				<Search size="sm" bind:value={trailerTypesSearch} />
+				{#each trailerTypeFiltered as trailerType}
+					{#if trailerTypesFilterArray.includes(trailerType.type) || trailerTypesFilter.includes(trailerType.type)}
+						<Checkbox
+							class="px-3"
+							color="blue"
+							checked
+							on:click={() => {
+								trailerType.enabled = trailerType.enabled ? false : true;
+								toggleTrailerType(trailerType.type);
+							}}>{trailerType.type}</Checkbox
+						>
+					{:else}
+						<Checkbox
+							class="px-3"
+							color="blue"
+							on:click={() => {
+								trailerType.enabled = trailerType.enabled ? false : true;
+								toggleTrailerType(trailerType.type);
+							}}>{trailerType.type}</Checkbox
+						>
+					{/if}
+				{/each}
+			</Dropdown>
 		{:else}
-		<Dropdown bind:open={trailerTypesShowing} class="h-48 w-60 overflow-y-auto py-1">
-			<Search size="sm" bind:value={trailerTypesSearch} />
-			{#each trailerTypeFiltered as trailerType}
-				{#if trailerTypesFilterArray.includes(trailerType.type) || trailerTypesFilter.includes(trailerType.type)}
-					<Checkbox
-						class="px-3"
-						color="blue"
-						checked
-						on:click={() => {
-							trailerType.enabled = trailerType.enabled ? false : true;
-							toggleTrailerType(trailerType.type);
-						}}>{trailerType.type}</Checkbox
-					>
-				{:else}
-					<Checkbox
-						class="px-3"
-						color="blue"
-						on:click={() => {
-							trailerType.enabled = trailerType.enabled ? false : true;
-							toggleTrailerType(trailerType.type);
-						}}>{trailerType.type}</Checkbox
-					>
-				{/if}
-			{/each}
-		</Dropdown>
+			<Dropdown bind:open={trailerTypesShowing} class="h-48 w-60 overflow-y-auto py-1">
+				<Search size="sm" bind:value={trailerTypesSearch} />
+				{#each trailerTypeFiltered as trailerType}
+					{#if trailerTypesFilterArray.includes(trailerType.type) || trailerTypesFilter.includes(trailerType.type)}
+						<Checkbox
+							class="px-3"
+							color="blue"
+							checked
+							on:click={() => {
+								trailerType.enabled = trailerType.enabled ? false : true;
+								toggleTrailerType(trailerType.type);
+							}}>{trailerType.type}</Checkbox
+						>
+					{:else}
+						<Checkbox
+							class="px-3"
+							color="blue"
+							on:click={() => {
+								trailerType.enabled = trailerType.enabled ? false : true;
+								toggleTrailerType(trailerType.type);
+							}}>{trailerType.type}</Checkbox
+						>
+					{/if}
+				{/each}
+			</Dropdown>
 		{/if}
 	</div>
 
