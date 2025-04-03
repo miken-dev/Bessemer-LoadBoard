@@ -136,7 +136,7 @@
 	}
 </script>
 
-<div class="mt-5 w-full rounded bg-slate-200 p-5 dark:bg-gray-900 md:m-5">
+<div class="mt-5 w-full rounded bg-slate-200 p-5 dark:bg-gray-900 md:m-5 pb-5">
 	<h2 class="text-2xl font-extrabold">Saved Searches</h2>
 	{#if loading}
 		<div class="flex h-full w-full flex-col justify-around align-middle m-auto">
@@ -237,7 +237,7 @@
 					{/if}
 				{/each}
 			</div>
-			<div class="flex flex-col gap-3 md:flex-row">
+			<div class="flex flex-col gap-3 pb-5 md:flex-row">
 				{#if savedSearches.length > 4}
 					<button
 						class="mx-50 my-3 w-full rounded bg-slate-800 px-5 py-2 text-white"
