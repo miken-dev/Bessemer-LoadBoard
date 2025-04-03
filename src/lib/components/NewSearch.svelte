@@ -618,18 +618,18 @@
 	</div>
 
 	<!-- BUTTONS -->
-	<ButtonGroup divClass="flex justify-start"> 
+	<ButtonGroup divClass="flex justify-start">
 		{#if saveEnabled}
-		<Button
-			color="blue"
-			onclick={() => {
-				saveSearchDialogIsShowing = true;
-			}}
-		>
-			<FloppyDiskSolid class="me-2 h-4 w-4" />
-			Save Search
-		</Button>
-{/if}
+			<Button
+				color="blue"
+				onclick={() => {
+					saveSearchDialogIsShowing = true;
+				}}
+			>
+				<FloppyDiskSolid class="me-2 h-4 w-4" />
+				Save Search
+			</Button>
+		{/if}
 		<Button color="dark" on:click={clearSearch}>
 			<DeleteRowOutline class="me-2 h-4 w-4" />
 			Clear Search</Button
