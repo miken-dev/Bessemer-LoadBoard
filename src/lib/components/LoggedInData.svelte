@@ -192,7 +192,6 @@
 	}
 
 	let filteredData = $derived.by((): TableDataTypes[] => {
-		console.log(`filterValues: ${filterValues.trailerTypesFilter}`)
 		return filterAndSortTableData(tableData, filterValues, locations, currentSort);
 	});
 	function numberWithCommas(number: number) {
