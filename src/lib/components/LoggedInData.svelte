@@ -197,7 +197,7 @@
 	function numberWithCommas(number: number) {
 		return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 	}
-	let sortName = $state("")
+	let sortName = $state('');
 </script>
 
 <div class="{detailsHidden ? "" : "overflow-clip outline-1 outline-red-400"}">
