@@ -361,9 +361,8 @@
 	);
 
 	let originCityFiltered = $derived(
-		filterByState(locations, originStateFilter).filter(
-			(location) =>
-				location.city.toLowerCase().includes(originCitySearch.toLowerCase())
+		filterByState(locations, originStateFilter).filter((location) =>
+			location.city.toLowerCase().includes(originCitySearch.toLowerCase())
 		)
 	);
 	let destStateFiltered = $derived(
@@ -384,16 +383,16 @@
 <div class="mt-5 flex w-full flex-col gap-5 rounded bg-slate-200 p-5 dark:bg-gray-900 md:m-5">
 	<h2 class="text-2xl font-extrabold">New Search</h2>
 	<!-- DATE RANGE -->
-	<div class="flex w-full flex-col items-center justify-start gap-4 md:flex-row">
+	<div class="flex w-full flex-col items-center justify-start gap-4 lg:flex-row">
 		<p class=" justify-self-start">Pick up Date/Range:</p>
-		<div class="flex w-full flex-col items-center gap-3 md:flex-row">
-			<div class="flex items-center gap-3">
+		<div class="flex w-full flex-col items-center gap-3 lg:flex-row">
+			<div class="flex items-center flex-col sm:flex-row gap-3">
 				<p>from:</p>
 				<div class="w-72">
 					<Datepicker bind:value={fromDateRange} color="blue" />
 				</div>
 			</div>
-			<div class="flex items-center gap-3">
+			<div class="flex items-center flex-col sm:flex-row gap-3">
 				<p>to:</p>
 				<div class="w-72">
 					<Datepicker bind:value={toDateRange} color="blue" />
@@ -403,155 +402,170 @@
 	</div>
 
 	<!-- ORIGIN -->
-	<div class="flex flex-col items-center justify-start gap-3 md:flex-row">
+	<div class="flex flex-col items-center justify-start gap-3 lg:flex-row">
 		<p class="justify-self-start">Origin:</p>
-		<div class="flex items-center gap-3">
-			<p>Within</p>
-			<Button size="xs" color="light"
-				>{originMilesFilter} Miles<ChevronDownOutline
-					class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
-				/></Button
-			>
-			<Dropdown bind:open={originMilesShowing} class="max-h-48 w-48 overflow-y-auto py-1">
-				{#each miles as mile}
-					<DropdownItem
-						on:click={() => {
-							originMilesFilter = mile;
-							originMilesShowing = false;
-							trailerTypesShowing = false;
-						}}>{mile}</DropdownItem
-					>
-				{/each}
-			</Dropdown>
-			<p>of</p>
-			<Button
-				size="xs"
-				color="light"
-				on:click={() => {
-					setTimeout(() => {
-						document.querySelector<HTMLInputElement>('.originStateSearch')?.focus();
-					}, 155);
-				}}
-				>{originStateFilter ? originStateFilter : 'State'}<ChevronDownOutline
-					class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
-				/></Button
-			>
-			<Dropdown bind:open={originStateShowing} class="max-h-48 w-48 overflow-y-auto py-1">
-				<Search size="sm" bind:value={originStateSearch} class="originStateSearch" />
-				{#each originStateFiltered as state}
-					<DropdownItem
-						on:click={() => {
-							originStateFilter = state;
-							originStateShowing = false;
-							originCityFilter = undefined;
-						}}>{state}</DropdownItem
-					>
-				{/each}
-			</Dropdown>
-			{#if originStateFilter}
+		<div class="flex flex-col items-center gap-3 lg:flex-row">
+			<div class="flex flex-col items-center gap-3 md:flex-row">
+				<p>Within</p>
+				<Button size="xs" color="light"
+					>{originMilesFilter} Miles<ChevronDownOutline
+						class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
+					/></Button
+				>
+				<Dropdown bind:open={originMilesShowing} class="max-h-48 w-48 overflow-y-auto py-1">
+					{#each miles as mile}
+						<DropdownItem
+							on:click={() => {
+								originMilesFilter = mile;
+								originMilesShowing = false;
+								trailerTypesShowing = false;
+							}}>{mile}</DropdownItem
+						>
+					{/each}
+				</Dropdown>
+			</div>
+			<div class="flex flex-col items-center gap-3 sm:flex-row">
+				<p>of</p>
 				<Button
 					size="xs"
 					color="light"
 					on:click={() => {
 						setTimeout(() => {
-							document.querySelector<HTMLInputElement>('.originCitySearch')?.focus();
+							document.querySelector<HTMLInputElement>('.originStateSearch')?.focus();
 						}, 155);
 					}}
-					>{originCityFilter ? originCityFilter : 'City'}<ChevronDownOutline
+					>{originStateFilter ? originStateFilter : 'State'}<ChevronDownOutline
 						class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
 					/></Button
 				>
-				<Dropdown bind:open={originCityShowing} class="max-h-48 w-48 overflow-y-auto py-1">
-					<Search size="sm" bind:value={originCitySearch} class="originCitySearch" />
-					{#each originCityFiltered as location}
-						{#if location.state === originStateFilter}
-							<DropdownItem
-								on:click={() => {
-									setOriginAddress(location.lat, location.lng, location.city);
-									originCityShowing = false;
-								}}>{location.city}</DropdownItem
-							>
-						{/if}
+				<Dropdown bind:open={originStateShowing} class="max-h-48 w-48 overflow-y-auto py-1">
+					<Search size="sm" bind:value={originStateSearch} class="originStateSearch" />
+					{#each originStateFiltered as state}
+						<DropdownItem
+							on:click={() => {
+								originStateFilter = state;
+								originStateShowing = false;
+								originCityFilter = undefined;
+							}}>{state}</DropdownItem
+						>
 					{/each}
 				</Dropdown>
-			{:else}
-				<Button disabled size="xs" color="light"
-					>City<ChevronDownOutline class="ms-2 h-6 w-6 text-gray-800 dark:text-white" /></Button
-				>
-			{/if}
+				{#if originStateFilter}
+					<Button
+						size="xs"
+						color="light"
+						on:click={() => {
+							setTimeout(() => {
+								document.querySelector<HTMLInputElement>('.originCitySearch')?.focus();
+							}, 155);
+						}}
+						>{originCityFilter ? originCityFilter : 'City'}<ChevronDownOutline
+							class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
+						/></Button
+					>
+					<Dropdown bind:open={originCityShowing} class="max-h-48 w-48 overflow-y-auto py-1">
+						<Search size="sm" bind:value={originCitySearch} class="originCitySearch" />
+						{#each originCityFiltered as location}
+							{#if location.state === originStateFilter}
+								<DropdownItem
+									on:click={() => {
+										setOriginAddress(location.lat, location.lng, location.city);
+										originCityShowing = false;
+									}}>{location.city}</DropdownItem
+								>
+							{/if}
+						{/each}
+					</Dropdown>
+				{:else}
+					<Button disabled size="xs" color="light"
+						>City<ChevronDownOutline class="ms-2 h-6 w-6 text-gray-800 dark:text-white" /></Button
+					>
+				{/if}
+			</div>
 		</div>
 	</div>
 
 	<!-- DESTINATION -->
-	<div class="flex flex-col items-center justify-start gap-8 md:flex-row">
+	<div class="flex flex-col items-center justify-start gap-3 lg:flex-row">
 		<p class=" justify-self-start">Destination:</p>
-		<div class="flex items-center gap-3">
-			<p>Within</p>
-			<Button size="xs" color="light"
-				>{destMilesFilter} Miles<ChevronDownOutline
-					class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
-				/></Button
-			>
-			<Dropdown bind:open={destMilesShowing} class="max-h-48 w-48 overflow-y-auto py-1">
-				{#each miles as mile}
-					<DropdownItem
-						on:click={() => {
-							destMilesFilter = mile;
-							destMilesShowing = false;
-						}}>{mile}</DropdownItem
-					>
-				{/each}
-			</Dropdown>
-			<p>of</p>
-			<Button size="xs" color="light"
-				on:click={() => {
-					setTimeout(() => { document.querySelector<HTMLInputElement>('.destStateSearch')?.focus()}, 155);
-				}}
-				>{destStateFilter ? destStateFilter : 'State'}<ChevronDownOutline
-					class="text-gray-800 ms-2 h-6 w-6 dark:text-white"
-				/></Button
-			>
-			<Dropdown bind:open={destStateShowing} class="max-h-48 w-48 overflow-y-auto py-1">
-				<Search size="sm" bind:value={destStateSearch} class="destStateSearch" />
-				{#each destStateFiltered as state}
-					<DropdownItem
-						on:click={() => {
-							destStateFilter = state;
-							destStateShowing = false;
-							destCityFilter = undefined;
-						}}>{state}</DropdownItem
-					>
-				{/each}
-			</Dropdown>
-			{#if destStateFilter}
-			<Button size="xs" color="light"
-					on:click={() => {
-						setTimeout(() => { document.querySelector<HTMLInputElement>('.destCitySearch')?.focus()}, 155);
-					}}
-				>{destCityFilter ? destCityFilter : 'City'}<ChevronDownOutline
-					class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
-				/></Button
-			>
-			<Dropdown bind:open={destCityShowing} class="max-h-48 w-48 overflow-y-auto py-1">
-				<Search size="sm" bind:value={destCitySearch} class="destCitySearch"/>
-				{#each destCityFiltered as location}
-					{#if location.state === destStateFilter}
-						<DropdownItem
-							on:click={() => {
-								setDestinationAddress(location.lat, location.lng, location.city);
-								destCityShowing = false;
-							}}>{location.city}</DropdownItem
-						>
-					{/if}
-				{/each}
-			</Dropdown>
-{:else}
-				<Button size="xs" color="light" disabled
-				>City<ChevronDownOutline
+		<div class="flex flex-col items-center gap-3 lg:flex-row">
+			<div class="flex flex-col items-center gap-3 md:flex-row">
+				<p>Within</p>
+				<Button size="xs" color="light"
+					>{destMilesFilter} Miles<ChevronDownOutline
 						class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
 					/></Button
 				>
-{/if}
+				<Dropdown bind:open={destMilesShowing} class="max-h-48 w-48 overflow-y-auto py-1">
+					{#each miles as mile}
+						<DropdownItem
+							on:click={() => {
+								destMilesFilter = mile;
+								destMilesShowing = false;
+							}}>{mile}</DropdownItem
+						>
+					{/each}
+				</Dropdown>
+			</div>
+
+			<div class="flex flex-col items-center gap-3 sm:flex-row">
+				<p>of</p>
+				<Button
+					size="xs"
+					color="light"
+					on:click={() => {
+						setTimeout(() => {
+							document.querySelector<HTMLInputElement>('.destStateSearch')?.focus();
+						}, 155);
+					}}
+					>{destStateFilter ? destStateFilter : 'State'}<ChevronDownOutline
+						class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
+					/></Button
+				>
+				<Dropdown bind:open={destStateShowing} class="max-h-48 w-48 overflow-y-auto py-1">
+					<Search size="sm" bind:value={destStateSearch} class="destStateSearch" />
+					{#each destStateFiltered as state}
+						<DropdownItem
+							on:click={() => {
+								destStateFilter = state;
+								destStateShowing = false;
+								destCityFilter = undefined;
+							}}>{state}</DropdownItem
+						>
+					{/each}
+				</Dropdown>
+				{#if destStateFilter}
+					<Button
+						size="xs"
+						color="light"
+						on:click={() => {
+							setTimeout(() => {
+								document.querySelector<HTMLInputElement>('.destCitySearch')?.focus();
+							}, 155);
+						}}
+						>{destCityFilter ? destCityFilter : 'City'}<ChevronDownOutline
+							class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
+						/></Button
+					>
+					<Dropdown bind:open={destCityShowing} class="max-h-48 w-48 overflow-y-auto py-1">
+						<Search size="sm" bind:value={destCitySearch} class="destCitySearch" />
+						{#each destCityFiltered as location}
+							{#if location.state === destStateFilter}
+								<DropdownItem
+									on:click={() => {
+										setDestinationAddress(location.lat, location.lng, location.city);
+										destCityShowing = false;
+									}}>{location.city}</DropdownItem
+								>
+							{/if}
+						{/each}
+					</Dropdown>
+				{:else}
+					<Button size="xs" color="light" disabled
+						>City<ChevronDownOutline class="ms-2 h-6 w-6 text-gray-800 dark:text-white" /></Button
+					>
+				{/if}
+			</div>
 		</div>
 	</div>
 
