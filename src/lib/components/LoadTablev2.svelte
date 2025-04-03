@@ -9,6 +9,7 @@
 		selectedCity = $bindable(),
 		detailsHidden = $bindable(),
 		tableClicked = $bindable(),
+		cleared = $bindable(),
 		loggedIn
 	}: {
 		tableData: TableDataTypes[];
@@ -54,9 +55,8 @@
 		tableClicked = true;
 	};
 
-	
 	function numberWithCommas(number: number) {
-		return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+		return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 	}
 </script>
 
@@ -132,7 +132,6 @@
 									</div>
 								</div>
 
-
 								<div>
 									<div class="text-xs font-medium text-gray-500 dark:text-gray-300">
 										Trailer Types
@@ -146,7 +145,9 @@
 										{#if row.lengthFeet === 0 && row.lengthInches === 0 && row.widthFeet === 0 && row.widthInches === 0 && row.heightFeet === 0 && row.heightInches === 0}
 											Not available
 										{:else}
-											{`${row.lengthFeet}'${row.lengthInches}" x ${row.widthFeet}'${row.widthInches}" x ${row.heightFeet}'${row.heightInches} x ${row.weightInPounds} lbs.`}
+											{`${row.lengthFeet}'${row.lengthInches}" x ${row.widthFeet}'${row.widthInches}" x ${row.heightFeet}'${row.heightInches}`}
+												<br>
+											{`${row.weightInPounds} lbs.`}
 										{/if}
 									</div>
 								</div>
@@ -161,7 +162,9 @@
 								</div>
 								<div>
 									<div class="text-xs font-medium text-gray-500 dark:text-gray-300">Phone #</div>
-									<a class="mt-1 text-sm text-blue-500 underline" href="tel:+1{row.terminalPhone}">{row.terminalPhone}</a>
+									<a class="mt-1 text-sm text-blue-500 underline" href="tel:+1{row.terminalPhone}"
+										>{row.terminalPhone}</a
+									>
 								</div>
 							</div>
 							<!-- Agent/Phone -->
