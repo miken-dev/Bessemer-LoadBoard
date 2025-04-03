@@ -41,7 +41,7 @@
 	let fromDateRange: Date | undefined = $state(undefined);
 	let toDateRange: Date | undefined = $state(undefined);
 	let filter: string = $state('isPublic = "true"');
-
+	let cleared: boolean = $state(false)
 	let filtersActive = $derived.by(() => {
 		if (originCityFilter || destCityFilter || trailerTypesFilter || fromDateRange || toDateRange) {
 			return true;
@@ -90,7 +90,7 @@
 				<strong>DEVELOPER MODE</strong> detailsHidden={detailsHidden}, selectedLoadID={selectedRow
 					? selectedRow
 					: 'null'}, tableClicked={tableClicked}, city={selectedCity}, userID={userId} multi={multipleLoads},
-				loggedIn={loggedIn} filters:{filtersActive}
+				loggedIn={loggedIn} filters={filtersActive} cleared= {cleared}
 			</p>
 		</div>
 	{/if}
@@ -120,6 +120,7 @@
 				bind:fromDateRange
 				bind:toDateRange
 				bind:saveSearchDialogIsShowing
+				bind:cleared
 				{loggedIn}
 				{userId}
 			/>
@@ -138,9 +139,21 @@
 			{trailerTypesFilter}
 			{fromDateRange}
 			{toDateRange}
+			bind:cleared
 		/>
 	{:else}
-		<PublicData />
+		<PublicData 
+			{originMilesFilter}
+			{originStateFilter}
+			{originCityFilter}
+			{destMilesFilter}
+			{destCityFilter}
+			{destStateFilter}
+			{trailerTypesFilter}
+			{fromDateRange}
+			{toDateRange}
+			bind:cleared
+		/>
 	{/if}
 	<NotificationPreferencesModal {NotificationPreferencesShowing} {userId} />
 </main>
