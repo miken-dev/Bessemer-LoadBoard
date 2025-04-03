@@ -140,7 +140,7 @@
 	<h2 class="text-2xl font-extrabold">Saved Searches</h2>
 	{#if loading}
 		<div class="flex h-full w-full flex-col justify-around align-middle m-auto">
-			<Spinner color="blue" />
+			<Spinner color="blue" class="m-auto"/>
 		</div>
 	{:else if savedSearches.length}
 		{#if savedSearches.length > 4}
