@@ -506,8 +506,9 @@
 			<Button size="xs" color="light"
 				on:click={() => {
 					setTimeout(() => { document.querySelector<HTMLInputElement>('.destStateSearch')?.focus()}, 155);
+				}}
 				>{destStateFilter ? destStateFilter : 'State'}<ChevronDownOutline
-					class="text-gratext-gratext-gratext-gratext-gratext-gratext-gratext-gray-800 ms-2 h-6 w-6 dark:text-white"
+					class="text-gray-800 ms-2 h-6 w-6 dark:text-white"
 				/></Button
 			>
 			<Dropdown bind:open={destStateShowing} class="max-h-48 w-48 overflow-y-auto py-1">
