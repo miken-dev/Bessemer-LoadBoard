@@ -345,6 +345,17 @@
 		return stateIndex;
 	}
 
+	// Filter function that uses the index
+	function filterByState(data: IndexableData, targetState: string): LocationEntry[] {
+		// If this is the first time filtering, create the index
+		if (!data.stateIndex) {
+			data.stateIndex = createStateIndex(data);
+		}
+
+		// Return the entries for the target state (or empty array if none)
+		return data.stateIndex[targetState] || [];
+	}
+
 	let originStateFiltered = $derived(
 		states.filter((state) => state.toLowerCase().includes(originStateSearch.toLowerCase()))
 	);
