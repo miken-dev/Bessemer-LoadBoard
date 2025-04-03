@@ -241,7 +241,7 @@
 		saveSearchDialogIsShowing: boolean;
 		savedSearches: [savedSearchesTypes] | [];
 		contactInfoPreferencesModal: boolean;
-		saveEnabled: boolean
+		saveEnabled: boolean;
 		userId: string | null;
 	} = $props();
 
