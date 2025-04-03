@@ -117,15 +117,15 @@
 
 	{#if totalSlides > 1}
 		<!-- Navigation controls wrapper - Fixed to viewport -->
-		<div class="fixed top-1/2 -translate-y-1/2 left-0 right-0 pointer-events-none z-50" transition:fade>
+		<div class="fixed top-1/2 md:top-3/4 -translate-y-1/2 left-0 right-0 pointer-events-none z-50" transition:fade>
 			<div class="container mx-auto px-4 relative">
 				<!-- Previous button -->
-				<button onclick={prev} class="pointer-events-auto absolute left-0 bg-background/80 p-2 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity disabled:opacity-30 hover:bg-background" disabled={currentIndex === 0 || isAnimating}>
+				<button onclick={prev} class="pointer-events-auto absolute left-0 bg-background/80 p-2 rounded-full shadow-lg opacity-50 group-hover:opacity-100 transition-opacity disabled:opacity-30 hover:bg-background" disabled={currentIndex === 0 || isAnimating}>
 					<ChevronLeftIcon class="size-6" />
 				</button>
 
 				<!-- Next button -->
-				<button onclick={next} class="pointer-events-auto absolute right-0 bg-background/80 p-2 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity disabled:opacity-30 hover:bg-background" disabled={currentIndex === totalSlides - 1 || isAnimating}>
+				<button onclick={next} class="pointer-events-auto absolute right-0 bg-background/80 p-2 rounded-full shadow-lg opacity-50 group-hover:opacity-100 transition-opacity disabled:opacity-30 hover:bg-background" disabled={currentIndex === totalSlides - 1 || isAnimating}>
 					<ChevronRightIcon class="size-6" />
 				</button>
 			</div>
