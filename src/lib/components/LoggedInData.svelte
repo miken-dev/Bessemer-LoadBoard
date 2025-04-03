@@ -198,9 +198,22 @@
 		return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 	}
 	let sortName = $state('');
+
+	onMount(() => {
+		handleSort("loadDate-asc");
+		sortName = "Load Date (Oldest First), Origin State, Origin City";
+	});
+
+	$effect(() => {
+		if (cleared) {
+			handleSort("loadDate-asc");
+			sortName = "Load Date (Oldest First), Origin State, Origin City";
+			cleared = false
+		}
+	})
 </script>
 
-<div class="{detailsHidden ? "" : "overflow-clip outline-1 outline-red-400"}">
+<div class={detailsHidden ? '' : 'overflow-clip outline-1 outline-red-400'}>
 	<ViewsBar bind:tableIsShowing bind:mapIsShowing />
 
 	<div class="flex flex-col items-start justify-center md:flex-row">
@@ -221,7 +234,7 @@
 								on:click={() => {
 									handleSort(option.value);
 									sortDropdownOpen = false;
-									sortName = option.label
+									sortName = option.label;
 								}}
 							>
 								{option.label}
