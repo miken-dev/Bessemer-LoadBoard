@@ -3,8 +3,8 @@
 	import { browser } from '$app/environment';
 	import type { TableDataTypes } from '$lib/types';
 	import { GestureHandling } from 'leaflet-gesture-handling';
-	import "leaflet/dist/leaflet.css"
-	import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css"
+	import 'leaflet/dist/leaflet.css';
+	import 'leaflet-gesture-handling/dist/leaflet-gesture-handling.css';
 
 	let {
 		multipleLoads = $bindable(),
@@ -34,7 +34,6 @@
 	};
 </script>
 
-
 {#if browser}
 	<div class="mt-8 h-full w-full">
 		<Map
@@ -54,19 +53,22 @@
 							latLng={[row.originLat, row.originLng]}
 						/>
 					{:else}
-						<Popup
-							onclick={() => toggle(true, row.originCityName, row.originStateName)}
-							latLng={[row.originLat, row.originLng]}
-							options={{
-								closeButton: false,
-								autoClose: false,
-								closeOnEscapeKey: false,
-								closeOnClick: false,
-								maxWidth: 5
-							}}
-						>
-							<div class="text-center text-lg font-bold">{row.areaLoadCount}</div>
-						</Popup>
+						<div class="popup">
+							<Popup
+								onclick={() => toggle(true, row.originCityName, row.originStateName)}
+								latLng={[row.originLat, row.originLng]}
+								class="popup"
+								options={{
+									closeButton: false,
+									autoClose: false,
+									closeOnEscapeKey: false,
+									closeOnClick: false,
+									maxWidth: 5
+								}}
+							>
+								<div class="popup text-center text-lg font-bold">{row.areaLoadCount}</div>
+							</Popup>
+						</div>
 					{/if}
 				{/if}
 			{/each}
@@ -77,5 +79,8 @@
 <style>
 	.leaflet-popup-content-wrapper {
 		box-shadow: none;
+	}
+	.popup {
+		cursor: pointer;
 	}
 </style>
