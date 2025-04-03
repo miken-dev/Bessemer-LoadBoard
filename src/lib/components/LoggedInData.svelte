@@ -199,7 +199,7 @@
 	let sortName = $state("")
 </script>
 
-<div>
+<div class="{detailsHidden ? "" : "overflow-clip outline-1 outline-red-400"}">
 	<ViewsBar bind:tableIsShowing bind:mapIsShowing />
 
 	<div class="flex flex-col items-start justify-center md:flex-row">
