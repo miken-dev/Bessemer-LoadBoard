@@ -58,8 +58,6 @@
 	function numberWithCommas(number: number) {
 		return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 	}
-
-
 </script>
 
 <!--
@@ -122,28 +120,7 @@
 										{`${row.destinationCityName}, ${row.destinationStateName}`}
 									</div>
 								</div>
-								<!-- Dimensions/Commodity -->
-								<div>
-									<div class="text-xs font-medium text-gray-500 dark:text-gray-300">Dimensions</div>
-									<div class="mt-1 text-sm">
-										{#if row.lengthFeet === 0 && row.lengthInches === 0 && row.widthFeet === 0 && row.widthInches === 0 && row.heightFeet === 0 && row.heightInches === 0}
-											Not available
-										{:else}
-											{`${row.lengthFeet}'${row.lengthInches}" x ${row.widthFeet}'${row.widthInches}" x ${row.heightFeet}'${row.heightInches}"`}
-										{/if}
-									</div>
-								</div>
-								<div>
-									<div class="text-xs font-medium text-gray-500 dark:text-gray-300">
-										Trailer Types
-									</div>
-									<div class="mt-1 text-sm">{row.trailerTypes}</div>
-								</div>
-								<!-- Revenue/Miles -->
-								<div>
-									<div class="text-xs font-medium text-gray-500 dark:text-gray-300">Revenue</div>
-									<div class="mt-1 text-sm">${numberWithCommas(row.revenue)}</div>
-								</div>
+
 								<div>
 									<div class="text-xs font-medium text-gray-500 dark:text-gray-300">Miles</div>
 									<div class="mt-1 text-sm">
@@ -153,6 +130,30 @@
 											{numberWithCommas(row.miles)}
 										{/if}
 									</div>
+								</div>
+
+
+								<div>
+									<div class="text-xs font-medium text-gray-500 dark:text-gray-300">
+										Trailer Types
+									</div>
+									<div class="mt-1 text-sm">{row.trailerTypes}</div>
+								</div>
+								<!-- Dimensions/Commodity -->
+								<div>
+									<div class="text-xs font-medium text-gray-500 dark:text-gray-300">Dimensions</div>
+									<div class="mt-1 text-sm">
+										{#if row.lengthFeet === 0 && row.lengthInches === 0 && row.widthFeet === 0 && row.widthInches === 0 && row.heightFeet === 0 && row.heightInches === 0}
+											Not available
+										{:else}
+											{`${row.lengthFeet}'${row.lengthInches}" x ${row.widthFeet}'${row.widthInches}" x ${row.heightFeet}'${row.heightInches} x ${row.weightInPounds} lbs.`}
+										{/if}
+									</div>
+								</div>
+								<!-- Revenue/Miles -->
+								<div>
+									<div class="text-xs font-medium text-gray-500 dark:text-gray-300">Revenue</div>
+									<div class="mt-1 text-sm">${numberWithCommas(row.revenue)}</div>
 								</div>
 								<div>
 									<div class="text-xs font-medium text-gray-500 dark:text-gray-300">Terminal</div>
