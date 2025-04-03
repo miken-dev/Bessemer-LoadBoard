@@ -223,6 +223,7 @@
 		saveSearchDialogIsShowing = $bindable(),
 		savedSearches = $bindable(),
 		contactInfoPreferencesModal = $bindable(),
+		cleared = $bindable(),
 		saveEnabled,
 		userId
 	}: {
@@ -242,6 +243,7 @@
 		saveSearchDialogIsShowing: boolean;
 		savedSearches: [savedSearchesTypes] | [];
 		contactInfoPreferencesModal: boolean;
+		cleared: boolean;
 		saveEnabled: boolean;
 		userId: string | null;
 	} = $props();
@@ -261,6 +263,7 @@
 		fromDateRange = undefined;
 		toDateRange = undefined;
 		trailerTypesFilterArray = [''];
+		cleared = true
 	}
 	function setOriginAddress(lat: string, lng: string, city: string) {
 		originLatFilter = Number(lat);
@@ -404,8 +407,8 @@
 	<!-- ORIGIN -->
 	<div class="flex flex-col items-center justify-start gap-3 lg:flex-row">
 		<p class="justify-self-start">Origin:</p>
-		<div class="flex flex-col items-center gap-3 lg:flex-row">
-			<div class="flex flex-col items-center gap-3 md:flex-row">
+		<div class="flex flex-col items-center gap-3 sm:flex-row">
+			<div class="flex flex-row items-center gap-3 ">
 				<p>Within</p>
 				<Button size="xs" color="light"
 					>{originMilesFilter} Miles<ChevronDownOutline
@@ -424,7 +427,7 @@
 					{/each}
 				</Dropdown>
 			</div>
-			<div class="flex flex-col items-center gap-3 sm:flex-row">
+			<div class="flex flex-row items-center gap-3 ">
 				<p>of</p>
 				<Button
 					size="xs"
@@ -488,8 +491,8 @@
 	<!-- DESTINATION -->
 	<div class="flex flex-col items-center justify-start gap-3 lg:flex-row">
 		<p class=" justify-self-start">Destination:</p>
-		<div class="flex flex-col items-center gap-3 lg:flex-row">
-			<div class="flex flex-col items-center gap-3 md:flex-row">
+		<div class="flex flex-col items-center gap-3 sm:flex-row">
+			<div class="flex  items-center gap-3 flex-row">
 				<p>Within</p>
 				<Button size="xs" color="light"
 					>{destMilesFilter} Miles<ChevronDownOutline
@@ -508,7 +511,7 @@
 				</Dropdown>
 			</div>
 
-			<div class="flex flex-col items-center gap-3 sm:flex-row">
+			<div class="flex flex-row items-center gap-3 ">
 				<p>of</p>
 				<Button
 					size="xs"
@@ -570,7 +573,7 @@
 	</div>
 
 	<!-- TRAILER TYPE -->
-	<div class="flex items-center justify-start gap-3">
+	<div class="flex items-center justify-start gap-3 flex-col sm:flex-row">
 		<p class="justify-self-start">Trailer Type:</p>
 		<Button size="md" color="light"
 			>{trailerTypesFilter ? trailerTypesFilter.slice(2) : 'Pick a type'}<ChevronDownOutline
