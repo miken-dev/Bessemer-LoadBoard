@@ -16,6 +16,7 @@
 		fromDateRange = $bindable(),
 		toDateRange = $bindable(),
 		saveSearchDialogIsShowing = $bindable(),
+		cleared = $bindable(),
 		loggedIn,
 		manageSavedSearchIsShowing,
 		userId
@@ -30,6 +31,7 @@
 		fromDateRange: Date | undefined;
 		toDateRange: Date | undefined;
 		saveSearchDialogIsShowing: boolean;
+		cleared: boolean
 		loggedIn: boolean	
 		manageSavedSearchIsShowing: boolean;
 		userId: string | null;
@@ -46,6 +48,7 @@
 	});
 
 	let savedSearches: [savedSearchesTypes] | [] = $state([]);
+	let loading = $state(true)
 
 	const PB = new PocketBase('https://bessemer-loadboard.pockethost.io');
 	async function getRecords() {
@@ -73,7 +76,12 @@
 	}
 
 	onMount(async () => {
+		loading = true
 		savedSearches = await getRecords();
+		setTimeout(async () => {
+				savedSearches = await getRecords()
+		}, 1500)
+		loading = false
 	});
 </script>
 
@@ -93,6 +101,7 @@
 			bind:saveSearchDialogIsShowing
 			bind:savedSearches
 			bind:contactInfoPreferencesModal
+			bind:cleared
 			saveEnabled = {true}
 			{userId}
 		/>
@@ -109,6 +118,7 @@
 			bind:manageSavedSearchIsShowing
 			bind:savedSearches
 			bind:contactInfoPreferencesModal
+			bind:loading
 			{userId}
 		/>
 {:else}
