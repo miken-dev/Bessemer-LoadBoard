@@ -95,7 +95,7 @@
 			};
 		});
 
-		return results;
+		return results.reverse();
 	}
 
 	async function saveSearch(
