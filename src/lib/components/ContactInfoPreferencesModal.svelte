@@ -94,8 +94,10 @@
 			color="blue"
 			onclick={async () => {
 				await save();
+				contactInfoPreferencesModal = false;
 			}}>Save</Button
 		>
 	{/if}
 	<Button size="md" color="alternative">Cancel</Button>
+			contactInfoPreferencesModal = false;
 </Modal>
