@@ -583,6 +583,11 @@
 	<div class="flex flex-col items-center justify-start gap-3 sm:flex-row">
 		<p class="justify-self-start">Trailer Type:</p>
 		<Button size="md" color="light"
+			on:click={() => {
+				setTimeout(() => {
+					document.querySelector<HTMLInputElement>('.trailerTypeSsearch')
+				})
+			}}
 			>{trailerTypesFilter ? trailerTypesFilter.slice(2) : 'Pick a type'}<ChevronDownOutline
 				class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
 			/></Button
