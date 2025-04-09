@@ -267,7 +267,9 @@
 	bind:deleteConfirmationShowing
 	bind:savedSearches
 />
+{#if contactInfoPreferencesModal}
 <ContactInfoPreferencesModal bind:contactInfoPreferencesModal email={true} text={true} {userId} />
+{/if}
 <ManageSavedSearchModal
 	bind:originMilesFilter
 	bind:originStateFilter
