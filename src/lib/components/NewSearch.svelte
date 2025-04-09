@@ -263,7 +263,12 @@
 		fromDateRange = undefined;
 		toDateRange = undefined;
 		trailerTypesFilterArray = [''];
-		cleared = true
+		originCitySearch = '';
+		originStateSearch = '';
+		destCitySearch = '';
+		destStateSearch = '';
+		trailerTypesSearch = ''
+		cleared = true;
 	}
 	function setOriginAddress(lat: string, lng: string, city: string) {
 		originLatFilter = Number(lat);
