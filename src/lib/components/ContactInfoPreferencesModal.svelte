@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Toggle, Button, Modal, Label, Input, Checkbox } from 'flowbite-svelte';
 	import PocketBase from 'pocketbase';
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 
 	let {
 		contactInfoPreferencesModal = $bindable(),
@@ -29,6 +29,11 @@
 
 	onMount(async () => {
 		userInfo = await getUserInfo();
+		emailAddress = userInfo.email;
+		phoneNumber = userInfo.phone;
+	});
+
+	onDestroy(async () => {
 		emailAddress = userInfo.email;
 		phoneNumber = userInfo.phone;
 	});
