@@ -394,13 +394,13 @@
 	<div class="flex w-full flex-col items-center justify-start gap-4 lg:flex-row">
 		<p class=" justify-self-start">Pick up Date/Range:</p>
 		<div class="flex w-full flex-col items-center gap-3 lg:flex-row">
-			<div class="flex items-center flex-col sm:flex-row gap-3">
+			<div class="flex flex-col items-center gap-3 sm:flex-row">
 				<p>from:</p>
 				<div class="w-72">
 					<Datepicker bind:value={fromDateRange} color="blue" />
 				</div>
 			</div>
-			<div class="flex items-center flex-col sm:flex-row gap-3">
+			<div class="flex flex-col items-center gap-3 sm:flex-row">
 				<p>to:</p>
 				<div class="w-72">
 					<Datepicker bind:value={toDateRange} color="blue" />
@@ -413,7 +413,7 @@
 	<div class="flex flex-col items-center justify-start gap-3 lg:flex-row">
 		<p class="justify-self-start">Origin:</p>
 		<div class="flex flex-col items-center gap-3 sm:flex-row">
-			<div class="flex flex-row items-center gap-3 ">
+			<div class="flex flex-row items-center gap-3">
 				<p>Within</p>
 				<Button size="xs" color="light"
 					>{originMilesFilter} Miles<ChevronDownOutline
@@ -432,7 +432,7 @@
 					{/each}
 				</Dropdown>
 			</div>
-			<div class="flex flex-row items-center gap-3 ">
+			<div class="flex flex-row items-center gap-3">
 				<p>of</p>
 				<Button
 					size="xs"
@@ -497,7 +497,7 @@
 	<div class="flex flex-col items-center justify-start gap-3 lg:flex-row">
 		<p class=" justify-self-start">Destination:</p>
 		<div class="flex flex-col items-center gap-3 sm:flex-row">
-			<div class="flex  items-center gap-3 flex-row">
+			<div class="flex flex-row items-center gap-3">
 				<p>Within</p>
 				<Button size="xs" color="light"
 					>{destMilesFilter} Miles<ChevronDownOutline
@@ -516,7 +516,7 @@
 				</Dropdown>
 			</div>
 
-			<div class="flex flex-row items-center gap-3 ">
+			<div class="flex flex-row items-center gap-3">
 				<p>of</p>
 				<Button
 					size="xs"
@@ -578,7 +578,7 @@
 	</div>
 
 	<!-- TRAILER TYPE -->
-	<div class="flex items-center justify-start gap-3 flex-col sm:flex-row">
+	<div class="flex flex-col items-center justify-start gap-3 sm:flex-row">
 		<p class="justify-self-start">Trailer Type:</p>
 		<Button size="md" color="light"
 			>{trailerTypesFilter ? trailerTypesFilter.slice(2) : 'Pick a type'}<ChevronDownOutline
