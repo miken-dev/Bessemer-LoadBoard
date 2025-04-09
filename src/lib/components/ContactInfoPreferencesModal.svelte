@@ -18,6 +18,7 @@
 	let phoneNumber = $state('');
 	let emailAddress = $state('');
 
+
 	const PB = new PocketBase('https://bessemer-loadboard.pockethost.io');
 	async function getUserInfo() {
 		const user = await PB.collection('driver').getOne(userId);
@@ -98,6 +99,13 @@
 			}}>Save</Button
 		>
 	{/if}
-	<Button size="md" color="alternative">Cancel</Button>
+	<Button
+		size="md"
+		color="alternative"
+		on:click={async () => {
+			emailAddress = userInfo.email;
+			phoneNumber = userInfo.phone;
 			contactInfoPreferencesModal = false;
+		}}>Cancel</Button
+	>
 </Modal>
