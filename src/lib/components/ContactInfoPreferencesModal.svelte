@@ -80,13 +80,7 @@
 	}
 </script>
 
-<Modal
-	title="Notification Preferences"
-	size="sm"
-	bind:open={contactInfoPreferencesModal}
-	autoclose
-	outsideclose
->
+<Modal title="Notification Preferences" size="sm" bind:open={contactInfoPreferencesModal} outsideclose>
 	<Label for="email" class="mb-2 block">Email Address</Label>
 	<Input id="email" placeholder="" bind:value={emailAddress} />
 
