@@ -16,6 +16,7 @@
 
 	let name: string = $state('');
 	let userInfo;
+	let originalUserInfo;
 
 	const PB = new PocketBase('https://bessemer-loadboard.pockethost.io');
 	async function getUserInfo() {
@@ -34,23 +35,29 @@
 
 	onMount(async () => {
 		userInfo = await getUserInfo();
-		console.log(`${userInfo}`)
+		originalUserInfo = userInfo;
+		console.log(`${userInfo}`);
+	});
+	onMount(() => {
+		return () => {
+			userInfo = originalUserInfo;
+		};
 	});
 
 	async function saveSearch(
-			nameSearch: string | undefined,
-			originMilesSearch: number | undefined,
-			originStateSearch: string | undefined,
-			originCitySearch: string | undefined,
-			destMilesSearch: number | undefined,
-			destStateSearch: string | undefined,
-			destCitySearch: string | undefined,
-			pickupDateStartSearch: Date | undefined,
-			pickupDateEndSearch: Date | undefined,
-			trailerTypeSearch: string | undefined,
-			emailNotificationSearch: boolean,
-			textNotificationSearch: boolean,
-			userIdSearch: string | null 
+		nameSearch: string | undefined,
+		originMilesSearch: number | undefined,
+		originStateSearch: string | undefined,
+		originCitySearch: string | undefined,
+		destMilesSearch: number | undefined,
+		destStateSearch: string | undefined,
+		destCitySearch: string | undefined,
+		pickupDateStartSearch: Date | undefined,
+		pickupDateEndSearch: Date | undefined,
+		trailerTypeSearch: string | undefined,
+		emailNotificationSearch: boolean,
+		textNotificationSearch: boolean,
+		userIdSearch: string | null
 	) {
 		const search = await PB.collection('Saved_Searches').create({
 			name: nameSearch,
@@ -65,7 +72,7 @@
 			trailerType: trailerTypeSearch,
 			emailNotification: emailNotificationSearch,
 			textNotification: textNotificationSearch,
-			userID: userIdSearch 
+			userID: userIdSearch
 		});
 		return search;
 	}
@@ -75,8 +82,6 @@
 	title="Notification Preferences"
 	size="md"
 	bind:open={NotificationPreferencesShowing}
-	autoclose
-	outsideclose
 >
 	<Label for="name" class="mb-2 block">Name your saved search</Label>
 	<Input id="name" placeholder="" bind:value={name} />
@@ -92,13 +97,17 @@
 		size="md"
 		color="blue"
 		onclick={async () => {
-			await saveSearch(
-				name,
-				emailNotification,
-				textNotification,
-				userId
-			);
+			await saveSearch(name, emailNotification, textNotification, userId);
+			NotificationPreferencesShowing = false
 		}}>Save</Button
 	>
-	<Button size="md" color="alternative">Cancel</Button>
+	<Button
+		size="md"
+		color="alternative"
+		on:click={async () => {
+			userInfo.phone = originalUserInfo.phone;
+			userInfo.email = originalUserInfo.email;
+			NotificationPreferencesShowing = false
+		}}>Cancel</Button
+	>
 </Modal>
