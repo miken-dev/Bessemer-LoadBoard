@@ -48,18 +48,20 @@
 	function saveButtonEnable(): boolean {
 		// Helper function to validate email format
 		const isValidEmail = (email: string) => {
+			if (!email) return true;
 			return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 		};
 
 		// Helper function to validate phone format (accepts formats like: 123-456-7890, (123) 456-7890, 1234567890)
 		const isValidPhone = (phone: string) => {
+			if (!phone) return true;
 			return /^\+?[\d\s-()]{10,}$/.test(phone);
 		};
 
 		// If no notifications are enabled, only name is required
 
 		// Check if user has existing email or valid new email
-		const hasValidNewEmail = emailAddress && isValidEmail(emailAddress);
+		const hasValidNewEmail =  isValidEmail(emailAddress);
 
 		if (!hasValidNewEmail) {
 			return false;
@@ -67,7 +69,7 @@
 
 		// Check text notification requirements
 		// Check if user has existing phone or valid new phone
-		const hasValidNewPhone = phoneNumber && isValidPhone(phoneNumber);
+		const hasValidNewPhone = isValidPhone(phoneNumber);
 
 		if (!hasValidNewPhone) {
 			return false;
