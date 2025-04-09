@@ -145,7 +145,7 @@
 										{#if row.lengthFeet === 0 && row.lengthInches === 0 && row.widthFeet === 0 && row.widthInches === 0 && row.heightFeet === 0 && row.heightInches === 0}
 											Not available
 										{:else}
-											{`${row.lengthFeet}'${row.lengthInches}" x ${row.widthFeet}'${row.widthInches}" x ${row.heightFeet}'${row.heightInches}`}
+											{`${row.lengthFeet}'${row.lengthInches}" x ${row.widthFeet}'${row.widthInches}" x ${row.heightFeet}'${row.heightInches}"`}
 												<br>
 											{`${row.weightInPounds} lbs.`}
 										{/if}
