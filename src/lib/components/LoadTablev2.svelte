@@ -147,7 +147,7 @@
 										{:else}
 											{`${row.lengthFeet}'${row.lengthInches}" x ${row.widthFeet}'${row.widthInches}" x ${row.heightFeet}'${row.heightInches}"`}
 												<br>
-											{`${row.weightInPounds} lbs.`}
+											{`${numberWithCommas(row.weightInPounds)} lbs.`}
 										{/if}
 									</div>
 								</div>
