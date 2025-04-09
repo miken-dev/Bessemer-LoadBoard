@@ -454,6 +454,7 @@
 								originStateFilter = state;
 								originStateShowing = false;
 								originCityFilter = undefined;
+								originCitySearch = '';
 							}}>{state}</DropdownItem
 						>
 					{/each}
@@ -538,6 +539,7 @@
 								destStateFilter = state;
 								destStateShowing = false;
 								destCityFilter = undefined;
+								destCitySearch = '';
 							}}>{state}</DropdownItem
 						>
 					{/each}
