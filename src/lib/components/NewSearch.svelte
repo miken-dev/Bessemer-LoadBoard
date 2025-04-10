@@ -268,7 +268,7 @@
 		originStateSearch = '';
 		destCitySearch = '';
 		destStateSearch = '';
-		trailerTypesSearch = ''
+		trailerTypesSearch = '';
 		cleared = true;
 	}
 	function setOriginAddress(lat: string, lng: string, city: string) {
