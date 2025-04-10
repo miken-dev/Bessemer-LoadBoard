@@ -610,7 +610,12 @@
 						/></Button
 					>
 					<Dropdown bind:open={destCityShowing} class="max-h-48 w-48 overflow-y-auto py-1">
-						<Search size="sm" bind:value={destCitySearch} class="destCitySearch" />
+						<Search size="sm" bind:value={destCitySearch} class="destCitySearch" on:keydown={(e) => {
+						if (e.key === 'Enter'  && destStateFiltered.length > 0) {
+							destCityFilter = destCityFiltered[0].city
+							destCityShowing = false
+							}
+						}}  />
 						{#each destCityFiltered as location}
 							{#if location.state === destStateFilter}
 								<DropdownItem
