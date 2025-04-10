@@ -353,6 +353,16 @@
 		return stateIndex;
 	}
 
+ 	let trailerAlignment = () => {
+		if (trailerTypesFilter.length >= 202) {
+			return "mt-20"
+		} else if (trailerTypesFilter.length >= 97) {
+			return "mt-14"
+		} else {
+			return "mt-12"
+		}                      
+	}
+
 	// Filter function that uses the index
 	function filterByState(data: IndexableData, targetState: string): LocationEntry[] {
 		// If this is the first time filtering, create the index
@@ -592,7 +602,7 @@
 				class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
 			/></Button
 		>
-			<Dropdown bind:open={trailerTypesShowing} class="h-48 w-60 overflow-y-auto py-1">
+			<Dropdown placement="start" bind:open={trailerTypesShowing} class="h-48 w-60 overflow-y-auto py-1" classContainer="{trailerAlignment()}  ml-0 relative">
 				<Search size="sm" bind:value={trailerTypesSearch} />
 				{#each trailerTypeFiltered as trailerType}
 					{#if trailerTypesFilterArray.includes(trailerType.type) || trailerTypesFilter.includes(trailerType.type)}
