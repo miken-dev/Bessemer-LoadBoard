@@ -542,6 +542,32 @@
 			</div>
 		</div>
 	</div>
+	<!--
+	<div class="flex flex-row items-center gap-3">
+		<p>of</p>
+		<Button
+			size="xs"
+			color="light"
+			on:click={() => {
+				setTimeout(() => {
+					document.querySelector<HTMLInputElement>('.originCityStateSearch')?.focus();
+				}, 155);
+			}}
+			>{originStateFilter ? originStateFilter : 'State'}<ChevronDownOutline
+				class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
+			/></Button
+		>
+		<Dropdown bind:open={originCityStateShowing} class="max-h-48 w-48 overflow-y-auto py-1">
+			<Search size="sm" bind:value={originCityStateSearch} class="originCityStateSearch" />
+			{#each originCityStateFiltered as cityState}
+				<DropdownItem
+					on:click={() => {
+						originCityStateShowing = false;
+					}}>{cityState.city}, {cityState.stateId}</DropdownItem
+				>
+			{/each}
+		</Dropdown>
+	</div> -->
 	<!-- DESTINATION -->
 	<div class="flex flex-col items-center justify-start gap-3 lg:flex-row">
 		<p class=" justify-self-start">Destination:</p>
@@ -630,43 +656,50 @@
 	<!-- TRAILER TYPE -->
 	<div class="flex flex-col items-center justify-start gap-3 sm:flex-row">
 		<p class="justify-self-start">Trailer Type:</p>
-		<Button size="md" color="light"
+		<Button
+			size="md"
+			color="light"
 			on:click={() => {
 				setTimeout(() => {
-					document.querySelector<HTMLInputElement>('.trailerTypeSsearch')
-				})
+					document.querySelector<HTMLInputElement>('.trailerTypeSsearch');
+				});
 			}}
 			>{trailerTypesFilter ? trailerTypesFilter.slice(2) : 'Pick a type'}<ChevronDownOutline
 				class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
 			/></Button
 		>
-			<Dropdown placement="start" bind:open={trailerTypesShowing} class="h-48 w-60 overflow-y-auto py-1" classContainer="{trailerAlignment()}  ml-0 relative">
-				<Search size="sm" bind:value={trailerTypesSearch} />
-				{#each trailerTypeFiltered as trailerType}
-					{#if trailerTypesFilterArray.includes(trailerType.type) || trailerTypesFilter.includes(trailerType.type)}
-							<Checkbox
-								class="px-3"
-								color="blue"
-								checked
-								on:click={() => {
-									trailerType.enabled = trailerType.enabled ? false : true;
-									toggleTrailerType(trailerType.type);
-									trailerTypesShowing = true;
-								}}>{trailerType.type}</Checkbox
-							>
-					{:else}
-							<Checkbox
-								class="px-3"
-								color="blue"
-								on:click={() => {
-									trailerType.enabled = trailerType.enabled ? false : true;
-									toggleTrailerType(trailerType.type);
-									trailerTypesShowing = true;
-								}}>{trailerType.type}</Checkbox
-							>
-					{/if}
-				{/each}
-			</Dropdown>
+		<Dropdown
+			placement="start"
+			bind:open={trailerTypesShowing}
+			class="h-48 w-60 overflow-y-auto py-1"
+			classContainer="{trailerAlignment()}  ml-0 relative"
+		>
+			<Search size="sm" bind:value={trailerTypesSearch} />
+			{#each trailerTypeFiltered as trailerType}
+				{#if trailerTypesFilterArray.includes(trailerType.type) || trailerTypesFilter.includes(trailerType.type)}
+					<Checkbox
+						class="px-3"
+						color="blue"
+						checked
+						on:click={() => {
+							trailerType.enabled = trailerType.enabled ? false : true;
+							toggleTrailerType(trailerType.type);
+							trailerTypesShowing = true;
+						}}>{trailerType.type}</Checkbox
+					>
+				{:else}
+					<Checkbox
+						class="px-3"
+						color="blue"
+						on:click={() => {
+							trailerType.enabled = trailerType.enabled ? false : true;
+							toggleTrailerType(trailerType.type);
+							trailerTypesShowing = true;
+						}}>{trailerType.type}</Checkbox
+					>
+				{/if}
+			{/each}
+		</Dropdown>
 	</div>
 
 	<!-- BUTTONS -->
