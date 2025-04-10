@@ -566,7 +566,18 @@
 					/></Button
 				>
 				<Dropdown bind:open={destStateShowing} class="max-h-48 w-48 overflow-y-auto py-1">
-					<Search size="sm" bind:value={destStateSearch} class="destStateSearch" />
+					<Search size="sm" bind:value={destStateSearch} class="destStateSearch" on:keydown={(e) => {
+						if (e.key === 'Enter'  && destStateFiltered.length > 0) {
+							destStateFilter = destStateFiltered[0];
+							destStateShowing = false;
+							destCityFilter = undefined;
+							destCitySearch = '';
+							destCityShowing = true
+							setTimeout(() => {
+								document.querySelector<HTMLInputElement>('.destCitySearch')?.focus();
+							}, 155);
+						}
+						}}  />
 					{#each destStateFiltered as state}
 						<DropdownItem
 							on:click={() => {
