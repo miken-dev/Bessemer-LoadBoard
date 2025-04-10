@@ -501,7 +501,13 @@
 						/></Button
 					>
 					<Dropdown bind:open={originCityShowing} class="max-h-48 w-48 overflow-y-auto py-1">
-						<Search size="sm" bind:value={originCitySearch} class="originCitySearch" />
+						<Search size="sm" bind:value={originCitySearch} class="originCitySearch" on:keydown={(e) => {
+						if (e.key === 'Enter'  && originStateFiltered.length > 0) {
+							originCityFilter = originCityFiltered[0].city
+							originCityShowing = false
+							}
+						}}  />
+
 						{#each originCityFiltered as location}
 							{#if location.state === originStateFilter}
 								<DropdownItem
