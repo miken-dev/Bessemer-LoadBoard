@@ -585,6 +585,13 @@
 								destStateShowing = false;
 								destCityFilter = undefined;
 								destCitySearch = '';
+								destCityShowing = true
+								setTimeout(() => {
+									destCityShowing = true
+								}, 155);
+								setTimeout(() => {
+									document.querySelector<HTMLInputElement>('.destCitySearch')?.focus();
+								}, 155);
 							}}>{state}</DropdownItem
 						>
 					{/each}
