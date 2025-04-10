@@ -316,6 +316,10 @@
 	let destCitySearch = $state('');
 	let trailerTypesShowing = $state(false);
 	let trailerTypesSearch = $state('');
+	let originCityStateSearch = $state('');
+	let destCityStateSearch = $state('');
+	let originCityStateShowing = $state(false);
+	let destCityStateShowing = $state(false);
 
 	// Define the data interface
 	interface LocationEntry {
