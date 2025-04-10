@@ -358,15 +358,15 @@
 		return stateIndex;
 	}
 
- 	let trailerAlignment = () => {
+	let trailerAlignment = () => {
 		if (trailerTypesFilter.length >= 202) {
-			return "mt-20"
+			return 'mt-20';
 		} else if (trailerTypesFilter.length >= 97) {
-			return "mt-14"
+			return 'mt-14';
 		} else {
-			return "mt-12"
-		}                      
-	}
+			return 'mt-12';
+		}
+	};
 
 	// Filter function that uses the index
 	function filterByState(data: IndexableData, targetState: string): LocationEntry[] {
