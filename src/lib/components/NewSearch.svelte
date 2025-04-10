@@ -379,18 +379,35 @@
 		return data.stateIndex[targetState] || [];
 	}
 
-	let originStateFiltered = $derived(
-		states.filter((state) => state.toLowerCase().includes(originStateSearch.toLowerCase()))
-	);
+	let originStateFiltered = $derived.by(() => {
+		if (originStateSearch.length === 2) {
+			states.filter((state) =>
+				state.stateId.toLowerCase().includes(originStateSearch.toLowerCase())
+			);
+		}
+		states.filter(
+			(state) =>
+				state.name.toLowerCase().includes(originStateSearch.toLowerCase()) 
+		);
+	});
 
 	let originCityFiltered = $derived(
 		filterByState(locations, originStateFilter).filter((location) =>
 			location.city.toLowerCase().includes(originCitySearch.toLowerCase())
 		)
 	);
-	let destStateFiltered = $derived(
-		states.filter((state) => state.toLowerCase().includes(destStateSearch.toLowerCase()))
-	);
+	let destStateFiltered = $derived.by(() => {
+		if (destStateSearch.length === 2) {
+			states.filter((state) =>
+				state.stateId.toLowerCase().includes(destStateSearch.toLowerCase())
+			);
+		} else {
+			states.filter(
+				(state) =>
+					state.name.toLowerCase().includes(destStateSearch.toLowerCase()) 
+			);
+		}
+	});
 	let destCityFiltered = $derived(
 		filterByState(locations, destStateFilter).filter((location) =>
 			location.city.toLowerCase().includes(destCitySearch.toLowerCase())
@@ -401,6 +418,23 @@
 			trailerType.type.toLowerCase().includes(trailerTypesSearch.toLowerCase())
 		)
 	);
+
+	const fuseOptions = {
+		// shouldSort: true,
+		// includeMatches: false,
+		findAllMatches: true,
+		// minMatchCharLength: 1,
+		// location: 0,
+		// threshold: 0.6,
+		// distance: 100,
+		// useExtendedSearch: false,
+		// ignoreLocation: false,
+		// ignoreFieldNorm: false,
+		// fieldNormWeight: 1,
+		keys: ['city', 'stateId', 'state', 'zips']
+	};
+	const fuse = new Fuse(locations);
+	let originCityStateFiltered = $derived(fuse.search(originCityStateSearch, fuseOptions));
 </script>
 
 <div class="mt-5 flex w-full flex-col gap-5 rounded bg-slate-200 p-5 dark:bg-gray-900 md:m-5">
@@ -466,11 +500,11 @@
 					{#each originStateFiltered as state}
 						<DropdownItem
 							on:click={() => {
-								originStateFilter = state;
+								originStateFilter = state.name;
 								originStateShowing = false;
 								originCityFilter = undefined;
 								originCitySearch = '';
-							}}>{state}</DropdownItem
+							}}>{state.name}</DropdownItem
 						>
 					{/each}
 				</Dropdown>
@@ -508,7 +542,6 @@
 			</div>
 		</div>
 	</div>
-
 	<!-- DESTINATION -->
 	<div class="flex flex-col items-center justify-start gap-3 lg:flex-row">
 		<p class=" justify-self-start">Destination:</p>
