@@ -9,6 +9,7 @@
 		DropdownHeader,
 		Search
 	} from 'flowbite-svelte';
+	import Fuse from 'fuse.js';
 	import {
 		ChevronDownOutline,
 		FloppyDiskSolid,
