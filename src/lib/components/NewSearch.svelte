@@ -476,6 +476,13 @@
 								originStateShowing = false;
 								originCityFilter = undefined;
 								originCitySearch = '';
+								setTimeout(() => {
+									originCityShowing = true
+									document.querySelector<HTMLInputElement>('.originCitySearch')?.focus();
+								}, 155);
+								setTimeout(() => {
+									document.querySelector<HTMLInputElement>('.originCitySearch')?.focus();
+								}, 155);
 							}}>{state}</DropdownItem
 						>
 					{/each}
