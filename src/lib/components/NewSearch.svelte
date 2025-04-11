@@ -521,12 +521,17 @@
 						/></Button
 					>
 					<Dropdown bind:open={originCityShowing} class="max-h-48 w-48 overflow-y-auto py-1">
-						<Search size="sm" bind:value={originCitySearch} class="originCitySearch" on:keydown={(e) => {
-						if (e.key === 'Enter'  && originStateFiltered.length > 0) {
-							originCityFilter = originCityFiltered[0].city
-							originCityShowing = false
-							}
-						}}  />
+						<Search
+							size="sm"
+							bind:value={originCitySearch}
+							class="originCitySearch"
+							on:keydown={(e) => {
+								if (e.key === 'Enter' && originStateFiltered.length > 0) {
+									originCityFilter = originCityFiltered[0].city;
+									originCityShowing = false;
+								}
+							}}
+						/>
 
 						{#each originCityFiltered as location}
 							{#if location.state === originStateFilter}
@@ -586,18 +591,23 @@
 					/></Button
 				>
 				<Dropdown bind:open={destStateShowing} class="max-h-48 w-48 overflow-y-auto py-1">
-					<Search size="sm" bind:value={destStateSearch} class="destStateSearch" on:keydown={(e) => {
-						if (e.key === 'Enter'  && destStateFiltered.length > 0) {
-							destStateFilter = destStateFiltered[0];
-							destStateShowing = false;
-							destCityFilter = undefined;
-							destCitySearch = '';
-							destCityShowing = true
-							setTimeout(() => {
-								document.querySelector<HTMLInputElement>('.destCitySearch')?.focus();
-							}, 155);
-						}
-						}}  />
+					<Search
+						size="sm"
+						bind:value={destStateSearch}
+						class="destStateSearch"
+						on:keydown={(e) => {
+							if (e.key === 'Enter' && destStateFiltered.length > 0) {
+								destStateFilter = destStateFiltered[0].name;
+								destStateShowing = false;
+								destCityFilter = undefined;
+								destCitySearch = '';
+								destCityShowing = true;
+								setTimeout(() => {
+									document.querySelector<HTMLInputElement>('.destCitySearch')?.focus();
+								}, 155);
+							}
+						}}
+					/>
 					{#each destStateFiltered as state}
 						<DropdownItem
 							on:click={() => {
@@ -630,12 +640,17 @@
 						/></Button
 					>
 					<Dropdown bind:open={destCityShowing} class="max-h-48 w-48 overflow-y-auto py-1">
-						<Search size="sm" bind:value={destCitySearch} class="destCitySearch" on:keydown={(e) => {
-						if (e.key === 'Enter'  && destStateFiltered.length > 0) {
-							destCityFilter = destCityFiltered[0].city
-							destCityShowing = false
-							}
-						}}  />
+						<Search
+							size="sm"
+							bind:value={destCitySearch}
+							class="destCitySearch"
+							on:keydown={(e) => {
+								if (e.key === 'Enter' && destStateFiltered.length > 0) {
+									destCityFilter = destCityFiltered[0].city;
+									destCityShowing = false;
+								}
+							}}
+						/>
 						{#each destCityFiltered as location}
 							{#if location.state === destStateFilter}
 								<DropdownItem
