@@ -80,10 +80,12 @@
 	}
 </script>
 
-<Modal title="Notification Preferences" size="sm" bind:open={contactInfoPreferencesModal} outsideclose>
-	<Label for="email" class="mb-2 block">Email Address</Label>
-	<Input id="email" placeholder="" bind:value={emailAddress} />
-
+<Modal
+	title="Notification Preferences"
+	dismissable={false}
+	size="sm"
+	bind:open={contactInfoPreferencesModal}
+>
 	<Label for="phone" class="mb-2 block">Phone Number</Label>
 	<Input id="phone" placeholder="" bind:value={phoneNumber} />
 	{#if !saveButtonEnable()}
