@@ -93,7 +93,7 @@
 		bind:value={emailAddress}
 		on:keydown={(e) => {
 			if (e.key === 'Tab') {
-				document.querySelector<HTMLInputElement>('#phone')?.focus();
+				document.querySelector<HTMLInputElement>('.phone')?.focus();
 			}
 		}}
 	/>
