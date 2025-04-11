@@ -492,18 +492,18 @@
 					{#each originStateFiltered as state}
 						<DropdownItem
 							on:click={() => {
-								originStateFilter = state;
+								originStateFilter = state.name;
 								originStateShowing = false;
 								originCityFilter = undefined;
 								originCitySearch = '';
 								setTimeout(() => {
-									originCityShowing = true
+									originCityShowing = true;
 									document.querySelector<HTMLInputElement>('.originCitySearch')?.focus();
 								}, 155);
 								setTimeout(() => {
 									document.querySelector<HTMLInputElement>('.originCitySearch')?.focus();
 								}, 155);
-							}}>{state}</DropdownItem
+							}}>{state.name}</DropdownItem
 						>
 					{/each}
 				</Dropdown>
@@ -601,18 +601,18 @@
 					{#each destStateFiltered as state}
 						<DropdownItem
 							on:click={() => {
-								destStateFilter = state;
+								destStateFilter = state.name;
 								destStateShowing = false;
 								destCityFilter = undefined;
 								destCitySearch = '';
-								destCityShowing = true
+								destCityShowing = true;
 								setTimeout(() => {
-									destCityShowing = true
+									destCityShowing = true;
 								}, 155);
 								setTimeout(() => {
 									document.querySelector<HTMLInputElement>('.destCitySearch')?.focus();
 								}, 155);
-							}}>{state}</DropdownItem
+							}}>{state.name}</DropdownItem
 						>
 					{/each}
 				</Dropdown>
