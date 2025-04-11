@@ -606,7 +606,7 @@
 						class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
 					/></Button
 				>
-				<Dropdown bind:open={destStateShowing} class="max-h-48 w-48 overflow-y-auto py-1">
+				<Dropdown bind:open={destStateShowing} class="max-h-48 w-48 overflow-y-auto py-1 trailerDropdown">
 					<Search
 						size="sm"
 						bind:value={destStateSearch}
@@ -688,12 +688,12 @@
 	</div>
 
 	<!-- TRAILER TYPE -->
-	<div class="flex  flex-col items-center justify-start gap-3 sm:flex-row">
+	<div class="flex flex-col items-center justify-center lg:justify-start gap-3 sm:flex-row">
 		<p class="justify-self-start">Trailer Type:</p>
 		<Button
 			size="md"
 			color="light"
-			class="w-80"
+			class="w-80 lg:w-96"
 			on:click={() => {
 				setTimeout(() => {
 					document.querySelector<HTMLInputElement>('.trailerTypeSsearch');
