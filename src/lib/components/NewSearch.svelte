@@ -704,7 +704,7 @@
 			/></Button
 		>
 		<Dropdown
-			placement="bottom"
+			placement="bottom-start"
 			bind:open={trailerTypesShowing}
 			class="h-48 w-60 mx-1 px-1 overflow-y-auto py-1"
 		>
