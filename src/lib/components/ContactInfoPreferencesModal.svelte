@@ -18,7 +18,6 @@
 	let phoneNumber = $state('');
 	let emailAddress = $state('');
 
-
 	const PB = new PocketBase('https://bessemer-loadboard.pockethost.io');
 	async function getUserInfo() {
 		const user = await PB.collection('driver').getOne(userId);
@@ -62,7 +61,7 @@
 		// If no notifications are enabled, only name is required
 
 		// Check if user has existing email or valid new email
-		const hasValidNewEmail =  isValidEmail(emailAddress);
+		const hasValidNewEmail = isValidEmail(emailAddress);
 
 		if (!hasValidNewEmail) {
 			return false;
