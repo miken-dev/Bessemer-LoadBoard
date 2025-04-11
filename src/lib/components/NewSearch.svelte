@@ -114,7 +114,7 @@
 			enabled: false
 		},
 		{
-			type: 'Drop Side RGN',
+			type: 'Drop Side_RGN',
 			enabled: false
 		},
 		{
@@ -697,7 +697,7 @@
 					document.querySelector<HTMLInputElement>('.trailerTypeSsearch');
 				});
 			}}
-			>{trailerTypesFilter ? trailerTypesFilter.slice(2) : 'Pick a type'}<ChevronDownOutline
+		>{trailerTypesFilter ? trailerTypesFilter.slice(2).replace("_", " ") : 'Pick a type'}<ChevronDownOutline
 				class="ms-2 h-6 md:w-6 text-gray-800 dark:text-white"
 			/></Button
 		>
@@ -719,7 +719,7 @@
 							trailerType.enabled = trailerType.enabled ? false : true;
 							toggleTrailerType(trailerType.type);
 							trailerTypesShowing = true;
-						}}>{trailerType.type}</Checkbox
+						}}>{trailerType.type.replace("_", " ")}</Checkbox
 					>
 				{:else}
 					<Checkbox
@@ -729,7 +729,7 @@
 							trailerType.enabled = trailerType.enabled ? false : true;
 							toggleTrailerType(trailerType.type);
 							trailerTypesShowing = true;
-						}}>{trailerType.type}</Checkbox
+						}}>{trailerType.type.replace("_", " ")}</Checkbox
 					>
 				{/if}
 				</DropdownItem>
