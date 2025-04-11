@@ -432,7 +432,7 @@
 <div class="mt-5 flex w-full flex-col gap-5 rounded bg-slate-200 p-5 dark:bg-gray-900 md:m-5">
 	<h2 class="text-2xl font-extrabold">New Search</h2>
 	<!-- DATE RANGE -->
-	<div class="flex w-full flex-col items-center justify-start gap-4 lg:flex-row">
+	<div class="flex w-full flex-col items-center justify-start gap-4 xl:flex-row">
 		<p class=" justify-self-start">Pick up Date/Range:</p>
 		<div class="flex w-full flex-col items-start gap-3">
 			<div class="flex flex-col items-center gap-3 sm:flex-row">
