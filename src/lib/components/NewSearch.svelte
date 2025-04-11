@@ -472,18 +472,23 @@
 					/></Button
 				>
 				<Dropdown bind:open={originStateShowing} class="max-h-48 w-48 overflow-y-auto py-1">
-					<Search size="sm" bind:value={originStateSearch} class="originStateSearch" on:keydown={(e) => {
-						if (e.key === 'Enter' && originStateFiltered.length > 0) {
-							originStateFilter = originStateFiltered[0];
-							originStateShowing = false;
-							originCityFilter = undefined;
-							originCitySearch = '';
-							originCityShowing = true
-							setTimeout(() => {
-								document.querySelector<HTMLInputElement>('.originCitySearch')?.focus();
-							}, 155);
-						}
-					}} />
+					<Search
+						size="sm"
+						bind:value={originStateSearch}
+						class="originStateSearch"
+						on:keydown={(e) => {
+							if (e.key === 'Enter' && originStateFiltered.length > 0) {
+								originStateFilter = originStateFiltered[0].name;
+								originStateShowing = false;
+								originCityFilter = undefined;
+								originCitySearch = '';
+								originCityShowing = true;
+								setTimeout(() => {
+									document.querySelector<HTMLInputElement>('.originCitySearch')?.focus();
+								}, 155);
+							}
+						}}
+					/>
 					{#each originStateFiltered as state}
 						<DropdownItem
 							on:click={() => {
