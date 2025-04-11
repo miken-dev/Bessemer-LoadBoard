@@ -354,9 +354,23 @@
 	}
 
 	let trailerAlignment = () => {
-		if (trailerTypesFilter.length >= 202) {
+		if (trailerTypesFilter.length >= 320) {
+			return 'mt-60';
+		} else if (trailerTypesFilter.length >= 280) {
+			return 'mt-52'
+		} else if (trailerTypesFilter.length >= 250) {
+			return 'mt-48';
+		} else if (trailerTypesFilter.length >= 210) {
+			return 'mt-44';
+		} else if (trailerTypesFilter.length >= 175) {
+			return 'mt-40';
+		} else if (trailerTypesFilter.length >= 140) {
+			return 'mt-28';
+		} else if (trailerTypesFilter.length >= 105) {
+			return 'mt-24';
+		} else if (trailerTypesFilter.length >= 70) {
 			return 'mt-20';
-		} else if (trailerTypesFilter.length >= 97) {
+		} else if (trailerTypesFilter.length >= 35) {
 			return 'mt-14';
 		} else {
 			return 'mt-12';
@@ -672,18 +686,19 @@
 	</div>
 
 	<!-- TRAILER TYPE -->
-	<div class="flex flex-col items-center justify-start gap-3 sm:flex-row">
+	<div class="flex  flex-col items-center justify-start gap-3 sm:flex-row">
 		<p class="justify-self-start">Trailer Type:</p>
 		<Button
 			size="md"
 			color="light"
+			class="w-80"
 			on:click={() => {
 				setTimeout(() => {
 					document.querySelector<HTMLInputElement>('.trailerTypeSsearch');
 				});
 			}}
 			>{trailerTypesFilter ? trailerTypesFilter.slice(2) : 'Pick a type'}<ChevronDownOutline
-				class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
+				class="ms-2 h-6 md:w-6 text-gray-800 dark:text-white"
 			/></Button
 		>
 		<Dropdown
@@ -694,6 +709,7 @@
 		>
 			<Search size="sm" bind:value={trailerTypesSearch} />
 			{#each trailerTypeFiltered as trailerType}
+				<DropdownItem>
 				{#if trailerTypesFilterArray.includes(trailerType.type) || trailerTypesFilter.includes(trailerType.type)}
 					<Checkbox
 						class="px-3"
@@ -716,6 +732,7 @@
 						}}>{trailerType.type}</Checkbox
 					>
 				{/if}
+				</DropdownItem>
 			{/each}
 		</Dropdown>
 	</div>
