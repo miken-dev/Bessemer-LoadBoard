@@ -710,7 +710,7 @@
 			<Search size="sm" bind:value={trailerTypesSearch} />
 			{#each trailerTypeFiltered as trailerType}
 				<DropdownItem>
-				{#if trailerTypesFilterArray.includes(trailerType.type) || trailerTypesFilter.includes(trailerType.type)}
+				{#if trailerTypesFilterArray.includes(trailerType.type) || trailerTypesFilter.includes(`{ trailerType.type},`)}
 					<Checkbox
 						class="px-3"
 						color="blue"
