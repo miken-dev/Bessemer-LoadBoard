@@ -416,7 +416,7 @@
 				state.name.toLowerCase().includes(destStateSearch.toLowerCase())
 			);
 		}
-	});
+});
 	let destCityFiltered = $derived(
 		filterByState(locations, destStateFilter).filter((location) =>
 			location.city.toLowerCase().includes(destCitySearch.toLowerCase())
