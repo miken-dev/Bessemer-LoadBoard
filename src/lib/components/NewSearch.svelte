@@ -496,10 +496,10 @@
 								originStateShowing = false;
 								originCityFilter = undefined;
 								originCitySearch = '';
-								originCityShowing = true;
-								setTimeout(() => {
-									document.querySelector<HTMLInputElement>('.originCitySearch')?.focus();
-								}, 155);
+								//originCityShowing = true;
+								//setTimeout(() => {
+								 //   document.querySelector<HTMLInputElement>('.originCitySearch')?.focus();
+								//}, 155);
 							}
 						}}
 					/>
@@ -510,13 +510,13 @@
 								originStateShowing = false;
 								originCityFilter = undefined;
 								originCitySearch = '';
-								setTimeout(() => {
+								/*setTimeout(() => {
 									originCityShowing = true;
 									document.querySelector<HTMLInputElement>('.originCitySearch')?.focus();
 								}, 155);
 								setTimeout(() => {
 									document.querySelector<HTMLInputElement>('.originCitySearch')?.focus();
-								}, 155);
+								}, 155);*/
 							}}>{state.name}</DropdownItem
 						>
 					{/each}
@@ -615,10 +615,10 @@
 								destStateShowing = false;
 								destCityFilter = undefined;
 								destCitySearch = '';
-								destCityShowing = true;
-								setTimeout(() => {
-									document.querySelector<HTMLInputElement>('.destCitySearch')?.focus();
-								}, 155);
+								//destCityShowing = true;
+								//setTimeout(() => {
+									//document.querySelector<HTMLInputElement>('.destCitySearch')?.focus();
+								//}, 155);
 							}
 						}}
 					/>
@@ -629,13 +629,13 @@
 								destStateShowing = false;
 								destCityFilter = undefined;
 								destCitySearch = '';
-								destCityShowing = true;
+								/*destCityShowing = true;
 								setTimeout(() => {
 									destCityShowing = true;
 								}, 155);
 								setTimeout(() => {
 									document.querySelector<HTMLInputElement>('.destCitySearch')?.focus();
-								}, 155);
+								}, 155);*/
 							}}>{state.name}</DropdownItem
 						>
 					{/each}
