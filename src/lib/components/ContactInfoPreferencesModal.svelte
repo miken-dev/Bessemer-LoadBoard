@@ -86,13 +86,25 @@
 	size="sm"
 	bind:open={contactInfoPreferencesModal}
 >
+	<Label for="email" class="mb-2 block">Email Address</Label>
+	<Input
+		id="email"
+		placeholder=""
+		bind:value={emailAddress}
+		on:keydown={(e) => {
+			if (e.key === 'Tab') {
+				document.querySelector<HTMLInputElement>('#phone')?.focus();
+			}
+		}}
+	/>
 	<Label for="phone" class="mb-2 block">Phone Number</Label>
-	<Input id="phone" placeholder="" bind:value={phoneNumber} />
+	<Input class="h-10 w-full rounded-md p-5" id="phone" placeholder="" bind:value={phoneNumber} />
 	{#if !saveButtonEnable()}
 		<Button size="md" color="alternative" disabled>Save</Button>
 	{:else}
 		<Button
 			size="md"
+			class="saveButton"
 			color="blue"
 			onclick={async () => {
 				await save();
@@ -110,3 +122,7 @@
 		}}>Cancel</Button
 	>
 </Modal>
+
+<!--
+document.querySelector<HTMLInputElement>('#phone')?.focus(); 
+	-->
