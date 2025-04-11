@@ -704,10 +704,9 @@
 			/></Button
 		>
 		<Dropdown
-			placement="start"
+			placement="bottom"
 			bind:open={trailerTypesShowing}
-			class="h-48 w-60 overflow-y-auto py-1"
-			classContainer="{trailerAlignment()}  ml-0 relative"
+			class="h-48 w-60 mx-1 px-1 overflow-y-auto py-1"
 		>
 			<Search size="sm" bind:value={trailerTypesSearch} />
 			{#each trailerTypeFiltered as trailerType}
