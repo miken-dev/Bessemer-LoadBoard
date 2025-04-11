@@ -354,16 +354,18 @@
 	}
 
 	let trailerAlignment = () => {
-		if (trailerTypesFilter.length >= 320) {
+		if (trailerTypesFilter.length >= 350) {
 			return 'mt-60';
+		} else if (trailerTypesFilter.length >= 320) {
+			return 'mt-56';
 		} else if (trailerTypesFilter.length >= 280) {
-			return 'mt-52'
+			return 'mt-48'
 		} else if (trailerTypesFilter.length >= 250) {
-			return 'mt-48';
-		} else if (trailerTypesFilter.length >= 210) {
 			return 'mt-44';
-		} else if (trailerTypesFilter.length >= 175) {
+		} else if (trailerTypesFilter.length >= 210) {
 			return 'mt-40';
+		} else if (trailerTypesFilter.length >= 175) {
+			return 'mt-36';
 		} else if (trailerTypesFilter.length >= 140) {
 			return 'mt-28';
 		} else if (trailerTypesFilter.length >= 105) {
