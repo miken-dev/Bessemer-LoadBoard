@@ -686,33 +686,38 @@
 				class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
 			/></Button
 		>
-			<Dropdown placement="start" bind:open={trailerTypesShowing} class="h-48 w-60 overflow-y-auto py-1" classContainer="{trailerAlignment()}  ml-0 relative">
-				<Search size="sm" bind:value={trailerTypesSearch} />
-				{#each trailerTypeFiltered as trailerType}
-					{#if trailerTypesFilterArray.includes(trailerType.type) || trailerTypesFilter.includes(trailerType.type)}
-							<Checkbox
-								class="px-3"
-								color="blue"
-								checked
-								on:click={() => {
-									trailerType.enabled = trailerType.enabled ? false : true;
-									toggleTrailerType(trailerType.type);
-									trailerTypesShowing = true;
-								}}>{trailerType.type}</Checkbox
-							>
-					{:else}
-							<Checkbox
-								class="px-3"
-								color="blue"
-								on:click={() => {
-									trailerType.enabled = trailerType.enabled ? false : true;
-									toggleTrailerType(trailerType.type);
-									trailerTypesShowing = true;
-								}}>{trailerType.type}</Checkbox
-							>
-					{/if}
-				{/each}
-			</Dropdown>
+		<Dropdown
+			placement="start"
+			bind:open={trailerTypesShowing}
+			class="h-48 w-60 overflow-y-auto py-1"
+			classContainer="{trailerAlignment()}  ml-0 relative"
+		>
+			<Search size="sm" bind:value={trailerTypesSearch} />
+			{#each trailerTypeFiltered as trailerType}
+				{#if trailerTypesFilterArray.includes(trailerType.type) || trailerTypesFilter.includes(trailerType.type)}
+					<Checkbox
+						class="px-3"
+						color="blue"
+						checked
+						on:click={() => {
+							trailerType.enabled = trailerType.enabled ? false : true;
+							toggleTrailerType(trailerType.type);
+							trailerTypesShowing = true;
+						}}>{trailerType.type}</Checkbox
+					>
+				{:else}
+					<Checkbox
+						class="px-3"
+						color="blue"
+						on:click={() => {
+							trailerType.enabled = trailerType.enabled ? false : true;
+							toggleTrailerType(trailerType.type);
+							trailerTypesShowing = true;
+						}}>{trailerType.type}</Checkbox
+					>
+				{/if}
+			{/each}
+		</Dropdown>
 	</div>
 
 	<!-- BUTTONS -->
