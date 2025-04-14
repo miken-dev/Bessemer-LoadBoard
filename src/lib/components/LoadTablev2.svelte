@@ -165,8 +165,9 @@
 								</div>
 								<div>
 									<div class="text-xs font-medium text-gray-500 dark:text-gray-300">Phone #</div>
-									<a class="mt-1 text-sm text-blue-500 underline" href="tel:+1{row.terminalPhone}"
-										>{row.terminalPhone}</a
+									<a
+										class="phone mt-1 text-sm text-blue-500 underline"
+										href="tel:+1{row.terminalPhone}">{row.terminalPhone}</a
 									>
 								</div>
 							</div>
