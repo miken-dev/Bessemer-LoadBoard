@@ -48,11 +48,14 @@
 				return 'th';
 		}
 	};
-	const toggle = (id: number, city: string) => {
+	const toggle = (id: number, city: string, event: Event) => {
 		selectedRow = id;
+		const phone = document.querySelector('.phone');
 
-		detailsHidden = false;
-		tableClicked = true;
+		if (phone !== event.target) {
+			detailsHidden = false;
+			tableClicked = true;
+		}
 	};
 
 	function numberWithCommas(number: number) {
@@ -77,7 +80,7 @@
 			{#each tableData as row, index}
 				<!-- Combined row with all data -->
 				<tr
-					onclick={() => toggle(row.loadID, row.originCityName)}
+					onclick={(event) => toggle(row.loadID, row.originCityName, event)}
 					class={cn(
 						'cursor-pointer transition-colors',
 						index % 2 === 0 ? 'bg-white dark:bg-gray-800' : 'bg-sky-100 dark:bg-sky-900',
@@ -146,7 +149,7 @@
 											Not available
 										{:else}
 											{`${row.lengthFeet}'${row.lengthInches}" x ${row.widthFeet}'${row.widthInches}" x ${row.heightFeet}'${row.heightInches}"`}
-												<br>
+											<br />
 											{`${numberWithCommas(row.weightInPounds)} lbs.`}
 										{/if}
 									</div>
