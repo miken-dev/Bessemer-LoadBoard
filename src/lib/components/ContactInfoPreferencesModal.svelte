@@ -80,7 +80,79 @@
 	}
 </script>
 
+{#if contactInfoPreferencesModal}
+	<div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+		<!--
+    Background backdrop, show/hide based on modal state.
 
+    Entering: "ease-out duration-300"
+      From: "opacity-0"
+      To: "opacity-100"
+    Leaving: "ease-in duration-200"
+      From: "opacity-100"
+      To: "opacity-0"
+  -->
+		<div class="fixed inset-0 bg-gray-500/75 transition-opacity" aria-hidden="true"></div>
+
+		<div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+			<div class="flex min-h-full  justify-center p-4 text-center items-center sm:p-0">
+				<div
+					class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 w-full sm:max-w-lg"
+				>
+					<div class="align-stretch bg-white px-4 pb-4 pt-5 dark:bg-gray-900 sm:p-6 sm:pb-4">
+						<div class="">
+							<div class="mt-3 sm:mt-0 text-left">
+								<h3 class="text-base font-semibold text-gray-900 dark:text-white" id="modal-title">
+									 Notification Preferences
+								</h3>
+								<div class="mt-2 flex flex-col gap-5">
+									<div class="flex flex-col">
+										<Label for="email" class="mb-2 block">Email Address</Label>
+										<Input id="email" class="email grow" placeholder="" bind:value={emailAddress} />
+									</div>
+									<div class="flex flex-col">
+										<Label for="phone" class="mb-2 block">Phone Number</Label>
+										<Input
+											class="h-10 w-full rounded-md p-5"
+											id="phone"
+											placeholder=""
+											bind:value={phoneNumber}
+										/>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="gap-3 bg-gray-50 px-4 py-3 pb-7 dark:bg-gray-900 sm:flex sm:flex-row sm:px-6">
+						{#if !saveButtonEnable()}
+							<Button size="md" color="alternative" disabled>Save</Button>
+						{:else}
+							<Button
+								size="md"
+								class="saveButton"
+								color="blue"
+								onclick={async () => {
+									await save();
+									contactInfoPreferencesModal = false;
+								}}>Save</Button
+							>
+						{/if}
+						<Button
+							size="md"
+							color="alternative"
+							on:click={async () => {
+								emailAddress = userInfo.email;
+								phoneNumber = userInfo.phone;
+								contactInfoPreferencesModal = false;
+							}}>Cancel</Button
+						>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{/if}
+<!--
 <Modal
 	title="Notification Preferences"
 	dismissable={false}
@@ -128,6 +200,7 @@
 		}}>Cancel</Button
 	>
 </Modal>
+-->
 <!--
 document.querySelector<HTMLInputElement>('#phone')?.focus(); 
 	-->
