@@ -195,7 +195,6 @@
 	size="md"
 	bind:open={saveSearchDialogIsShowing}
 	autoclose
-	outsideclose
 >
 	<Label for="name" class="mb-2 block">Name your saved search</Label>
 	<Input id="name" placeholder="" bind:value={name} />
