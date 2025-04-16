@@ -128,7 +128,7 @@
 									<Input
 										autofocus
 										id="email"
-										class="email grow"
+										class="email grow text-base"
 										placeholder=""
 										bind:value={emailAddress}
 									/>
@@ -136,7 +136,7 @@
 								<div class="flex flex-col">
 									<Label for="phone" class="mb-2 block">Phone Number</Label>
 									<Input
-										class="h-10 w-full rounded-md p-5"
+										class="h-10 w-full rounded-md p-5 text-base"
 										id="phone"
 										placeholder=""
 										bind:value={phoneNumber}
