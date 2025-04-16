@@ -17,6 +17,15 @@
 	let userInfo = $state();
 	let phoneNumber = $state('');
 	let emailAddress = $state('');
+	let dialogElement;
+
+	$effect(() => {
+		if (contactInfoPreferencesModal) {
+			dialogElement?.showModal()
+		} else {
+			dialogElement?.close()
+		}
+	})
 
 	const PB = new PocketBase('https://bessemer-loadboard.pockethost.io');
 	async function getUserInfo() {
