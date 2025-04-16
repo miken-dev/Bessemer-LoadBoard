@@ -139,9 +139,24 @@ export function filterAndSortTableData(
                         : b.originStateName.localeCompare(a.originStateName);
                 
                 case 'originCity':
-                    return sortOption.direction === 'asc'
+                    const originStateCompare = sortOption.direction === 'asc'
+                        ? a.originStateName.localeCompare(b.originStateName)
+                        : b.originStateName.localeCompare(a.originStateName);
+                    if (originStateCompare !== 0) return originStateCompare;
+                    
+                    const originCityCompare = sortOption.direction === 'asc'
                         ? a.originCityName.localeCompare(b.originCityName)
                         : b.originCityName.localeCompare(a.originCityName);
+                    if (originCityCompare !== 0) return originCityCompare;
+                    
+                    const destStateCompare = sortOption.direction === 'asc'
+                        ? a.destinationStateName.localeCompare(b.destinationStateName)
+                        : b.destinationStateName.localeCompare(a.destinationStateName);
+                    if (destStateCompare !== 0) return destStateCompare;
+                    
+                    return sortOption.direction === 'asc'
+                        ? a.destinationCityName.localeCompare(b.destinationCityName)
+                        : b.destinationCityName.localeCompare(a.destinationCityName);
                 
                 case 'destinationState':
                     return sortOption.direction === 'asc'
@@ -149,9 +164,24 @@ export function filterAndSortTableData(
                         : b.destinationStateName.localeCompare(a.destinationStateName);
                 
                 case 'destinationCity':
-                    return sortOption.direction === 'asc'
+                    const destCityStateCompare = sortOption.direction === 'asc'
+                        ? a.destinationStateName.localeCompare(b.destinationStateName)
+                        : b.destinationStateName.localeCompare(a.destinationStateName);
+                    if (destCityStateCompare !== 0) return destCityStateCompare;
+                    
+                    const destCityCityCompare = sortOption.direction === 'asc'
                         ? a.destinationCityName.localeCompare(b.destinationCityName)
                         : b.destinationCityName.localeCompare(a.destinationCityName);
+                    if (destCityCityCompare !== 0) return destCityCityCompare;
+                    
+                    const destCityOriginStateCompare = sortOption.direction === 'asc'
+                        ? a.originStateName.localeCompare(b.originStateName)
+                        : b.originStateName.localeCompare(a.originStateName);
+                    if (destCityOriginStateCompare !== 0) return destCityOriginStateCompare;
+                    
+                    return sortOption.direction === 'asc'
+                        ? a.originCityName.localeCompare(b.originCityName)
+                        : b.originCityName.localeCompare(a.originCityName);
                 
                 case 'loadDate':
                     const dateA = new Date(a.loadDate);
