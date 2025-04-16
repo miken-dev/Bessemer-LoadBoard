@@ -194,13 +194,13 @@ export function filterAndSortTableData(
                     // Secondary sort by originStateName
                     const stateCompare = sortOption.direction === 'asc'
                         ? a.originStateName.localeCompare(b.originStateName)
-                        : b.originStateName.localeCompare(a.originStateName);
+                        : a.originStateName.localeCompare(b.originStateName);
                     if (stateCompare !== 0) return stateCompare;
                     
                     // Tertiary sort by originCityName
                     return sortOption.direction === 'asc'
                         ? a.originCityName.localeCompare(b.originCityName)
-                        : b.originCityName.localeCompare(a.originCityName);
+                        : a.originCityName.localeCompare(b.originCityName);
                 
                 case 'revenue':
                     return sortOption.direction === 'asc'
