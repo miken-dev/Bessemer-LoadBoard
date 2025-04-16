@@ -80,15 +80,18 @@
 	}
 </script>
 
+
 <Modal
 	title="Notification Preferences"
 	dismissable={false}
 	size="sm"
 	bind:open={contactInfoPreferencesModal}
->
+>	
+	<div>
 	<Label for="email" class="mb-2 block">Email Address</Label>
 	<Input
 		id="email"
+		class="email"
 		placeholder=""
 		bind:value={emailAddress}
 		on:keydown={(e) => {
@@ -97,8 +100,11 @@
 			}
 		}}
 	/>
+		</div>
+	<div>
 	<Label for="phone" class="mb-2 block">Phone Number</Label>
 	<Input class="h-10 w-full rounded-md p-5" id="phone" placeholder="" bind:value={phoneNumber} />
+		</div>
 	{#if !saveButtonEnable()}
 		<Button size="md" color="alternative" disabled>Save</Button>
 	{:else}
@@ -122,7 +128,6 @@
 		}}>Cancel</Button
 	>
 </Modal>
-
 <!--
 document.querySelector<HTMLInputElement>('#phone')?.focus(); 
 	-->
