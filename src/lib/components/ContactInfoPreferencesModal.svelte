@@ -89,7 +89,15 @@
 	}
 </script>
 
-	<div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+	<dialog
+		class="relative z-10"
+		bind:this={dialogElement}
+		onkeydown={(e) => {
+			if (e.key === 'Escape') {
+				contactInfoPreferencesModal = false
+			}
+		}}
+	>
 		<!--
     Background backdrop, show/hide based on modal state.
 
@@ -158,7 +166,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</dialog>
 <!--
 <Modal
 	title="Notification Preferences"
