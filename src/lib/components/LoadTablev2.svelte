@@ -50,9 +50,15 @@
 	};
 	const toggle = (id: number, city: string, event: Event) => {
 		selectedRow = id;
-		const phone = document.querySelector('.phone');
+		const phone = document.querySelectorAll('.phone');
+		let comparison = false 
 
-		if (phone !== event.target) {
+		for (const phoneNode of phone){ 
+			if (phoneNode === event.target) {
+				comparison = true
+			}
+		}
+		if (!comparison) {
 			detailsHidden = false;
 			tableClicked = true;
 		}
