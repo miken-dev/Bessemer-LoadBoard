@@ -482,6 +482,8 @@
 
 	const fuse = new Fuse(locations, fuseOptions);
 
+	let originSearchResults = $derived(fuse.search(originCitySearch.replace(',', ' ').replace('  ', ' ')));
+	let destSearchResults = $derived(fuse.search(destCitySearch.replace(',', ' ').replace('  ', ' ')));
 </script>
 
 <div class="mt-5 flex w-full flex-col gap-5 rounded bg-slate-200 p-5 dark:bg-gray-900 md:m-5">
