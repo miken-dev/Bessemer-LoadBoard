@@ -557,15 +557,16 @@
 						bind:value={originCitySearch}
 						class="originCitySearch"
 						on:keydown={(e) => {
-							if (e.key === 'Enter' && originStateFiltered.length > 0) {
-								originStateFilter = originStateFiltered[0].name;
-								originStateShowing = false;
-								originCityFilter = undefined;
+							if (e.key === 'Enter' && originSearchResults.length > 0) {
+								setOriginAddress(
+									originSearchResults[0].item.lat,
+									originSearchResults[0].item.lng,
+									originSearchResults[0].item.city,
+									originSearchResults[0].item.state,
+									originSearchResults[0].item.state_id
+								);
+								originCityShowing = false;
 								originCitySearch = '';
-								//originCityShowing = true;
-								//setTimeout(() => {
-								 //   document.querySelector<HTMLInputElement>('.originCitySearch')?.focus();
-								//}, 155);
 							}
 						}}
 					/>
