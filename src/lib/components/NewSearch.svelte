@@ -272,15 +272,31 @@
 		trailerTypesSearch = '';
 		cleared = true;
 	}
-	function setOriginAddress(lat: string, lng: string, city: string) {
+	function setOriginAddress(
+		lat: string,
+		lng: string,
+		city: string,
+		state: string,
+		stateShort: string
+	) {
 		originLatFilter = Number(lat);
 		originLngFilter = Number(lng);
 		originCityFilter = city;
+		originStateFilter = state;
+		originStateShort = stateShort;
 	}
-	function setDestinationAddress(lat: string, lng: string, city: string) {
+	function setDestinationAddress(
+		lat: string,
+		lng: string,
+		city: string,
+		state: string,
+		stateShort: string
+	) {
 		destLatFilter = Number(lat);
 		destLngFilter = Number(lng);
 		destCityFilter = city;
+		destStateFilter = state;
+		destStateShort = stateShort;
 	}
 	let trailerTypesFilterArray: string[] = $state(['']);
 	function toggleTrailerType(trailerType: string) {
