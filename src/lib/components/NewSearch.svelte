@@ -680,7 +680,7 @@
 	</div>
 
 	<!-- TRAILER TYPE -->
-	<div class="flex flex-col items-center justify-center lg:justify-start gap-3 sm:flex-row">
+	<div class="flex flex-col items-center justify-center gap-3 sm:flex-row lg:justify-start">
 		<p class="justify-self-start">Trailer Type:</p>
 		<Button
 			size="md"
