@@ -547,11 +547,15 @@
 						class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
 					/></Button
 				>
-				<Dropdown bind:open={originStateShowing} class="max-h-48 w-48 overflow-y-auto py-1">
+				<Dropdown
+					bind:open={originCityShowing}
+					id="originDropDown"
+					class="max-h-48 w-48 overflow-y-auto py-1"
+				>
 					<Search
 						size="sm"
-						bind:value={originStateSearch}
-						class="originStateSearch"
+						bind:value={originCitySearch}
+						class="originCitySearch"
 						on:keydown={(e) => {
 							if (e.key === 'Enter' && originStateFiltered.length > 0) {
 								originStateFilter = originStateFiltered[0].name;
