@@ -532,6 +532,7 @@
 			</div>
 			<div class="flex flex-row items-center gap-3">
 				<p>of</p>
+				<!-- CITY -->
 				<Button
 					size="xs"
 					color="light"
