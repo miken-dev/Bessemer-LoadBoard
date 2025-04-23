@@ -571,27 +571,24 @@
 						}}
 					/>
 
+					{#if originCitySearch}
+						{#each sortLocationData(originSearchResults) as location}
+							<DropdownItem
+								on:click={() => {
+									setOriginAddress(
+										location.item.lat,
+										location.item.lng,
+										location.item.city,
+										location.item.state,
+										location.item.state_id
+									);
 									originCityShowing = false;
-								}
-							}}
-						/>
-
-						{#each originCityFiltered as location}
-							{#if location.state === originStateFilter}
-								<DropdownItem
-									on:click={() => {
-										setOriginAddress(location.lat, location.lng, location.city);
-										originCityShowing = false;
-									}}>{location.city}</DropdownItem
-								>
-							{/if}
+									originCitySearch = '';
+								}}>{location.item.city}, {location.item.state_id}</DropdownItem
+							>
 						{/each}
-					</Dropdown>
-				{:else}
-					<Button disabled size="xs" color="light"
-						>City<ChevronDownOutline class="ms-2 h-6 w-6 text-gray-800 dark:text-white" /></Button
-					>
-				{/if}
+					{/if}
+				</Dropdown>
 			</div>
 		</div>
 	</div>
