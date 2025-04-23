@@ -640,18 +640,19 @@
 				>
 					<Search
 						size="sm"
-						bind:value={destStateSearch}
-						class="destStateSearch"
+						bind:value={destCitySearch}
+						class="destCitySearch"
 						on:keydown={(e) => {
-							if (e.key === 'Enter' && destStateFiltered.length > 0) {
-								destStateFilter = destStateFiltered[0].name;
-								destStateShowing = false;
-								destCityFilter = undefined;
+							if (e.key === 'Enter' && destSearchResults.length > 0) {
+								setDestinationAddress(
+									destSearchResults[0].item.lat,
+									destSearchResults[0].item.lng,
+									destSearchResults[0].item.city,
+									destSearchResults[0].item.state,
+									destSearchResults[0].item.state_id
+								);
+								destCityShowing = false;
 								destCitySearch = '';
-								//destCityShowing = true;
-								//setTimeout(() => {
-									//document.querySelector<HTMLInputElement>('.destCitySearch')?.focus();
-								//}, 155);
 							}
 						}}
 					/>
