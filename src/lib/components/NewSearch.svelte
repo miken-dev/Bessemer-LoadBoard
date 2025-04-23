@@ -700,7 +700,7 @@
 		<Dropdown
 			placement="bottom-start"
 			bind:open={trailerTypesShowing}
-			class="h-48 w-60 mx-1 px-1 overflow-y-auto py-1"
+			class="mx-1 h-48 w-60 overflow-y-auto px-1 py-1"
 		>
 			<Search size="sm" bind:value={trailerTypesSearch} />
 			{#each trailerTypeFiltered as trailerType}
