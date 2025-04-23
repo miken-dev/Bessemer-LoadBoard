@@ -436,7 +436,7 @@
 				state.name.toLowerCase().includes(destStateSearch.toLowerCase())
 			);
 		}
-});
+	});
 	let destCityFiltered = $derived(
 		filterByState(locations, destStateFilter).filter((location) =>
 			location.city.toLowerCase().includes(destCitySearch.toLowerCase())
@@ -447,6 +447,7 @@
 			trailerType.type.toLowerCase().includes(trailerTypesSearch.toLowerCase())
 		)
 	);
+
 </script>
 
 <div class="mt-5 flex w-full flex-col gap-5 rounded bg-slate-200 p-5 dark:bg-gray-900 md:m-5">
