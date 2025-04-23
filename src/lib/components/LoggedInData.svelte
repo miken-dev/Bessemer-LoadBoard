@@ -263,7 +263,7 @@
 						{:else if filteredData.length === 0 && tableData.length === 0}
 							<LoadTableSkeleton />
 						{:else}
-							<div class="flex w-96 flex-col justify-around text-4xl">
+							<div class="flex w-full md:w-96 flex-col justify-around text-4xl">
 								<h3 class="text-center">No results available</h3>
 							</div>
 						{/if}

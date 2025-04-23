@@ -1,4 +1,6 @@
 <script lang="ts">
+	//	import MiniSearch from 'minisearch';
+	import Fuse from 'fuse.js';
 	import {
 		Button,
 		ButtonGroup,
@@ -20,7 +22,7 @@
 	import SaveSearchDialog from './saveSearchDialog.svelte';
 	import type { savedSearchesTypes } from '$lib/types';
 	import ContactInfoPreferencesModal from './ContactInfoPreferencesModal.svelte';
-	import SearchBar from './SearchBar.svelte';
+
 	let miles = [5, 10, 25, 50, 100, 150, 200, 250, 300, 400, 500];
 
 	const states = [
@@ -270,15 +272,31 @@
 		trailerTypesSearch = '';
 		cleared = true;
 	}
-	function setOriginAddress(lat: string, lng: string, city: string) {
+	function setOriginAddress(
+		lat: string,
+		lng: string,
+		city: string,
+		state: string,
+		stateShort: string
+	) {
 		originLatFilter = Number(lat);
 		originLngFilter = Number(lng);
 		originCityFilter = city;
+		originStateFilter = state;
+		originStateShort = stateShort;
 	}
-	function setDestinationAddress(lat: string, lng: string, city: string) {
+	function setDestinationAddress(
+		lat: string,
+		lng: string,
+		city: string,
+		state: string,
+		stateShort: string
+	) {
 		destLatFilter = Number(lat);
 		destLngFilter = Number(lng);
 		destCityFilter = city;
+		destStateFilter = state;
+		destStateShort = stateShort;
 	}
 	let trailerTypesFilterArray: string[] = $state(['']);
 	function toggleTrailerType(trailerType: string) {
@@ -315,6 +333,8 @@
 	let destCitySearch = $state('');
 	let trailerTypesShowing = $state(false);
 	let trailerTypesSearch = $state('');
+	let originStateShort = $state('');
+	let destStateShort = $state('');
 
 	// Define the data interface
 	interface LocationEntry {
@@ -359,7 +379,7 @@
 		} else if (trailerTypesFilter.length >= 320) {
 			return 'mt-56';
 		} else if (trailerTypesFilter.length >= 280) {
-			return 'mt-48'
+			return 'mt-48';
 		} else if (trailerTypesFilter.length >= 250) {
 			return 'mt-44';
 		} else if (trailerTypesFilter.length >= 210) {
@@ -416,7 +436,7 @@
 				state.name.toLowerCase().includes(destStateSearch.toLowerCase())
 			);
 		}
-});
+	});
 	let destCityFiltered = $derived(
 		filterByState(locations, destStateFilter).filter((location) =>
 			location.city.toLowerCase().includes(destCitySearch.toLowerCase())
@@ -427,6 +447,43 @@
 			trailerType.type.toLowerCase().includes(trailerTypesSearch.toLowerCase())
 		)
 	);
+
+	function sortLocationData(locations) {
+		return locations.sort((a, b) => {
+			// First, compare by city name
+			const cityComparison = a.item.city.localeCompare(b.item.city);
+
+			// If cities are the same, compare by state_id
+			if (cityComparison === 0) {
+				return a.item.state_id.localeCompare(b.item.state_id);
+			}
+
+			// Otherwise, return the city comparison result
+			return cityComparison;
+		});
+	}
+	const fuseOptions = {
+		// isCaseSensitive: false,
+		// includeScore: false,
+		// ignoreDiacritics: false,
+		// shouldSort: true,
+		// includeMatches: false,
+		// findAllMatches: false,
+		minMatchCharLength: 3,
+		// location: 0,
+		threshold: 0.05,
+		// distance: 100,
+		// useExtendedSearch: false,
+		ignoreLocation: true,
+		// ignoreFieldNorm: false,
+		// fieldNormWeight: 1,
+		keys: ['keywords']
+	};
+
+	const fuse = new Fuse(locations, fuseOptions);
+
+	let originSearchResults = $derived(fuse.search(originCitySearch.replace(',', ' ').replace('  ', ' ')));
+	let destSearchResults = $derived(fuse.search(destCitySearch.replace(',', ' ').replace('  ', ' ')));
 </script>
 
 <div class="mt-5 flex w-full flex-col gap-5 rounded bg-slate-200 p-5 dark:bg-gray-900 md:m-5">
@@ -475,96 +532,63 @@
 			</div>
 			<div class="flex flex-row items-center gap-3">
 				<p>of</p>
+				<!-- CITY -->
 				<Button
 					size="xs"
 					color="light"
 					on:click={() => {
 						setTimeout(() => {
-							document.querySelector<HTMLInputElement>('.originStateSearch')?.focus();
+							document.querySelector<HTMLInputElement>('.originCitySearch')?.focus();
 						}, 155);
 					}}
-					>{originStateFilter ? originStateFilter : 'State'}<ChevronDownOutline
+					>{originCityFilter
+						? `${originCityFilter}, ${originStateShort}`
+						: 'Location'}<ChevronDownOutline
 						class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
 					/></Button
 				>
-				<Dropdown bind:open={originStateShowing} class="max-h-48 w-48 overflow-y-auto py-1">
+				<Dropdown
+					bind:open={originCityShowing}
+					id="originDropDown"
+					class="max-h-48 w-48 overflow-y-auto py-1"
+				>
 					<Search
 						size="sm"
-						bind:value={originStateSearch}
-						class="originStateSearch"
+						bind:value={originCitySearch}
+						class="originCitySearch"
 						on:keydown={(e) => {
-							if (e.key === 'Enter' && originStateFiltered.length > 0) {
-								originStateFilter = originStateFiltered[0].name;
-								originStateShowing = false;
-								originCityFilter = undefined;
+							if (e.key === 'Enter' && originSearchResults.length > 0) {
+								setOriginAddress(
+									originSearchResults[0].item.lat,
+									originSearchResults[0].item.lng,
+									originSearchResults[0].item.city,
+									originSearchResults[0].item.state,
+									originSearchResults[0].item.state_id
+								);
+								originCityShowing = false;
 								originCitySearch = '';
-								//originCityShowing = true;
-								//setTimeout(() => {
-								 //   document.querySelector<HTMLInputElement>('.originCitySearch')?.focus();
-								//}, 155);
 							}
 						}}
 					/>
-					{#each originStateFiltered as state}
-						<DropdownItem
-							on:click={() => {
-								originStateFilter = state.name;
-								originStateShowing = false;
-								originCityFilter = undefined;
-								originCitySearch = '';
-								/*setTimeout(() => {
-									originCityShowing = true;
-									document.querySelector<HTMLInputElement>('.originCitySearch')?.focus();
-								}, 155);
-								setTimeout(() => {
-									document.querySelector<HTMLInputElement>('.originCitySearch')?.focus();
-								}, 155);*/
-							}}>{state.name}</DropdownItem
-						>
-					{/each}
-				</Dropdown>
-				{#if originStateFilter}
-					<Button
-						size="xs"
-						color="light"
-						on:click={() => {
-							setTimeout(() => {
-								document.querySelector<HTMLInputElement>('.originCitySearch')?.focus();
-							}, 155);
-						}}
-						>{originCityFilter ? originCityFilter : 'City'}<ChevronDownOutline
-							class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
-						/></Button
-					>
-					<Dropdown bind:open={originCityShowing} class="max-h-48 w-48 overflow-y-auto py-1">
-						<Search
-							size="sm"
-							bind:value={originCitySearch}
-							class="originCitySearch"
-							on:keydown={(e) => {
-								if (e.key === 'Enter' && originStateFiltered.length > 0) {
-									originCityFilter = originCityFiltered[0].city;
-									originCityShowing = false;
-								}
-							}}
-						/>
 
-						{#each originCityFiltered as location}
-							{#if location.state === originStateFilter}
-								<DropdownItem
-									on:click={() => {
-										setOriginAddress(location.lat, location.lng, location.city);
-										originCityShowing = false;
-									}}>{location.city}</DropdownItem
-								>
-							{/if}
+					{#if originCitySearch}
+						{#each sortLocationData(originSearchResults) as location}
+							<DropdownItem
+								on:click={() => {
+									setOriginAddress(
+										location.item.lat,
+										location.item.lng,
+										location.item.city,
+										location.item.state,
+										location.item.state_id
+									);
+									originCityShowing = false;
+									originCitySearch = '';
+								}}>{location.item.city}, {location.item.state_id}</DropdownItem
+							>
 						{/each}
-					</Dropdown>
-				{:else}
-					<Button disabled size="xs" color="light"
-						>City<ChevronDownOutline class="ms-2 h-6 w-6 text-gray-800 dark:text-white" /></Button
-					>
-				{/if}
+					{/if}
+				</Dropdown>
 			</div>
 		</div>
 	</div>
@@ -594,101 +618,69 @@
 
 			<div class="flex flex-row items-center gap-3">
 				<p>of</p>
+
 				<Button
 					size="xs"
 					color="light"
 					on:click={() => {
 						setTimeout(() => {
-							document.querySelector<HTMLInputElement>('.destStateSearch')?.focus();
+							document.querySelector<HTMLInputElement>('.destCitySearch')?.focus();
 						}, 155);
 					}}
-					>{destStateFilter ? destStateFilter : 'State'}<ChevronDownOutline
+				>{destCityFilter
+					? `${destCityFilter}, ${destStateShort}`
+					: 'Location'}<ChevronDownOutline
 						class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
 					/></Button
 				>
-				<Dropdown bind:open={destStateShowing} class="max-h-48 w-48 overflow-y-auto py-1 trailerDropdown">
+				<Dropdown
+					bind:open={destCityShowing}
+					id="destDropDown"
+					class="max-h-48 w-48 overflow-y-auto py-1"
+				>
 					<Search
 						size="sm"
-						bind:value={destStateSearch}
-						class="destStateSearch"
+						bind:value={destCitySearch}
+						class="destCitySearch"
 						on:keydown={(e) => {
-							if (e.key === 'Enter' && destStateFiltered.length > 0) {
-								destStateFilter = destStateFiltered[0].name;
-								destStateShowing = false;
-								destCityFilter = undefined;
+							if (e.key === 'Enter' && destSearchResults.length > 0) {
+								setDestinationAddress(
+									destSearchResults[0].item.lat,
+									destSearchResults[0].item.lng,
+									destSearchResults[0].item.city,
+									destSearchResults[0].item.state,
+									destSearchResults[0].item.state_id
+								);
+								destCityShowing = false;
 								destCitySearch = '';
-								//destCityShowing = true;
-								//setTimeout(() => {
-									//document.querySelector<HTMLInputElement>('.destCitySearch')?.focus();
-								//}, 155);
 							}
 						}}
 					/>
-					{#each destStateFiltered as state}
-						<DropdownItem
-							on:click={() => {
-								destStateFilter = state.name;
-								destStateShowing = false;
-								destCityFilter = undefined;
-								destCitySearch = '';
-								/*destCityShowing = true;
-								setTimeout(() => {
-									destCityShowing = true;
-								}, 155);
-								setTimeout(() => {
-									document.querySelector<HTMLInputElement>('.destCitySearch')?.focus();
-								}, 155);*/
-							}}>{state.name}</DropdownItem
-						>
-					{/each}
-				</Dropdown>
-				{#if destStateFilter}
-					<Button
-						size="xs"
-						color="light"
-						on:click={() => {
-							setTimeout(() => {
-								document.querySelector<HTMLInputElement>('.destCitySearch')?.focus();
-							}, 155);
-						}}
-						>{destCityFilter ? destCityFilter : 'City'}<ChevronDownOutline
-							class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
-						/></Button
-					>
-					<Dropdown bind:open={destCityShowing} class="max-h-48 w-48 overflow-y-auto py-1">
-						<Search
-							size="sm"
-							bind:value={destCitySearch}
-							class="destCitySearch"
-							on:keydown={(e) => {
-								if (e.key === 'Enter' && destStateFiltered.length > 0) {
-									destCityFilter = destCityFiltered[0].city;
+
+					{#if destCitySearch}
+						{#each sortLocationData(destSearchResults) as location}
+							<DropdownItem
+								on:click={() => {
+									setDestinationAddress(
+										location.item.lat,
+										location.item.lng,
+										location.item.city,
+										location.item.state,
+										location.item.state_id
+									);
 									destCityShowing = false;
-								}
-							}}
-						/>
-						{#each destCityFiltered as location}
-							{#if location.state === destStateFilter}
-								<DropdownItem
-									on:click={() => {
-										setDestinationAddress(location.lat, location.lng, location.city);
-										destCityShowing = false;
-									}}>{location.city}</DropdownItem
-								>
-							{/if}
+									destCitySearch = '';
+								}}>{location.item.city}, {location.item.state_id}</DropdownItem
+							>
 						{/each}
-					</Dropdown>
-				{:else}
-					<Button size="xs" color="light" disabled
-						>City<ChevronDownOutline class="ms-2 h-6 w-6 text-gray-800 dark:text-white" /></Button
-					>
-				{/if}
+					{/if}
+				</Dropdown>
 			</div>
 		</div>
 	</div>
 
 	<!-- TRAILER TYPE -->
-	<div class="flex flex-col items-center justify-center lg:justify-start gap-3 sm:flex-row">
+	<div class="flex flex-col items-center justify-center gap-3 sm:flex-row lg:justify-start">
 		<p class="justify-self-start">Trailer Type:</p>
 		<Button
 			size="md"
@@ -699,40 +691,42 @@
 					document.querySelector<HTMLInputElement>('.trailerTypeSsearch');
 				});
 			}}
-		>{trailerTypesFilter ? trailerTypesFilter.slice(2).replace("_", " ") : 'Pick a type'}<ChevronDownOutline
-				class="ms-2 h-6 md:w-6 text-gray-800 dark:text-white"
+			>{trailerTypesFilter
+				? trailerTypesFilter.slice(2).replace('_', ' ')
+				: 'Pick a type'}<ChevronDownOutline
+				class="ms-2 h-6 text-gray-800 dark:text-white md:w-6"
 			/></Button
 		>
 		<Dropdown
 			placement="bottom-start"
 			bind:open={trailerTypesShowing}
-			class="h-48 w-60 mx-1 px-1 overflow-y-auto py-1"
+			class="mx-1 h-48 w-60 overflow-y-auto px-1 py-1"
 		>
 			<Search size="sm" bind:value={trailerTypesSearch} />
 			{#each trailerTypeFiltered as trailerType}
 				<DropdownItem>
-				{#if trailerTypesFilterArray.includes(trailerType.type) || trailerTypesFilter.includes(`{ trailerType.type},`)}
-					<Checkbox
-						class="px-3"
-						color="blue"
-						checked
-						on:click={() => {
-							trailerType.enabled = trailerType.enabled ? false : true;
-							toggleTrailerType(trailerType.type);
-							trailerTypesShowing = true;
-						}}>{trailerType.type.replace("_", " ")}</Checkbox
-					>
-				{:else}
-					<Checkbox
-						class="px-3"
-						color="blue"
-						on:click={() => {
-							trailerType.enabled = trailerType.enabled ? false : true;
-							toggleTrailerType(trailerType.type);
-							trailerTypesShowing = true;
-						}}>{trailerType.type.replace("_", " ")}</Checkbox
-					>
-				{/if}
+					{#if trailerTypesFilterArray.includes(trailerType.type) || trailerTypesFilter.includes(`{ trailerType.type},`)}
+						<Checkbox
+							class="px-3"
+							color="blue"
+							checked
+							on:click={() => {
+								trailerType.enabled = trailerType.enabled ? false : true;
+								toggleTrailerType(trailerType.type);
+								trailerTypesShowing = true;
+							}}>{trailerType.type.replace('_', ' ')}</Checkbox
+						>
+					{:else}
+						<Checkbox
+							class="px-3"
+							color="blue"
+							on:click={() => {
+								trailerType.enabled = trailerType.enabled ? false : true;
+								toggleTrailerType(trailerType.type);
+								trailerTypesShowing = true;
+							}}>{trailerType.type.replace('_', ' ')}</Checkbox
+						>
+					{/if}
 				</DropdownItem>
 			{/each}
 		</Dropdown>
