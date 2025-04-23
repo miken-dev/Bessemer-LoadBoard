@@ -633,7 +633,11 @@
 						class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
 					/></Button
 				>
-				<Dropdown bind:open={destStateShowing} class="max-h-48 w-48 overflow-y-auto py-1 trailerDropdown">
+				<Dropdown
+					bind:open={destCityShowing}
+					id="destDropDown"
+					class="max-h-48 w-48 overflow-y-auto py-1"
+				>
 					<Search
 						size="sm"
 						bind:value={destStateSearch}
