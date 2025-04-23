@@ -462,6 +462,26 @@
 			return cityComparison;
 		});
 	}
+	const fuseOptions = {
+		// isCaseSensitive: false,
+		// includeScore: false,
+		// ignoreDiacritics: false,
+		// shouldSort: true,
+		// includeMatches: false,
+		// findAllMatches: false,
+		minMatchCharLength: 3,
+		// location: 0,
+		threshold: 0.05,
+		// distance: 100,
+		// useExtendedSearch: false,
+		ignoreLocation: true,
+		// ignoreFieldNorm: false,
+		// fieldNormWeight: 1,
+		keys: ['keywords']
+	};
+
+	const fuse = new Fuse(locations, fuseOptions);
+
 </script>
 
 <div class="mt-5 flex w-full flex-col gap-5 rounded bg-slate-200 p-5 dark:bg-gray-900 md:m-5">
