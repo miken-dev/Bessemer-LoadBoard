@@ -570,45 +570,7 @@
 							}
 						}}
 					/>
-					{#each originStateFiltered as state}
-						<DropdownItem
-							on:click={() => {
-								originStateFilter = state.name;
-								originStateShowing = false;
-								originCityFilter = undefined;
-								originCitySearch = '';
-								/*setTimeout(() => {
-									originCityShowing = true;
-									document.querySelector<HTMLInputElement>('.originCitySearch')?.focus();
-								}, 155);
-								setTimeout(() => {
-									document.querySelector<HTMLInputElement>('.originCitySearch')?.focus();
-								}, 155);*/
-							}}>{state.name}</DropdownItem
-						>
-					{/each}
-				</Dropdown>
-				{#if originStateFilter}
-					<Button
-						size="xs"
-						color="light"
-						on:click={() => {
-							setTimeout(() => {
-								document.querySelector<HTMLInputElement>('.originCitySearch')?.focus();
-							}, 155);
-						}}
-						>{originCityFilter ? originCityFilter : 'City'}<ChevronDownOutline
-							class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
-						/></Button
-					>
-					<Dropdown bind:open={originCityShowing} class="max-h-48 w-48 overflow-y-auto py-1">
-						<Search
-							size="sm"
-							bind:value={originCitySearch}
-							class="originCitySearch"
-							on:keydown={(e) => {
-								if (e.key === 'Enter' && originStateFiltered.length > 0) {
-									originCityFilter = originCityFiltered[0].city;
+
 									originCityShowing = false;
 								}
 							}}
