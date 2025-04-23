@@ -50,6 +50,7 @@
 		"leaflet": "^1.9.4",
 		"leaflet-gesture-handling": "^1.2.2",
 		"lucide-svelte": "^0.474.0",
+		"minisearch": "^7.1.2",
 		"pocketbase": "^0.25.2",
 		"sveaflet": "^0.1.4"
 	}
