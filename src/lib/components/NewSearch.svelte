@@ -657,26 +657,24 @@
 						}}
 					/>
 
+					{#if destCitySearch}
+						{#each sortLocationData(destSearchResults) as location}
+							<DropdownItem
+								on:click={() => {
+									setDestinationAddress(
+										location.item.lat,
+										location.item.lng,
+										location.item.city,
+										location.item.state,
+										location.item.state_id
+									);
 									destCityShowing = false;
-								}
-							}}
-						/>
-						{#each destCityFiltered as location}
-							{#if location.state === destStateFilter}
-								<DropdownItem
-									on:click={() => {
-										setDestinationAddress(location.lat, location.lng, location.city);
-										destCityShowing = false;
-									}}>{location.city}</DropdownItem
-								>
-							{/if}
+									destCitySearch = '';
+								}}>{location.item.city}, {location.item.state_id}</DropdownItem
+							>
 						{/each}
-					</Dropdown>
-				{:else}
-					<Button size="xs" color="light" disabled
-						>City<ChevronDownOutline class="ms-2 h-6 w-6 text-gray-800 dark:text-white" /></Button
-					>
-				{/if}
+					{/if}
+				</Dropdown>
 			</div>
 		</div>
 	</div>
