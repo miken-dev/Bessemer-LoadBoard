@@ -705,28 +705,28 @@
 			<Search size="sm" bind:value={trailerTypesSearch} />
 			{#each trailerTypeFiltered as trailerType}
 				<DropdownItem>
-				{#if trailerTypesFilterArray.includes(trailerType.type) || trailerTypesFilter.includes(`{ trailerType.type},`)}
-					<Checkbox
-						class="px-3"
-						color="blue"
-						checked
-						on:click={() => {
-							trailerType.enabled = trailerType.enabled ? false : true;
-							toggleTrailerType(trailerType.type);
-							trailerTypesShowing = true;
-						}}>{trailerType.type.replace("_", " ")}</Checkbox
-					>
-				{:else}
-					<Checkbox
-						class="px-3"
-						color="blue"
-						on:click={() => {
-							trailerType.enabled = trailerType.enabled ? false : true;
-							toggleTrailerType(trailerType.type);
-							trailerTypesShowing = true;
-						}}>{trailerType.type.replace("_", " ")}</Checkbox
-					>
-				{/if}
+					{#if trailerTypesFilterArray.includes(trailerType.type) || trailerTypesFilter.includes(`{ trailerType.type},`)}
+						<Checkbox
+							class="px-3"
+							color="blue"
+							checked
+							on:click={() => {
+								trailerType.enabled = trailerType.enabled ? false : true;
+								toggleTrailerType(trailerType.type);
+								trailerTypesShowing = true;
+							}}>{trailerType.type.replace('_', ' ')}</Checkbox
+						>
+					{:else}
+						<Checkbox
+							class="px-3"
+							color="blue"
+							on:click={() => {
+								trailerType.enabled = trailerType.enabled ? false : true;
+								toggleTrailerType(trailerType.type);
+								trailerTypesShowing = true;
+							}}>{trailerType.type.replace('_', ' ')}</Checkbox
+						>
+					{/if}
 				</DropdownItem>
 			{/each}
 		</Dropdown>
