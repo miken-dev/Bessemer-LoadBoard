@@ -1,4 +1,6 @@
 <script lang="ts">
+	//	import MiniSearch from 'minisearch';
+	import Fuse from 'fuse.js';
 	import {
 		Button,
 		ButtonGroup,
