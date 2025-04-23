@@ -448,6 +448,20 @@
 		)
 	);
 
+	function sortLocationData(locations) {
+		return locations.sort((a, b) => {
+			// First, compare by city name
+			const cityComparison = a.item.city.localeCompare(b.item.city);
+
+			// If cities are the same, compare by state_id
+			if (cityComparison === 0) {
+				return a.item.state_id.localeCompare(b.item.state_id);
+			}
+
+			// Otherwise, return the city comparison result
+			return cityComparison;
+		});
+	}
 </script>
 
 <div class="mt-5 flex w-full flex-col gap-5 rounded bg-slate-200 p-5 dark:bg-gray-900 md:m-5">
