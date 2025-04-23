@@ -538,7 +538,7 @@
 					color="light"
 					on:click={() => {
 						setTimeout(() => {
-							document.querySelector<HTMLInputElement>('.originStateSearch')?.focus();
+							document.querySelector<HTMLInputElement>('.originCitySearch')?.focus();
 						}, 155);
 					}}
 					>{originStateFilter ? originStateFilter : 'State'}<ChevronDownOutline
