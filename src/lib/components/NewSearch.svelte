@@ -379,7 +379,7 @@
 		} else if (trailerTypesFilter.length >= 320) {
 			return 'mt-56';
 		} else if (trailerTypesFilter.length >= 280) {
-			return 'mt-48'
+			return 'mt-48';
 		} else if (trailerTypesFilter.length >= 250) {
 			return 'mt-44';
 		} else if (trailerTypesFilter.length >= 210) {
