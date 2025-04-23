@@ -691,8 +691,10 @@
 					document.querySelector<HTMLInputElement>('.trailerTypeSsearch');
 				});
 			}}
-		>{trailerTypesFilter ? trailerTypesFilter.slice(2).replace("_", " ") : 'Pick a type'}<ChevronDownOutline
-				class="ms-2 h-6 md:w-6 text-gray-800 dark:text-white"
+			>{trailerTypesFilter
+				? trailerTypesFilter.slice(2).replace('_', ' ')
+				: 'Pick a type'}<ChevronDownOutline
+				class="ms-2 h-6 text-gray-800 dark:text-white md:w-6"
 			/></Button
 		>
 		<Dropdown
