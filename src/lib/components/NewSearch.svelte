@@ -541,7 +541,9 @@
 							document.querySelector<HTMLInputElement>('.originCitySearch')?.focus();
 						}, 155);
 					}}
-					>{originStateFilter ? originStateFilter : 'State'}<ChevronDownOutline
+					>{originCityFilter
+						? `${originCityFilter}, ${originStateShort}`
+						: 'Location'}<ChevronDownOutline
 						class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
 					/></Button
 				>
