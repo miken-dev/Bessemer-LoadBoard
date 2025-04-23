@@ -656,45 +656,7 @@
 							}
 						}}
 					/>
-					{#each destStateFiltered as state}
-						<DropdownItem
-							on:click={() => {
-								destStateFilter = state.name;
-								destStateShowing = false;
-								destCityFilter = undefined;
-								destCitySearch = '';
-								/*destCityShowing = true;
-								setTimeout(() => {
-									destCityShowing = true;
-								}, 155);
-								setTimeout(() => {
-									document.querySelector<HTMLInputElement>('.destCitySearch')?.focus();
-								}, 155);*/
-							}}>{state.name}</DropdownItem
-						>
-					{/each}
-				</Dropdown>
-				{#if destStateFilter}
-					<Button
-						size="xs"
-						color="light"
-						on:click={() => {
-							setTimeout(() => {
-								document.querySelector<HTMLInputElement>('.destCitySearch')?.focus();
-							}, 155);
-						}}
-						>{destCityFilter ? destCityFilter : 'City'}<ChevronDownOutline
-							class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
-						/></Button
-					>
-					<Dropdown bind:open={destCityShowing} class="max-h-48 w-48 overflow-y-auto py-1">
-						<Search
-							size="sm"
-							bind:value={destCitySearch}
-							class="destCitySearch"
-							on:keydown={(e) => {
-								if (e.key === 'Enter' && destStateFiltered.length > 0) {
-									destCityFilter = destCityFiltered[0].city;
+
 									destCityShowing = false;
 								}
 							}}
