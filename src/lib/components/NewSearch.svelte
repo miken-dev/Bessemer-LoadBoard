@@ -618,12 +618,13 @@
 
 			<div class="flex flex-row items-center gap-3">
 				<p>of</p>
+
 				<Button
 					size="xs"
 					color="light"
 					on:click={() => {
 						setTimeout(() => {
-							document.querySelector<HTMLInputElement>('.destStateSearch')?.focus();
+							document.querySelector<HTMLInputElement>('.destCitySearch')?.focus();
 						}, 155);
 					}}
 					>{destStateFilter ? destStateFilter : 'State'}<ChevronDownOutline
