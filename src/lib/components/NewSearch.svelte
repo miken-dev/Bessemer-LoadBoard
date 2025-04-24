@@ -283,7 +283,6 @@
 		originLngFilter = Number(lng);
 		originCityFilter = city;
 		originStateFilter = state;
-		originStateShort = stateShort;
 	}
 	function setDestinationAddress(
 		lat: string,
@@ -296,7 +295,6 @@
 		destLngFilter = Number(lng);
 		destCityFilter = city;
 		destStateFilter = state;
-		destStateShort = stateShort;
 	}
 	let trailerTypesFilterArray: string[] = $state(['']);
 	function toggleTrailerType(trailerType: string) {
