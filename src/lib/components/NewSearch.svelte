@@ -331,8 +331,20 @@
 	let destCitySearch = $state('');
 	let trailerTypesShowing = $state(false);
 	let trailerTypesSearch = $state('');
-	let originStateShort = $state('');
-	let destStateShort = $state('');
+	let destStateShort = $derived.by(() => {
+		for (const state of states) {
+			if (destStateFilter === state.name) {
+				return state.stateId;
+			}
+		}
+	});
+	let originStateShort = $derived.by(() => {
+		for (const state of states) {
+			if (originStateFilter === state.name) {
+				return state.stateId;
+			}
+		}
+	});
 
 	// Define the data interface
 	interface LocationEntry {
