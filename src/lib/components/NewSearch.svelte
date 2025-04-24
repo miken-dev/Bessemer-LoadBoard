@@ -641,9 +641,7 @@
 							document.querySelector<HTMLInputElement>('.destCitySearch')?.focus();
 						}, 155);
 					}}
-				>{destCityFilter
-					? `${destCityFilter}, ${destStateShort}`
-					: 'Location'}<ChevronDownOutline
+					>{destCityFilter ? `${destCityFilter}, ${destStateShort}` : 'Location'}<ChevronDownOutline
 						class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
 					/></Button
 				>
