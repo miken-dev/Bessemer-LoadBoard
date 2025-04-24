@@ -505,7 +505,7 @@
 	<!-- DATE RANGE -->
 	<div class="flex w-full flex-col items-center justify-start gap-4 xl:flex-row">
 		<p class=" justify-self-start">Pick up Date/Range:</p>
-		<div class="flex w-full flex-col items-center gap-3 xl:flex-row">
+		<div class="xxl:items-center xxl:flex-row flex w-full flex-col items-start gap-3">
 			<div class="flex flex-col items-center gap-3 sm:flex-row">
 				<p>from:</p>
 				<div class="w-72">
