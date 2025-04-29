@@ -42,7 +42,7 @@
 	};
 
 	function numberWithCommas(number: number) {
-		return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+		return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 	}
 </script>
 
@@ -56,7 +56,7 @@
 </div>
 {/each} -->
 	{#if browser}
-		<div class="pl-0 md:pl-10 top-0 size-80">
+		<div class="top-0 size-80 pl-0 md:pl-10">
 			<DrawerMap
 				originLat={Number(data.originLat)}
 				originLng={Number(data.originLng)}
@@ -84,7 +84,7 @@
 		<div class="my-1 mt-3 flex flex-col">
 			<h3 class="font-extrabold">Delivery Date:</h3>
 			<p>
-										{`${new Date(data.deliveryDate).getMonth() + 1}/${new Date(data.deliveryDate).getDate()}/${new Date(data.deliveryDate).getFullYear()}`}
+				{`${new Date(data.deliveryDate).getMonth() + 1}/${new Date(data.deliveryDate).getDate()}/${new Date(data.deliveryDate).getFullYear()}`}
 			</p>
 		</div>
 		<div class="my-1 mt-3 flex flex-col">
@@ -144,7 +144,7 @@
 		</div>
 		<div class="my-1 mt-3 flex flex-col">
 			<h3 class="font-extrabold">LTL:</h3>
-			<p>{data.ltl ? "Yes" : "No"}</p>
+			<p>{data.ltl ? 'Yes' : 'No'}</p>
 		</div>
 		<div class="my-1 mb-10 mt-3 flex max-w-80 flex-col">
 			<h3 class="font-extrabold">Notes:</h3>
@@ -153,7 +153,3 @@
 	</div>
 </div>
 
-<style>
-	* {
-	}
-</style>
