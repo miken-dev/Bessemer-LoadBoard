@@ -85,12 +85,12 @@
 		transitionType="fly"
 		transitionParams={transitionParamsDesktop}
 		bind:hidden={detailsHidden}
-		class="w-100 desktop"
+		class="w-full desktop"
 		id="loadDetailsDrawerDesktop"
 	>
 		<CloseButton on:click={() => (detailsHidden = true)} class="mb-4, dark:text-white" />
 
-		<div class="container">
+		<div class="w-100vw container">
 			{#if tableClicked || !multipleLoads}
 				{#each tableData as data}
 					{#if data.loadID === selectedRow}
