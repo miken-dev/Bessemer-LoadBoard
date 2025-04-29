@@ -48,13 +48,6 @@
 
 <!-- load info -->
 <div class=" ml-3 flex {horizontal ? 'w-screen flex-row gap-x-60 pb-10 ' : 'flex-col'}">
-	<!---
-{#each columns as column}
-<div class="flex flex-row mt-5">
-<h3>{column.title}</h3>
-<p>{data[column.property]}</p>
-</div>
-{/each} -->
 	{#if browser}
 		<div class="top-0 size-80 pl-0 md:pl-10">
 			<DrawerMap
