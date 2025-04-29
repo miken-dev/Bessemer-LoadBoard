@@ -1,10 +1,20 @@
 <script lang="ts">
 	import type { TableDataTypes } from '$lib/types';
 	import { cn } from '$lib/utils';
+	import { onMount } from 'svelte';
 	import Skeleton from './Skeleton.svelte';
 	import { Spinner } from 'flowbite-svelte';
 
+	let loadFailed = $state(false)
 	let rows = [1, 2, 3, 4, 5, 6];
+
+
+	onMount(async () => {
+		setTimeout(() => {
+			loadFailed = true
+		}, 1500)
+	})
+
 </script>
 
 <!--
