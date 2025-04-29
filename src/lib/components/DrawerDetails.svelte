@@ -47,7 +47,7 @@
 </script>
 
 <!-- load info -->
-<div class=" ml-3 flex {horizontal ? 'w-screen flex-row gap-x-60 pb-10 ' : 'flex-col'}">
+<div class=" ml-3 flex {horizontal ? 'w-full flex-row gap-x-60 pb-10 ' : 'flex-col'}">
 	{#if browser}
 		<div class="top-0 size-80 pl-0 md:pl-10">
 			<DrawerMap
