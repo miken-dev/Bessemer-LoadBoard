@@ -26,6 +26,7 @@
 	<option value="">Revenue</option>
 	<option value="">Miles</option>
 </select> -->
+{#if !loadFailed}
 <div
 	class="w-full overflow-x-auto rounded-lg  shadow-sm dark:bg-gray-800 dark:text-gray-100"
 >
@@ -35,4 +36,9 @@
 		</div>
 	</div>
 </div>
+{:else if loadFailed }
+	<div class="flex w-full md:w-96 flex-col justify-around text-4xl">
+		<h3 class="text-center">No loads available</h3>
+	</div>
+{/if}
 
