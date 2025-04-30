@@ -527,7 +527,7 @@
 		<p class="justify-self-start">Origin:</p>
 		<div class="flex flex-col items-center gap-3 sm:flex-row">
 			<div class="flex flex-row items-center gap-3">
-				<p>Within</p>
+				<p>within:</p>
 				<Button size="xs" color="light"
 					>{originMilesFilter} Miles<ChevronDownOutline
 						class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
@@ -613,7 +613,7 @@
 		<p class=" justify-self-start">Destination:</p>
 		<div class="flex flex-col items-center gap-3 sm:flex-row">
 			<div class="flex flex-row items-center gap-3">
-				<p>Within</p>
+				<p>within:</p>
 				<Button size="xs" color="light"
 					>{destMilesFilter} Miles<ChevronDownOutline
 						class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
@@ -781,3 +781,4 @@
 />
 
 <ContactInfoPreferencesModal bind:contactInfoPreferencesModal {email} {text} {userId} />
+
