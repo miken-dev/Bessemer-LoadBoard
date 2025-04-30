@@ -509,13 +509,14 @@
 			<div class="flex flex-col items-center gap-3 sm:flex-row">
 				<p>from:</p>
 				<div class="w-72">
-					<Datepicker bind:value={fromDateRange} color="blue" />
+					<input type="date" class=" dark:bg-slate-700 dark:bg-dark-bg dark:text-gray-800 mt-1 block w-full rounded border-gray-400 text-sm dark:border-gray-600 dark:text-white dark:[color-scheme:dark]" bind:value={fromDateRange}/>
+					<!-- <Datepicker bind:value={fromDateRange} color="blue" /> -->
 				</div>
 			</div>
 			<div class="flex flex-col items-center gap-3 sm:flex-row">
 				<p>to:</p>
 				<div class="w-72">
-					<Datepicker bind:value={toDateRange} color="blue" />
+					<input type="date" class=" dark:bg-slate-700 dark:bg-dark-bg dark:text-gray-800 mt-1 block w-full rounded border-gray-400 text-sm dark:border-gray-600 dark:text-white dark:[color-scheme:dark]" bind:value={toDateRange}/>
 				</div>
 			</div>
 		</div>
