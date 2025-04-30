@@ -66,7 +66,7 @@
 		<div class="my-1 mt-4 flex flex-col">
 			<h3 class="font-extrabold">Load Date:</h3>
 			<p>
-				{`${day[new Date(data.loadDate).getDay()]}, ${month[new Date(data.loadDate).getMonth()]} ${new Date(data.loadDate).getDate()}${dateOrdinals(new Date(data.loadDate).getDate())} ${new Date(data.loadDate).getFullYear()}`}
+				{`${day[new Date(data.loadDate).getUTCDay()]}, ${month[new Date(data.loadDate).getUTCMonth()]} ${new Date(data.loadDate).getUTCDate()}${dateOrdinals(new Date(data.loadDate).getUTCDate())} ${new Date(data.loadDate).getUTCFullYear()}`}
 			</p>
 		</div>
 
@@ -77,7 +77,7 @@
 		<div class="my-1 mt-3 flex flex-col">
 			<h3 class="font-extrabold">Delivery Date:</h3>
 			<p>
-				{`${new Date(data.deliveryDate).getMonth() + 1}/${new Date(data.deliveryDate).getDate()}/${new Date(data.deliveryDate).getFullYear()}`}
+				{`${day[new Date(data.deliveryDate).getUTCDay()]}, ${month[new Date(data.deliveryDate).getUTCMonth()]} ${new Date(data.deliveryDate).getUTCDate()}${dateOrdinals(new Date(data.deliveryDate).getUTCDate())} ${new Date(data.deliveryDate).getUTCFullYear()}`}
 			</p>
 		</div>
 		<div class="my-1 mt-3 flex flex-col">
