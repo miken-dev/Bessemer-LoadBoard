@@ -30,6 +30,10 @@ export interface SortOptions {
     direction: 'asc' | 'desc';
 }
 
+function addMinutes(date: Date) {
+	return new Date(date.getTime() + 12*60000)
+}
+
 export function filterAndSortTableData(
     tableData: TableDataTypes[],
     filters: FilterParams,
@@ -42,23 +46,31 @@ export function filterAndSortTableData(
         const loadDate = new Date(row.loadDate);
         
         // Validate dates and convert to midnight UTC for consistent comparison
-        const fromDate = filters.fromDateRange ? new Date(filters.fromDateRange.setHours(0, 0, 0, 0)) : null;
-        const toDate = filters.toDateRange ? new Date(filters.toDateRange.setHours(0, 0, 0, 0)) : null;
-        const compareDate = new Date(loadDate.setHours(0, 0, 0, 0));
+        const fromDate = filters.fromDateRange ? new Date(filters.fromDateRange) : null;
+        const toDate = filters.toDateRange ? new Date(filters.toDateRange) : null;
+        
+        // Convert all dates to YYYY-MM-DD format for timezone-agnostic comparison
+        const loadDateStr = loadDate.toISOString().split('T')[0];
+        const fromDateStr = fromDate ? fromDate.toISOString().split('T')[0] : null;
+        const toDateStr = toDate ? toDate.toISOString().split('T')[0] : null;
 
-        if (fromDate && toDate) {
+        if (fromDate && toDate && fromDateStr && toDateStr && (fromDateStr === toDateStr)) { 
+            if (fromDateStr !== loadDateStr) {
+                return false;
+            }
+        } else if (fromDate && toDate && fromDateStr && toDateStr) {
             // Both dates set - show results between and including both dates
-            if (compareDate < fromDate || compareDate > toDate) {
+            if (loadDateStr < fromDateStr || loadDateStr > toDateStr) {
                 return false;
             }
-        } else if (fromDate) {
+        } else if (fromDate && fromDateStr) {
             // Only from date set - show results after and including fromDateRange
-            if (compareDate < fromDate) {
+            if (loadDateStr < fromDateStr) {
                 return false;
             }
-        } else if (toDate) {
+        } else if (toDate && toDateStr) {
             // Only to date set - show results before and including toDateRange
-            if (compareDate > toDate) {
+            if (loadDateStr > toDateStr) {
                 return false;
             }
         }
