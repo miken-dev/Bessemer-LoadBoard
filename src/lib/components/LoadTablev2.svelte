@@ -64,6 +64,7 @@
 		}
 	};
 
+
 	function numberWithCommas(number: number) {
 		return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 	}
@@ -103,7 +104,7 @@
 								<div>
 									<div class="text-xs font-medium text-gray-500 dark:text-gray-300">Load Date</div>
 									<div class="mt-1 text-sm">
-										{`${new Date(row.loadDate).getMonth() + 1}/${new Date(row.loadDate).getDate()}/${new Date(row.loadDate).getFullYear()}`}
+										{`${new Date(row.loadDate).getUTCMonth() + 1}/${new Date(row.loadDate).getUTCDate()}/${new Date(row.loadDate).getUTCFullYear()}`}
 									</div>
 								</div>
 								<div>
@@ -118,7 +119,7 @@
 										Delivery Date
 									</div>
 									<div class="mt-1 text-sm">
-										{`${new Date(row.deliveryDate).getMonth() + 1}/${new Date(row.deliveryDate).getDate()}/${new Date(row.deliveryDate).getFullYear()}`}
+										{`${new Date(row.deliveryDate).getUTCMonth() + 1}/${new Date(row.deliveryDate).getUTCDate()}/${new Date(row.deliveryDate).getUTCFullYear()}`}
 									</div>
 								</div>
 								<div>
