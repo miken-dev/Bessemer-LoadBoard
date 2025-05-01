@@ -90,7 +90,7 @@
 	>
 		<CloseButton on:click={() => (detailsHidden = true)} class="mb-4, dark:text-white" />
 
-		<div class="w-100vw container">
+		<div class="w-100 container">
 			{#if tableClicked || !multipleLoads}
 				{#each tableData as data}
 					{#if data.loadID === selectedRow}
