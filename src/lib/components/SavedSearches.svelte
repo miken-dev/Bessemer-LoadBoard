@@ -38,6 +38,7 @@
 		userId: string | null;
 	} = $props();
 
+	let loadFailed = $state(false);
 	let active = 'bg-blue-600';
 	let inactive = 'bg-gray-500';
 	let deleteConfirmationShowing = $state(false);
@@ -133,13 +134,24 @@
 			toDateRange = new Date(toDate);
 		}
 	}
+
+	onMount(async () => {
+		setTimeout(() => {
+			loadFailed = true;
+		}, 5500);
+		setInterval(async () => {
+			if (!savedSearches) {
+				savedSearches = await getRecords()
+			}
+		}, 15000)
+	});
 </script>
 
-<div class="mt-5 w-full rounded bg-slate-200 p-5 dark:bg-gray-900 md:m-5 pb-5">
+<div class="mt-5 w-full rounded bg-slate-200 p-5 pb-5 dark:bg-gray-900 md:m-5">
 	<h2 class="text-2xl font-extrabold">Saved Searches</h2>
 	{#if loading}
-		<div class="flex h-full w-full flex-col justify-around align-middle m-auto">
-			<Spinner color="blue" class="m-auto"/>
+		<div class="m-auto flex h-full w-full flex-col justify-around align-middle">
+			<Spinner color="blue" class="m-auto" />
 		</div>
 	{:else if savedSearches.length}
 		{#if savedSearches.length > 4}
@@ -253,7 +265,7 @@
 				>
 			</div>
 		</div>
-	{:else}
+	{:else if loadFailed}
 		<div class="flex flex-col items-center justify-center">
 			<div class="m-auto text-center text-4xl">No saved searches available</div>
 			<Button outline color="blue" class="m-auto mt-10 w-40" on:click={refresh}>Refresh</Button>
@@ -267,7 +279,7 @@
 	bind:savedSearches
 />
 {#if contactInfoPreferencesModal}
-<ContactInfoPreferencesModal bind:contactInfoPreferencesModal email={true} text={true} {userId} />
+	<ContactInfoPreferencesModal bind:contactInfoPreferencesModal email={true} text={true} {userId} />
 {/if}
 <ManageSavedSearchModal
 	bind:originMilesFilter
