@@ -94,7 +94,6 @@
 		deleteConfirmationShowing = true;
 		deleteID = id;
 		deleteName = name;
-		console.log(deleteName);
 	}
 	async function refresh() {
 		savedSearches = await getRecords();

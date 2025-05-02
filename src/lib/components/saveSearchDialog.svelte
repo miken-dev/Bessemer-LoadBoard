@@ -113,7 +113,6 @@
 		textNotificationSearch: boolean,
 		userIdSearch: string | null
 	) {
-		console.log(userIdSearch);
 		try {
 			await checkIfUserExistsPB(userId);
 		} catch {}
@@ -150,9 +149,7 @@
 		};
 
 		for (const savedSearch of savedSearches) {
-			console.log("running comparison")
 			if (savedSearch.name === name) {
-				console.log(`${savedSearch.name} === ${name} ${savedSearch.name === name}`)
 				error = "Please enter a unique name"
 				return false
 			}

@@ -42,7 +42,6 @@
 
 	const PB = new PocketBase('https://bessemer-loadboard.pockethost.io');
 	async function getRecords() {
-		console.log(userId);
 		const records = await PB.collection('Saved_Searches').getFullList({
 			filter: `userID = "${userId}"`
 		});
@@ -63,7 +62,6 @@
 				textNotification: record.textNotification
 			};
 		});
-		console.log(`got ${results.length} records`)
 		return results.reverse();
 	}
 
@@ -94,10 +92,8 @@
 		deleteConfirmationShowing = true;
 		deleteID = id;
 		deleteName = name;
-		console.log(deleteName);
 	}
 	async function refresh() {
-		console.log("refreshing")
 		savedSearches = await getRecords();
 	}
 

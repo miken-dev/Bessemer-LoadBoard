@@ -304,12 +304,10 @@
 			if (index > -1) {
 				trailerTypesFilterArray.splice(index, 1);
 				trailerTypesFilter = trailerTypesFilterArray.join(', ');
-				console.log(`first: ${trailerType}, ttf:${trailerTypesFilterArray}`);
 			}
 		} else {
 			trailerTypesFilterArray.push(trailerType);
 			trailerTypesFilter = trailerTypesFilterArray.join(', ');
-			console.log(`third, tts:${trailerTypesFilterArray}`);
 		}
 	}
 	function removeTrailerType(trailerType: string) {

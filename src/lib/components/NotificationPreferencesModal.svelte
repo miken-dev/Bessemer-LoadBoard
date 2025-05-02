@@ -36,7 +36,6 @@
 	onMount(async () => {
 		userInfo = await getUserInfo();
 		originalUserInfo = userInfo;
-		console.log(`${userInfo}`);
 	});
 	onMount(() => {
 		return () => {

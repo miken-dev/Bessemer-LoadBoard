@@ -14,7 +14,6 @@
 	let logout = () => {
 		loggedIn = false;
 		userID = null;
-		console.log('Logged out');
 		document.cookie = 'dds_user_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC';
 		invalidateAll;
 		location.replace("https://operator.ddsexpress.com/wp-login.php?action=logout")
