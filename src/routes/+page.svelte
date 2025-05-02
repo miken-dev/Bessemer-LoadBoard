@@ -50,7 +50,6 @@
 		}
 	});
 
-	const PB = new PocketBase('https://bessemer-loadboard.pockethost.io');
 	// Cookie set up
 	function getUserId(): string | null {
 		const cookie = document.cookie.split('; ').find((row) => row.startsWith('dds_user_id='));
