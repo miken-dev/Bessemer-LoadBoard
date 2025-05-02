@@ -94,12 +94,16 @@
 		});
 		return results;
 	}
+/*
 	PB.collection('Active_Loads').subscribe('*', async (e) => {
 		tableData = await getRecords();
 	});
-
+*/
 	onMount(async () => {
 		tableData = await getRecords();
+		setInterval(async () => {
+			tableData = await getRecords()
+		}, 60000)
 	});
 
 	onDestroy(() => {
