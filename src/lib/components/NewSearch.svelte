@@ -498,205 +498,212 @@
 	);
 </script>
 
-<div class="mt-5 flex w-full flex-col gap-5 rounded bg-slate-200 p-5 dark:bg-gray-900 md:m-5">
-	<h2 class="text-2xl font-extrabold">New Search</h2>
+<div
+	class="mt-5 grid w-full grid-cols-[1fr] flex-col content-between items-center gap-2 rounded bg-slate-200 p-5 dark:bg-gray-900 md:m-5 xl:grid-cols-[10rem_1fr]"
+>
+	<h2 class="text-center text-2xl font-extrabold md:text-start xl:col-span-2">New Search</h2>
 	<!-- DATE RANGE -->
-	<div class="flex w-full flex-col items-center justify-start gap-4 xl:flex-row">
-		<p class=" justify-self-start">Pick up Date/Range:</p>
-		<div class="xxl:items-center xxl:flex-row flex w-full flex-col items-start gap-3">
-			<div class="flex flex-col items-center gap-3 sm:flex-row">
-				<p>from:</p>
-				<div class="w-72">
-					<input type="date" class=" dark:bg-slate-700 dark:bg-dark-bg dark:text-gray-800 mt-1 block w-full rounded border-gray-400 text-sm dark:border-gray-600 dark:text-white dark:[color-scheme:dark]" bind:value={fromDateRange}/>
-					<!-- <Datepicker bind:value={fromDateRange} color="blue" /> -->
-				</div>
+	<p class=" text-center font-bold md:text-start">Pick up Date/Range:</p>
+	<div class="xxl:items-center xxl:flex-row flex w-full flex-col gap-3">
+		<div class="flex flex-col items-center gap-1 sm:flex-row lg:gap-2">
+			<label for="fromDate">from:</label>
+			<div class="flex w-72 justify-center md:justify-start">
+				<input
+					type="date"
+					class=" dark:bg-dark-bg mt-1 block h-10 w-3/4 rounded border-gray-400 text-sm dark:border-gray-600 dark:bg-slate-700 dark:text-gray-800 dark:text-white dark:[color-scheme:dark] lg:w-full"
+					id="fromDate"
+					bind:value={fromDateRange}
+					placeholder="Choose a Date"
+				/>
+				<!-- <Datepicker bind:value={fromDateRange} color="blue" /> -->
 			</div>
-			<div class="flex flex-col items-center gap-3 sm:flex-row">
-				<p>to:</p>
-				<div class="w-72">
-					<input type="date" class=" dark:bg-slate-700 dark:bg-dark-bg dark:text-gray-800 mt-1 block w-full rounded border-gray-400 text-sm dark:border-gray-600 dark:text-white dark:[color-scheme:dark]" bind:value={toDateRange}/>
-				</div>
+		</div>
+		<div class="flex flex-col items-center gap-1 sm:flex-row lg:gap-2">
+			<label for="toDate" class="md:pr-5">to:</label>
+			<div class="flex w-72 justify-center md:justify-start">
+				<input
+					type="date"
+					class=" dark:bg-dark-bg mt-1 block h-10 w-3/4 rounded border-gray-400 text-sm dark:border-gray-600 dark:bg-slate-700 dark:text-gray-800 dark:text-white dark:[color-scheme:dark] lg:w-full"
+					id="toDate"
+					bind:value={toDateRange}
+				/>
 			</div>
 		</div>
 	</div>
 
 	<!-- ORIGIN -->
-	<div class="flex flex-col items-center justify-start gap-3 lg:flex-row">
-		<p class="justify-self-start">Origin:</p>
-		<div class="flex flex-col items-center gap-3 sm:flex-row">
-			<div class="flex flex-row items-center gap-3">
-				<p>within:</p>
-				<Button size="xs" color="light"
-					>{originMilesFilter} Miles<ChevronDownOutline
-						class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
-					/></Button
-				>
-				<Dropdown bind:open={originMilesShowing} class="max-h-48 w-48 overflow-y-auto py-1">
-					{#each miles as mile}
+	<p class="text-center font-bold md:text-start">Origin:</p>
+	<div class="flex flex-col items-center gap-3 sm:flex-row">
+		<div class="flex flex-row items-center gap-3">
+			<p>within:</p>
+			<Button size="xs" color="light"
+				>{originMilesFilter} Miles<ChevronDownOutline
+					class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
+				/></Button
+			>
+			<Dropdown bind:open={originMilesShowing} class="max-h-48 w-48 overflow-y-auto py-1">
+				{#each miles as mile}
+					<DropdownItem
+						on:click={() => {
+							originMilesFilter = mile;
+							originMilesShowing = false;
+							trailerTypesShowing = false;
+						}}>{mile}</DropdownItem
+					>
+				{/each}
+			</Dropdown>
+		</div>
+		<div class="flex flex-row items-center gap-3">
+			<p>of</p>
+			<!-- CITY -->
+			<Button
+				size="xs"
+				color="light"
+				on:click={() => {
+					setTimeout(() => {
+						document.querySelector<HTMLInputElement>('.originCitySearch')?.focus();
+					}, 155);
+				}}
+				>{originCityFilter
+					? `${originCityFilter}, ${originStateShort}`
+					: 'Location'}<ChevronDownOutline
+					class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
+				/></Button
+			>
+			<Dropdown
+				bind:open={originCityShowing}
+				id="originDropDown"
+				class="max-h-48 w-48 overflow-y-auto py-1"
+			>
+				<Search
+					size="sm"
+					bind:value={originCitySearch}
+					class="originCitySearch"
+					on:keydown={(e) => {
+						if (e.key === 'Enter' && originSearchResults.length > 0) {
+							setOriginAddress(
+								originSearchResults[0].item.lat,
+								originSearchResults[0].item.lng,
+								originSearchResults[0].item.city,
+								originSearchResults[0].item.state,
+								originSearchResults[0].item.state_id
+							);
+							originCityShowing = false;
+							originCitySearch = '';
+						}
+					}}
+				/>
+
+				{#if originCitySearch}
+					{#each sortLocationData(originSearchResults) as location}
 						<DropdownItem
 							on:click={() => {
-								originMilesFilter = mile;
-								originMilesShowing = false;
-								trailerTypesShowing = false;
-							}}>{mile}</DropdownItem
-						>
-					{/each}
-				</Dropdown>
-			</div>
-			<div class="flex flex-row items-center gap-3">
-				<p>of</p>
-				<!-- CITY -->
-				<Button
-					size="xs"
-					color="light"
-					on:click={() => {
-						setTimeout(() => {
-							document.querySelector<HTMLInputElement>('.originCitySearch')?.focus();
-						}, 155);
-					}}
-					>{originCityFilter
-						? `${originCityFilter}, ${originStateShort}`
-						: 'Location'}<ChevronDownOutline
-						class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
-					/></Button
-				>
-				<Dropdown
-					bind:open={originCityShowing}
-					id="originDropDown"
-					class="max-h-48 w-48 overflow-y-auto py-1"
-				>
-					<Search
-						size="sm"
-						bind:value={originCitySearch}
-						class="originCitySearch"
-						on:keydown={(e) => {
-							if (e.key === 'Enter' && originSearchResults.length > 0) {
 								setOriginAddress(
-									originSearchResults[0].item.lat,
-									originSearchResults[0].item.lng,
-									originSearchResults[0].item.city,
-									originSearchResults[0].item.state,
-									originSearchResults[0].item.state_id
+									location.item.lat,
+									location.item.lng,
+									location.item.city,
+									location.item.state,
+									location.item.state_id
 								);
 								originCityShowing = false;
 								originCitySearch = '';
-							}
-						}}
-					/>
-
-					{#if originCitySearch}
-						{#each sortLocationData(originSearchResults) as location}
-							<DropdownItem
-								on:click={() => {
-									setOriginAddress(
-										location.item.lat,
-										location.item.lng,
-										location.item.city,
-										location.item.state,
-										location.item.state_id
-									);
-									originCityShowing = false;
-									originCitySearch = '';
-								}}>{location.item.city}, {location.item.state_id}</DropdownItem
-							>
-						{/each}
-					{/if}
-				</Dropdown>
-			</div>
+							}}>{location.item.city}, {location.item.state_id}</DropdownItem
+						>
+					{/each}
+				{/if}
+			</Dropdown>
 		</div>
 	</div>
 
 	<!-- DESTINATION -->
-	<div class="flex flex-col items-center justify-start gap-3 lg:flex-row">
-		<p class=" justify-self-start">Destination:</p>
-		<div class="flex flex-col items-center gap-3 sm:flex-row">
-			<div class="flex flex-row items-center gap-3">
-				<p>within:</p>
-				<Button size="xs" color="light"
-					>{destMilesFilter} Miles<ChevronDownOutline
-						class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
-					/></Button
-				>
-				<Dropdown bind:open={destMilesShowing} class="max-h-48 w-48 overflow-y-auto py-1">
-					{#each miles as mile}
+	<h3 class="text-center font-bold md:text-start">Destination:</h3>
+	<div class="flex flex-col items-center gap-3 sm:flex-row">
+		<div class="flex flex-row items-center gap-3">
+			<p>within:</p>
+			<Button size="xs" color="light"
+				>{destMilesFilter} Miles<ChevronDownOutline
+					class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
+				/></Button
+			>
+			<Dropdown bind:open={destMilesShowing} class="max-h-48 w-48 overflow-y-auto py-1">
+				{#each miles as mile}
+					<DropdownItem
+						on:click={() => {
+							destMilesFilter = mile;
+							destMilesShowing = false;
+						}}>{mile}</DropdownItem
+					>
+				{/each}
+			</Dropdown>
+		</div>
+
+		<div class="flex flex-row items-center gap-3">
+			<p>of</p>
+
+			<Button
+				size="xs"
+				color="light"
+				on:click={() => {
+					setTimeout(() => {
+						document.querySelector<HTMLInputElement>('.destCitySearch')?.focus();
+					}, 155);
+				}}
+				>{destCityFilter ? `${destCityFilter}, ${destStateShort}` : 'Location'}<ChevronDownOutline
+					class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
+				/></Button
+			>
+			<Dropdown
+				bind:open={destCityShowing}
+				id="destDropDown"
+				class="max-h-48 w-48 overflow-y-auto py-1"
+			>
+				<Search
+					size="sm"
+					bind:value={destCitySearch}
+					class="destCitySearch"
+					on:keydown={(e) => {
+						if (e.key === 'Enter' && destSearchResults.length > 0) {
+							setDestinationAddress(
+								destSearchResults[0].item.lat,
+								destSearchResults[0].item.lng,
+								destSearchResults[0].item.city,
+								destSearchResults[0].item.state,
+								destSearchResults[0].item.state_id
+							);
+							destCityShowing = false;
+							destCitySearch = '';
+						}
+					}}
+				/>
+
+				{#if destCitySearch}
+					{#each sortLocationData(destSearchResults) as location}
 						<DropdownItem
 							on:click={() => {
-								destMilesFilter = mile;
-								destMilesShowing = false;
-							}}>{mile}</DropdownItem
-						>
-					{/each}
-				</Dropdown>
-			</div>
-
-			<div class="flex flex-row items-center gap-3">
-				<p>of</p>
-
-				<Button
-					size="xs"
-					color="light"
-					on:click={() => {
-						setTimeout(() => {
-							document.querySelector<HTMLInputElement>('.destCitySearch')?.focus();
-						}, 155);
-					}}
-					>{destCityFilter ? `${destCityFilter}, ${destStateShort}` : 'Location'}<ChevronDownOutline
-						class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
-					/></Button
-				>
-				<Dropdown
-					bind:open={destCityShowing}
-					id="destDropDown"
-					class="max-h-48 w-48 overflow-y-auto py-1"
-				>
-					<Search
-						size="sm"
-						bind:value={destCitySearch}
-						class="destCitySearch"
-						on:keydown={(e) => {
-							if (e.key === 'Enter' && destSearchResults.length > 0) {
 								setDestinationAddress(
-									destSearchResults[0].item.lat,
-									destSearchResults[0].item.lng,
-									destSearchResults[0].item.city,
-									destSearchResults[0].item.state,
-									destSearchResults[0].item.state_id
+									location.item.lat,
+									location.item.lng,
+									location.item.city,
+									location.item.state,
+									location.item.state_id
 								);
 								destCityShowing = false;
 								destCitySearch = '';
-							}
-						}}
-					/>
-
-					{#if destCitySearch}
-						{#each sortLocationData(destSearchResults) as location}
-							<DropdownItem
-								on:click={() => {
-									setDestinationAddress(
-										location.item.lat,
-										location.item.lng,
-										location.item.city,
-										location.item.state,
-										location.item.state_id
-									);
-									destCityShowing = false;
-									destCitySearch = '';
-								}}>{location.item.city}, {location.item.state_id}</DropdownItem
-							>
-						{/each}
-					{/if}
-				</Dropdown>
-			</div>
+							}}>{location.item.city}, {location.item.state_id}</DropdownItem
+						>
+					{/each}
+				{/if}
+			</Dropdown>
 		</div>
 	</div>
 
 	<!-- TRAILER TYPE -->
-	<div class="flex flex-col items-center justify-center gap-3 sm:flex-row lg:justify-start">
-		<p class="justify-self-start">Trailer Type:</p>
+	<p class="text-center font-bold md:text-start">Trailer Type:</p>
+	<div class="flex items-center justify-center lg:justify-start">
 		<Button
 			size="md"
 			color="light"
-			class="w-80 lg:w-96"
+			class="w-72 xs:w-80 center lg:w-96"
 			on:click={() => {
 				setTimeout(() => {
 					document.querySelector<HTMLInputElement>('.trailerTypeSsearch');
@@ -742,9 +749,8 @@
 			{/each}
 		</Dropdown>
 	</div>
-
 	<!-- BUTTONS -->
-	<ButtonGroup divClass="flex justify-start">
+	<ButtonGroup divClass="flex xl:col-span-2 justify-start">
 		{#if saveEnabled}
 			<Button
 				color="blue"
