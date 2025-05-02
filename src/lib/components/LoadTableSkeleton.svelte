@@ -39,7 +39,7 @@
 </div>
 {:else if loadFailed }
 	<div class="flex w-full md:w-96 flex-col justify-around text-4xl">
-		<h3 class="text-center">No loads available</h3>
+		<h3 class="text-center">No Loads Available</h3>
 	</div>
 {/if}
 
