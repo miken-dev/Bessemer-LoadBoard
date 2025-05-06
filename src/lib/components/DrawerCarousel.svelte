@@ -60,7 +60,21 @@
 	}
 </script>
 
-<div class="group relative">
+<div class="group relative grid h-full grid-cols-[auto_1fr_auto]">
+
+	<!-- Left navigation -->
+	{#if totalSlides > 1}
+		<div class="sticky top-0 flex h-screen items-center md:h-1/2">
+			<button
+				onclick={prev}
+				class="pointer-events-auto z-50 rounded-full bg-background/80 p-2 opacity-50 shadow-lg transition-opacity hover:bg-background disabled:opacity-30 group-hover:opacity-100"
+				disabled={currentIndex === 0 || isAnimating}
+			>
+				<ChevronLeftIcon class="size-6" />
+			</button>
+		</div>
+	{/if}
+
 	<!-- Carousel container -->
 	<div
 		bind:this={container}
@@ -70,35 +84,22 @@
 		{@render children()}
 	</div>
 
+	<!-- Right navigation -->
 	{#if totalSlides > 1}
-		<!-- Navigation controls wrapper - Fixed to viewport -->
-		<div
-			class="pointer-events-none fixed left-0 right-0 top-1/2 z-50 -translate-y-1/2 md:top-3/4"
-			transition:fade
-		>
-			<div class="container relative mx-auto px-4">
-				<!-- Previous button -->
-				<button
-					onclick={prev}
-					class="pointer-events-auto absolute left-0 rounded-full bg-background/80 p-2 opacity-50 shadow-lg transition-opacity hover:bg-background disabled:opacity-30 group-hover:opacity-100"
-					disabled={currentIndex === 0 || isAnimating}
-				>
-					<ChevronLeftIcon class="size-6" />
-				</button>
-
-				<!-- Next button -->
-				<button
-					onclick={next}
-					class="pointer-events-auto absolute right-0 rounded-full bg-background/80 p-2 opacity-50 shadow-lg transition-opacity hover:bg-background disabled:opacity-30 group-hover:opacity-100"
-					disabled={currentIndex === totalSlides - 1 || isAnimating}
-				>
-					<ChevronRightIcon class="size-6" />
-				</button>
-			</div>
+		<div class="sticky top-0 flex h-screen items-center md:h-1/2">
+			<button
+				onclick={next}
+				class="pointer-events-auto z-50 rounded-full bg-background/80 p-2 opacity-50 shadow-lg transition-opacity hover:bg-background disabled:opacity-30 group-hover:opacity-100"
+				disabled={currentIndex === totalSlides - 1 || isAnimating}
+			>
+				<ChevronRightIcon class="size-6" />
+			</button>
 		</div>
+	{/if}
 
-		<!-- Indicators -->
-		<div class="absolute bottom-2 left-1/2 flex -translate-x-1/2 gap-2">
+	<!-- Indicators -->
+	{#if totalSlides > 1}
+		<div class="absolute bottom-2 left-1/2 col-span-3 flex -translate-x-1/2 gap-2">
 			{#each Array(totalSlides) as _, i}
 				<button
 					onclick={() => goToSlide(i)}
@@ -121,5 +122,36 @@
 	}
 	.hide-scrollbar::-webkit-scrollbar {
 		display: none;
+	}
+
+	@media screen and (min-width: 1101px) {
+		:global(.container) {
+			width: 100%;
+		}
+	}
+	@media screen and (max-width: 1100px) {
+		:global(.container) {
+			width: 490px;
+		}
+	}
+	@media screen and (max-width: 900px) {
+		:global(.container) {
+			width: 490px;
+		}
+	}
+	@media screen and (max-width: 600px) {
+		:global(.container) {
+			width: 390px;
+		}
+	}
+	@media screen and (max-width: 400px) {
+		:global(.container) {
+			width: 310px;
+		}
+	}
+	@media screen and (max-width: 300px) {
+		:global(.container) {
+			width: 280px;
+		}
 	}
 </style>
