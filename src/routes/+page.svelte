@@ -108,6 +108,7 @@
 		<p class="ml-5">{searchOptionsIsShowing ? 'Hide' : 'Show'} Search Options</p>
 		<ChevronDownOutline class="ms-2  h-6 w-6 text-gray-800 dark:text-white" />
 	</Button>
+	{#if (detailsHidden && !desktop.current) || desktop.current}
 		{#if searchOptionsIsShowing}
 			<SearchOptions
 				bind:originMilesFilter
@@ -125,7 +126,7 @@
 				{userId}
 			/>
 		{/if}
-	
+	{/if}
 
 	<!-- Table and Map -->
 	{#if loggedIn}
@@ -142,7 +143,7 @@
 			bind:cleared
 		/>
 	{:else}
-		<PublicData 
+		<PublicData
 			{originMilesFilter}
 			{originStateFilter}
 			{originCityFilter}
