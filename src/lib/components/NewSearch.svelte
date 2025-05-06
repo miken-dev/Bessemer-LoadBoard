@@ -571,7 +571,7 @@
 		<div class="flex flex-row items-center gap-3">
 			<p>within:</p>
 			<Button size="xs" color="light"
-				>{originMilesFilter} Miles<ChevronDownOutline
+				>{originMilesFilter === 0 ? "" : originMilesFilter} Miles<ChevronDownOutline
 					class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
 				/></Button
 			>
@@ -655,7 +655,7 @@
 		<div class="flex flex-row items-center gap-3">
 			<p>within:</p>
 			<Button size="xs" color="light"
-				>{destMilesFilter} Miles<ChevronDownOutline
+				>{destMilesFilter === 0 ? "" : destMilesFilter} Miles<ChevronDownOutline
 					class="ms-2 h-6 w-6 text-gray-800 dark:text-white"
 				/></Button
 			>
