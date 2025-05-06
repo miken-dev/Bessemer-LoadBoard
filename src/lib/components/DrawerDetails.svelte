@@ -82,7 +82,7 @@ export function insertBreaks(text, chunkSize = 23) {
 <!-- load info -->
 <div class=" ml-3 flex {horizontal ? 'w-full flex-row gap-x-60 pb-10 ' : 'flex-col'}">
 	{#if browser}
-		<div class="top-0 size-80 pl-0 md:pl-10">
+		<div class="top-0 size-60 w-80 overflow-hidden pl-0 sm:size-80 md:pl-10">
 			<DrawerMap
 				originLat={Number(data.originLat)}
 				originLng={Number(data.originLng)}
