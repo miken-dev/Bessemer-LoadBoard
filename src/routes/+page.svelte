@@ -41,7 +41,7 @@
 	let fromDateRange: Date | undefined = $state(undefined);
 	let toDateRange: Date | undefined = $state(undefined);
 	let filter: string = $state('isPublic = "true"');
-	let cleared: boolean = $state(false)
+	let cleared: boolean = $state(false);
 	let filtersActive = $derived.by(() => {
 		if (originCityFilter || destCityFilter || trailerTypesFilter || fromDateRange || toDateRange) {
 			return true;
