@@ -28,7 +28,7 @@
 	let searchOptionsIsShowing: boolean = $state(true);
 	let NotificationPreferencesShowing: boolean = $state(false);
 
-	let searchTerm = ""
+	let searchTerm = '';
 
 	// filters
 	let originMilesFilter: number | undefined = $state();
