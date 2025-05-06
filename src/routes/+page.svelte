@@ -4,6 +4,7 @@
 	import { Button } from 'flowbite-svelte';
 	import { ChevronDownOutline } from 'flowbite-svelte-icons';
 	import { onMount } from 'svelte';
+	import { MediaQuery } from 'svelte/reactivity';
 
 	// Component imports
 	import Header from '$lib/components/Header.svelte';
@@ -79,6 +80,7 @@
 
 		return () => clearInterval(checkCookie);
 	});
+	const desktop = new MediaQuery('min-width: 600px');
 </script>
 
 <header class="dark:bg-gray-800 dark:text-gray-100">
