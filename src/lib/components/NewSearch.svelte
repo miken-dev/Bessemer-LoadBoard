@@ -556,6 +556,11 @@
 					id="toDate"
 					bind:value={toDateRange}
 				/>
+				{#if validateDate()}
+					<p class=" text-sm text-red-600 dark:text-red-500">
+						Please enter a date after {Number(new Date(fromDateRange).getUTCMonth()) +1}/{new Date(fromDateRange).getUTCDate()}/{new Date(fromDateRange).getUTCFullYear()}
+					</p>
+				{/if}
 			</div>
 		</div>
 	</div>
