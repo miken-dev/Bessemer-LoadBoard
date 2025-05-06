@@ -733,7 +733,7 @@
 
 	<!-- TRAILER TYPE -->
 	<p class="text-center font-bold md:text-start">Trailer Type:</p>
-	<div class="flex items-center justify-center lg:justify-start">
+	<div class="flex items-center justify-center md:justify-start">
 		<Button
 			size="md"
 			color="light"
