@@ -27,14 +27,14 @@
 
 	let zoomLevel = (originLng: number, destLng: number): number => {
 		if (originLng - destLng > 25 || destLng - originLng > 25) {
-			return 2.8;
+			return 2.4;
 		} else {
-			return 4.1;
+			return 3.1;
 		}
 	};
 </script>
 
-<div class="size-80">
+<div class="size-56 sm:size-80">
 	<Map
 		options={{
 			center: [centerMap(originLat, destLat), centerMap(originLng, destLng)],
