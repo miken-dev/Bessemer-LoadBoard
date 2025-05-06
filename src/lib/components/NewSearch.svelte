@@ -504,6 +504,27 @@
 		}
 	}
 
+	function saveButtonEnabled(): boolean {
+		if (originCityFilter && originStateFilter) {
+			return true
+		}
+		if (destCityFilter && destStateFilter) {
+			return true
+		} 
+		if (trailerTypesFilter) {
+			return true
+		}
+		if (toDateRange >= fromDateRange) {
+			return true
+		}
+		if (fromDateRange && !toDateRange) {
+			return true
+		}
+		if (toDateRange && !fromDateRange) {
+			return true
+		}
+		return false
+	}
 </script>
 
 <div
