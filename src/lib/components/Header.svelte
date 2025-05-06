@@ -26,7 +26,7 @@
 	};
 </script>
 
-<div class="flex w-screen items-center justify-between border-b-4 border-sky-400 p-5">
+<div class="flex w-full items-center justify-between border-b-4 border-sky-400 p-5">
 	<div>
 		<img class="w-1/2" alt="DD&S Express Logo" src={logo} />
 	</div>
