@@ -496,6 +496,14 @@
 	let destSearchResults = $derived(
 		fuse.search(destCitySearch.replace(',', ' ').replace('  ', ' '))
 	);
+	function validateDate(): boolean {
+		if (toDateRange && fromDateRange && (toDateRange < fromDateRange)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 </script>
 
 <div
