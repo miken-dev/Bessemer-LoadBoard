@@ -737,7 +737,7 @@
 		<Button
 			size="md"
 			color="light"
-			class="w-72 xs:w-80 center lg:w-96"
+			class="xs:w-80 center w-72 lg:w-96"
 			on:click={() => {
 				setTimeout(() => {
 					document.querySelector<HTMLInputElement>('.trailerTypeSsearch');
