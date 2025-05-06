@@ -100,6 +100,15 @@
 		savedSearches = await getRecords();
 	}
 
+	function formatDateToYYYYMMDD(date: Date): string {
+		let formattedDate = new Date(date)
+		const year = formattedDate.getFullYear();
+		const month = String(formattedDate.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+		const day = String(formattedDate.getDate()).padStart(2, '0');
+
+		return `${year}-${month}-${day}`;
+}
+
 	function setFilters(
 		originMiles: number,
 		originState: string,
@@ -128,10 +137,10 @@
 		destCityFilter = destCity;
 		trailerTypesFilter = trailerTypes;
 		if (fromDate) {
-			fromDateRange = new Date(fromDate);
+			fromDateRange = new Date(fromDate).toISOString().substring(0, 10)
 		}
 		if (toDate) {
-			toDateRange = new Date(toDate);
+			toDateRange = new Date(toDate).toISOString().substring(0, 10)
 		}
 	}
 
