@@ -539,7 +539,7 @@
 			<div class="flex w-72 justify-center md:justify-start">
 				<input
 					type="date"
-					class=" dark:bg-dark-bg mt-1 block h-10 w-3/4 rounded border-gray-400 text-sm dark:border-gray-600 dark:bg-slate-700 dark:text-gray-800 dark:text-white dark:[color-scheme:dark] lg:w-full"
+					class=" dark:bg-dark-bg mt-1 block h-10 w-3/4 rounded border-gray-300 text-sm dark:border-gray-600 dark:bg-slate-800 dark:text-gray-800 dark:text-white dark:[color-scheme:dark] lg:w-full"
 					id="fromDate"
 					bind:value={fromDateRange}
 					placeholder="Choose a Date"
@@ -549,10 +549,10 @@
 		</div>
 		<div class="flex flex-col items-center gap-1 sm:flex-row lg:gap-2">
 			<label for="toDate" class="md:pr-5">to:</label>
-			<div class="flex w-72 justify-center md:justify-start">
+			<div class="flex w-72 flex-col align-middle items-center justify-center md:items-start md:justify-start">
 				<input
 					type="date"
-					class=" dark:bg-dark-bg mt-1 block h-10 w-3/4 rounded border-gray-400 text-sm dark:border-gray-600 dark:bg-slate-700 dark:text-gray-800 dark:text-white dark:[color-scheme:dark] lg:w-full"
+					class=" dark:bg-dark-bg mt-1 block h-10 w-3/4 rounded  text-sm dark:bg-slate-800 dark:text-gray-800 dark:text-white dark:[color-scheme:dark] lg:w-full {validateDate() ? "border-red-600 dark:border-red-400" : "border-gray-300 dark:border-gray-600"} "
 					id="toDate"
 					bind:value={toDateRange}
 				/>
