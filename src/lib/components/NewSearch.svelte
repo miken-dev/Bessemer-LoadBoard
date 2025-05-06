@@ -785,7 +785,7 @@
 	</div>
 	<!-- BUTTONS -->
 	<ButtonGroup divClass="flex xl:col-span-2 justify-start">
-		{#if saveEnabled}
+		{#if saveButtonEnabled()}
 			<Button
 				color="blue"
 				onclick={() => {
@@ -795,6 +795,17 @@
 				<FloppyDiskSolid class="me-2 h-4 w-4" />
 				Save Search
 			</Button>
+			{:else}
+			<Button
+				onclick={() => {
+					saveSearchDialogIsShowing = true;
+				}}
+				disabled
+			>
+				<FloppyDiskSolid class="me-2 h-4 w-4" />
+				Save Search
+			</Button>
+
 		{/if}
 		<Button color="dark" on:click={clearSearch}>
 			<DeleteRowOutline class="me-2 h-4 w-4" />
@@ -819,4 +830,3 @@
 />
 
 <ContactInfoPreferencesModal bind:contactInfoPreferencesModal {email} {text} {userId} />
-
