@@ -12,6 +12,7 @@
 	import LoadTableSkeleton from './LoadTableSkeleton.svelte';
 	import { Dropdown, DropdownItem, Button } from 'flowbite-svelte';
 	import { ChevronUpOutline, ChevronDownOutline } from 'flowbite-svelte-icons';
+	import { MediaQuery } from 'svelte/reactivity';
 
 	let {
 		originMilesFilter,
@@ -206,8 +207,10 @@
 			cleared = false
 		}
 	})
+	const desktop = new MediaQuery('min-width: 600px');
 </script>
 
+{#if (detailsHidden && !desktop.current) || desktop.current}
 <div>
 	<ViewsBar bind:tableIsShowing bind:mapIsShowing />
 
@@ -297,6 +300,7 @@
 		{/if}
 	</div>
 </div>
+{/if}
 <Drawerv2
 	{tableData}
 	{selectedCity}
