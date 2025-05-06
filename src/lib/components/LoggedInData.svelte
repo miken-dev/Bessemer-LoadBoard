@@ -12,6 +12,7 @@
 	import LoadTableSkeleton from './LoadTableSkeleton.svelte';
 	import { Dropdown, DropdownItem, Button } from 'flowbite-svelte';
 	import { ChevronUpOutline, ChevronDownOutline } from 'flowbite-svelte-icons';
+	import { MediaQuery } from 'svelte/reactivity';
 
 	//state
 	let selectedRow = $state(0);
@@ -215,12 +216,14 @@
 			cleared = false
 		}
 	})
+	const desktop = new MediaQuery('min-width: 600px');
 </script>
 
+{#if (detailsHidden && !desktop.current) || desktop.current}
 <div class={detailsHidden ? '' : 'overflow-clip outline-1 outline-red-400'}>
 	<ViewsBar bind:tableIsShowing bind:mapIsShowing />
 
-	<div class="flex flex-col items-start justify-center md:flex-row">
+	<div class="flex flex-col items-start justify-center lg:flex-row">
 		{#if tableIsShowing}
 			<div class="flex flex-col">
 				<div class="p-0 md:pl-8">
@@ -306,6 +309,7 @@
 		{/if}
 	</div>
 </div>
+{/if}
 <Drawerv2
 	{tableData}
 	{selectedCity}
