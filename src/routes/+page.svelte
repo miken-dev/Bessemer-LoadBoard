@@ -4,7 +4,6 @@
 	import { Button } from 'flowbite-svelte';
 	import { ChevronDownOutline } from 'flowbite-svelte-icons';
 	import { onMount } from 'svelte';
-	import PocketBase from 'pocketbase';
 
 	// Component imports
 	import Header from '$lib/components/Header.svelte';
