@@ -30,6 +30,7 @@
 		fromDateRange: Date | undefined;
 		toDateRange: Date | undefined;
 	} = $props();
+
 	let name: string = $state('');
 	let emailNotification: boolean = $state(true);
 	let textNotification: boolean = $state(true);
