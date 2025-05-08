@@ -240,9 +240,13 @@
 			}}>Save</Button
 		>
 	{/if}
-	<Button size="md" color="alternative" onclick={() => {
-		name = ""
-		emailNotification = false
-		textNotification = false
-	}}>Cancel</Button>
+	<Button
+		size="md"
+		color="alternative"
+		onclick={() => {
+			name = '';
+			emailNotification = true;
+			textNotification = true;
+		}}>Cancel</Button
+	>
 </Modal>
