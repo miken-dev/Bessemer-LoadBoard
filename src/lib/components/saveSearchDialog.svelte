@@ -31,8 +31,8 @@
 		toDateRange: Date | undefined;
 	} = $props();
 	let name: string = $state('');
-	let emailNotification: boolean = $state(false);
-	let textNotification: boolean = $state(false);
+	let emailNotification: boolean = $state(true);
+	let textNotification: boolean = $state(true);
 	let userInfo = $state();
 
 	let emailAddress = $state('');
