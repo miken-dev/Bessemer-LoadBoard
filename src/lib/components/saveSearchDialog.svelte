@@ -37,7 +37,7 @@
 
 	let emailAddress = $state('');
 	let phoneNumber = $state('');
-	let error = $state('')
+	let error = $state('');
 	const PB = new PocketBase('https://bessemer-loadboard.pockethost.io');
 	async function getUserInfo() {
 		const user = await PB.collection('driver').getOne(userId);
