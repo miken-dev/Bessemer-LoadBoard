@@ -62,16 +62,16 @@
 	onMount(async () => {
 		userInfo = await getUserInfo();
 	});
-	
+
 	function checkSavedSearchName(name: String): Boolean {
 		for (const savedSearch in savedSearches) {
 			if (savedSearch.name === name) {
-				error = "Please enter a unique name"
-				return false
+				error = 'Please enter a unique name';
+				return false;
 			}
 		}
-	error = ""
-	return true
+		error = '';
+		return true;
 	}
 	async function updateSavedSeachList() {
 		const records = await PB.collection('Saved_Searches').getFullList({
@@ -150,11 +150,11 @@
 
 		for (const savedSearch of savedSearches) {
 			if (savedSearch.name === name) {
-				error = "Please enter a unique name"
-				return false
+				error = 'Please enter a unique name';
+				return false;
 			}
 		}
-		error = ""
+		error = '';
 		// If no notifications are enabled, only name is required
 		if (!emailNotification && !textNotification) {
 			return true;
@@ -165,7 +165,7 @@
 			// Check if user has existing email or valid new email
 			const hasValidExistingEmail = userInfo?.email && isValidEmail(userInfo.email);
 			const hasValidNewEmail = emailAddress && isValidEmail(emailAddress);
-			
+
 			if (!hasValidExistingEmail && !hasValidNewEmail) {
 				return false;
 			}
@@ -176,23 +176,18 @@
 			// Check if user has existing phone or valid new phone
 			const hasValidExistingPhone = userInfo?.phone && isValidPhone(userInfo.phone);
 			const hasValidNewPhone = phoneNumber && isValidPhone(phoneNumber);
-			
+
 			if (!hasValidExistingPhone && !hasValidNewPhone) {
 				return false;
 			}
 		}
-		return true
+		return true;
 		// All checks passed
 		return true;
 	}
 </script>
 
-<Modal
-	title="Name your saved search"
-	size="md"
-	bind:open={saveSearchDialogIsShowing}
-	autoclose
->
+<Modal title="Name your saved search" size="md" bind:open={saveSearchDialogIsShowing} autoclose>
 	<Label for="name" class="mb-2 block">Name your saved search</Label>
 	<Input id="name" placeholder="" bind:value={name} />
 	<p class="text-red-500">{error}</p>
@@ -217,7 +212,7 @@
 		{/if}
 	</div>
 
-	{#if !saveButtonEnable() }
+	{#if !saveButtonEnable()}
 		<Button size="md" color="alternative" disabled>Save</Button>
 	{:else}
 		<Button
