@@ -63,15 +63,16 @@
 	onMount(() => {
 		const initialId = getUserId();
 		if (initialId !== null) {
-			userId = initialId; // Direct assignment, no .value needed
+			userId = initialId; 
 			loggedIn = true;
 			filter = '';
+
 		}
 
 		const checkCookie = setInterval(async () => {
 			const currentId = getUserId();
 			if (currentId !== null) {
-				userId = currentId; // Direct assignment
+				userId = currentId; 
 				loggedIn = true;
 				filter = '';
 			} else {
