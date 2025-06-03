@@ -5,6 +5,7 @@
 	import { ChevronDownOutline } from 'flowbite-svelte-icons';
 	import { onMount } from 'svelte';
 	import { MediaQuery } from 'svelte/reactivity';
+	import PocketBase from 'pocketbase'
 
 	// Component imports
 	import Header from '$lib/components/Header.svelte';
@@ -58,6 +59,7 @@
 
 	let userId = $state<string | null>(null);
 
+	const PB = new PocketBase('https://bessemer-loadboard.pockethost.io');
 	onMount(() => {
 		const initialId = getUserId();
 		if (initialId !== null) {
@@ -80,6 +82,11 @@
 
 		return () => clearInterval(checkCookie);
 	});
+	onMount(async () => {
+		await PB.collection('driver').create({
+			id: `${userId}`
+		});
+	})
 	const desktop = new MediaQuery('min-width: 600px');
 </script>
 
