@@ -22,7 +22,7 @@
 		const checkCookie = setInterval(() => {
 			const currentId = getUserId();
 			userId.set(currentId);
-		}, 1000); // Check every second
+		}, 1000); 
 
 		return () => clearInterval(checkCookie);
 	});
