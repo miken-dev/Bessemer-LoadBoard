@@ -4,7 +4,10 @@ import { PB } from '$lib/server/server';
 
 Sentry.init({
 	dsn: 'https://566b2c1b427feed92700e572c71e1179@o4508971907940352.ingest.us.sentry.io/4508971911020544',
-	tracesSampleRate: 1
+	tracesSampleRate: 1,
+	replaysSessionSampleRate: 1.0,
+	replaysOnErrorSampleRate: 1.0,
+	profilesSampleRate: 1.0
 });
 
 export const handle = sequence(Sentry.sentryHandle(), async ({ event, resolve }) => {
