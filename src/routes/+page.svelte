@@ -59,7 +59,7 @@
 
 	let userId = $state<string | null>(null);
 
-	const PB = new PocketBase('https://bessemer-loadboard.pockethost.io');
+	const PB = new PocketBase('https://lbdb2.dennisoncreative.com');
 	onMount(() => {
 		const initialId = getUserId();
 		if (initialId !== null) {

@@ -31,7 +31,7 @@
 
 
 	//Pocketbase calls
-	const PB = new PocketBase('https://bessemer-loadboard.pockethost.io');
+	const PB = new PocketBase('https://lbdb2.dennisoncreative.com');
 	async function toggleEmail(currentValue: boolean, id: string ) {
 		const record = await PB.collection('Saved_Searches').update(`${id}`, {
 			email: `${currentValue ? "False" : "True" }`

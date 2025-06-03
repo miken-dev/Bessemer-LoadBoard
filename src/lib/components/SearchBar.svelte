@@ -28,7 +28,7 @@
 	let searchContainer: HTMLDivElement = $state() as any;
 	let searchInput: HTMLInputElement = $state() as any;
 
-	const PB = new PocketBase('https://bessemer-loadboard.pockethost.io');
+	const PB = new PocketBase('https://lbdb2.dennisoncreative.com');
 	async function getLocations() {
 		const records = await PB.collection('Locations').getFullList({
 			filter: `state = "Ohio"`,

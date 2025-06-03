@@ -13,7 +13,7 @@ export const bessemerLoadboardTask = schedules.task({
 	// Set an optional maxDuration to prevent tasks from running indefinitely
 	maxDuration: 30, // Stop executing after 300 secs (5 mins) of compute
 	run: async (payload, { ctx }) => {
-		const PB = new PocketBase('https://bessemer-loadboard.pockethost.io');
+		const PB = new PocketBase('https://lbdb2.dennisoncreative.com');
 		async function getActiveLoads() {
 			let records = await PB.collection('Active_Loads').getFullList();
 			const results: [TableDataTypes] = records.map((record) => {
@@ -100,7 +100,7 @@ export const bessemerLoadboardTask = schedules.task({
 			return results;
 		}
 		async function sendEmail(emailAddress: string, message: string) {
-			await fetch('https://bessemer-loadboard.pockethost.io/api/notificationsender/email', {
+			await fetch('https://lbdb2.dennisoncreative.com/api/notificationsender/email', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -113,7 +113,7 @@ export const bessemerLoadboardTask = schedules.task({
 		}
 		async function sendText(phoneNumber: string, message: string) { 
 			
-			await fetch('https://bessemer-loadboard.pockethost.io/api/notificationsender/text', {
+			await fetch('https://lbdb2.dennisoncreative.com/api/notificationsender/text', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

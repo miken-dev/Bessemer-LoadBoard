@@ -27,7 +27,7 @@
 		}
 	});
 
-	const PB = new PocketBase('https://bessemer-loadboard.pockethost.io');
+	const PB = new PocketBase('https://lbdb2.dennisoncreative.com');
 	async function getUserInfo() {
 		const user = await PB.collection('driver').getOne(userId);
 

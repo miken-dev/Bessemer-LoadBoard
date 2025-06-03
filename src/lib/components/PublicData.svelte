@@ -102,7 +102,7 @@
 	//tableData
 	let tableData: TableDataTypes[] = $state([]);
 
-	const PB = new PocketBase('https://bessemer-loadboard.pockethost.io');
+	const PB = new PocketBase('https://lbdb2.dennisoncreative.com');
 	async function getRecords() {
 		let records = await PB.collection('Active_Loads_Public').getFullList({});
 		const results: [TableDataTypes] = records.map((record) => {

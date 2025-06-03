@@ -51,7 +51,7 @@
 			savedSearches = await getRecords();
 		}
 	});
-	const PB = new PocketBase('https://bessemer-loadboard.pockethost.io');
+	const PB = new PocketBase('https://lbdb2.dennisoncreative.com');
 	async function getRecords() {
 		const records = await PB.collection('Saved_Searches').getFullList({
 			filter: `userID = "${userId}"`

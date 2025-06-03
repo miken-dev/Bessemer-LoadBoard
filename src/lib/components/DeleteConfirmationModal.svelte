@@ -16,7 +16,7 @@
 	} = $props()
 	
 	
-	const PB = new PocketBase('https://bessemer-loadboard.pockethost.io');
+	const PB = new PocketBase('https://lbdb2.dennisoncreative.com');
 	async function deleteRecord() {
 		await PB.collection('Saved_Searches').delete(id)
 
