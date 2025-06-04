@@ -324,7 +324,7 @@ export const bessemerLoadboardTask = schedules.task({
 						? `- ${count} loads from ${titleCase(load.originCityName)}, ${load.originStateName} to ${titleCase(load.destinationCityName)}, ${load.destinationStateName} (from your "${notification.searchName}" saved search)`
 						: `- Load from ${titleCase(load.originCityName)}, ${load.originStateName} to ${titleCase(load.destinationCityName)}, ${load.destinationStateName} (from your "${notification.searchName}" saved search)`
 				)
-				.join('\n')}\n\nView your saved searches at test-loadboard.dds-express.com`;
+				.join('\n')}\n\nView your saved searches at loadboard.ddsexpress.com`;
 
 			// If either notification type is sent, mark all loads as notified
 			if (notification.shouldEmail || notification.shouldText) {
