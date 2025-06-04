@@ -16,7 +16,7 @@ Sentry.init({
 
 	// If you don't want to use Session Replay, just remove the line below:
 	integrations: [
-		Sentry.replayCanvasIntegration ({
+		Sentry.replayIntegration ({
 			maskAllText: false,
 			maskAllInputs: false,
 			blockAllMedia: false,
