@@ -3,7 +3,7 @@ import * as Sentry from '@sentry/sveltekit';
 import { PB } from '$lib/server/server';
 
 Sentry.init({
-	dsn: 'https://b962a8eb337185ba3602a7dc324b2c47@o4508971907940352.ingest.us.sentry.io/4508971911020544',
+	dsn: 'https://add9301487d2ac52572466bff780824b@o4508971907940352.ingest.us.sentry.io/4509437733240832',
 	tracesSampleRate: 1,
 	replaysSessionSampleRate: 1.0,
 	replaysOnErrorSampleRate: 1.0,
