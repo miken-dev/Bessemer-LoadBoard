@@ -64,7 +64,6 @@
 		}
 	};
 
-
 	function numberWithCommas(number: number) {
 		return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 	}
@@ -162,10 +161,12 @@
 									</div>
 								</div>
 								<!-- Revenue/Miles -->
-								<div>
-									<div class="text-xs font-medium text-gray-500 dark:text-gray-300">Revenue</div>
-									<div class="mt-1 text-sm">${numberWithCommas(row.revenue)}</div>
-								</div>
+								{#if loggedIn}
+									<div>
+										<div class="text-xs font-medium text-gray-500 dark:text-gray-300">Revenue</div>
+										<div class="mt-1 text-sm">${numberWithCommas(row.revenue)}</div>
+									</div>
+								{/if}
 								<div>
 									<div class="text-xs font-medium text-gray-500 dark:text-gray-300">Terminal</div>
 									<div class="mt-1 text-sm">{row.terminalName}</div>
