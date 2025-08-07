@@ -51,11 +51,11 @@
 	const toggle = (id: number, city: string, event: Event) => {
 		selectedRow = id;
 		const phone = document.querySelectorAll('.phone');
-		let comparison = false 
+		let comparison = false;
 
-		for (const phoneNode of phone){ 
+		for (const phoneNode of phone) {
 			if (phoneNode === event.target) {
-				comparison = true
+				comparison = true;
 			}
 		}
 		if (!comparison) {
