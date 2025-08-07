@@ -258,6 +258,7 @@
 									bind:selectedRow
 									bind:detailsHidden
 									bind:tableClicked
+									loggedIn = {true}
 								/>
 							{:else}
 								<LoadTablev2
@@ -265,6 +266,7 @@
 									bind:selectedRow
 									bind:detailsHidden
 									bind:tableClicked
+									loggedIn = {true}
 								/>
 							{/if}
 						{:else if filteredData.length === 0 && tableData.length === 0}
