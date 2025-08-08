@@ -14,7 +14,8 @@
 		selectedRow = $bindable(),
 		detailsHidden = $bindable(),
 		tableClicked,
-		multipleLoads
+		multipleLoads,
+		loggedIn
 	}: {
 		tableData: any;
 		selectedCity: string | null;
@@ -23,6 +24,7 @@
 		detailsHidden: boolean;
 		tableClicked: boolean;
 		multipleLoads: boolean;
+		loggedIn: boolean;
 	} = $props();
 
 	let isSingleRow = () => {
@@ -77,7 +79,7 @@
 				<div class="my-4">
 					{#each tableData as data}
 						{#if data.loadID === selectedRow}
-							<DrawerDetails {data} horizontal={false} />
+							<DrawerDetails {data} horizontal={false} {loggedIn}/>
 						{/if}
 					{/each}
 				</div>
@@ -116,7 +118,7 @@
 			{#if tableClicked || !multipleLoads}
 				{#each tableData as data}
 					{#if data.loadID === selectedRow}
-						<DrawerDetails {data} horizontal={true} />
+						<DrawerDetails {data} horizontal={true} {loggedIn}/>
 					{/if}
 				{/each}
 			{:else}
@@ -134,7 +136,7 @@
 						{#each tableData as data}
 							{#if data.originCityName === selectedCity}
 								<div class="w-dvw">
-									<DrawerDetails {data} horizontal={true} />
+									<DrawerDetails {data} horizontal={true} {loggedIn} />
 								</div>
 							{/if}
 						{/each}

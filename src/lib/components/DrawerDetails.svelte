@@ -4,10 +4,12 @@
 	import type { TableDataTypes } from '$lib/types';
 	let {
 		data,
-		horizontal
+		horizontal,
+		loggedIn
 	}: {
 		data: any;
 		horizontal: boolean;
+		loggedIn: boolean;
 	} = $props();
 	let selectedCity = $state('');
 	let selectedState = $state('');
@@ -45,38 +47,41 @@
 		return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 	}
 
-export function insertBreaks(text, chunkSize = 23) {
-  if (!text) return '';
-  
-  let result = '';
-  let lastBreakIndex = 0;
-  let lastSpaceIndex = -1;
-  
-  for (let i = 0; i < text.length; i++) {
-    // Track position of spaces
-    if (text[i] === ' ') {
-      lastSpaceIndex = i;
-    }
-    
-    result += text[i];
-    
-    // When we've gone chunkSize characters since last break
-    if (i - lastBreakIndex >= chunkSize - 1 && i < text.length - 1) {
-      // If we found a space recently, break there
-      if (lastSpaceIndex > lastBreakIndex) {
-        // Go back and insert the break at the last space
-        const charactersToBacktrack = i - lastSpaceIndex;
-        result = result.slice(0, result.length - charactersToBacktrack) + '<br>' + result.slice(result.length - charactersToBacktrack);
-        lastBreakIndex = lastSpaceIndex + 1; // +1 because the space is before the break
-        lastSpaceIndex = -1;
-      } 
-      // If no space found within this chunk, just continue until we find one
-    }
-  }
-  
-  // Return the HTML as a trusted string in Svelte
-  return new String(result);
-}
+	export function insertBreaks(text, chunkSize = 23) {
+		if (!text) return '';
+
+		let result = '';
+		let lastBreakIndex = 0;
+		let lastSpaceIndex = -1;
+
+		for (let i = 0; i < text.length; i++) {
+			// Track position of spaces
+			if (text[i] === ' ') {
+				lastSpaceIndex = i;
+			}
+
+			result += text[i];
+
+			// When we've gone chunkSize characters since last break
+			if (i - lastBreakIndex >= chunkSize - 1 && i < text.length - 1) {
+				// If we found a space recently, break there
+				if (lastSpaceIndex > lastBreakIndex) {
+					// Go back and insert the break at the last space
+					const charactersToBacktrack = i - lastSpaceIndex;
+					result =
+						result.slice(0, result.length - charactersToBacktrack) +
+						'<br>' +
+						result.slice(result.length - charactersToBacktrack);
+					lastBreakIndex = lastSpaceIndex + 1; // +1 because the space is before the break
+					lastSpaceIndex = -1;
+				}
+				// If no space found within this chunk, just continue until we find one
+			}
+		}
+
+		// Return the HTML as a trusted string in Svelte
+		return new String(result);
+	}
 </script>
 
 <!-- load info -->
@@ -154,10 +159,12 @@ export function insertBreaks(text, chunkSize = 23) {
 			<h3 class="font-extrabold">Phone Number:</h3>
 			<a class="text-blue-500 underline" href="tel:+1{data.terminalPhone}">{data.terminalPhone}</a>
 		</div>
-		<div class="my-1 mt-3 flex flex-col">
-			<h3 class="font-extrabold">Revenue:</h3>
-			<p>{`$${numberWithCommas(data.revenue)}`}</p>
-		</div>
+		{#if loggedIn}
+			<div class="my-1 mt-3 flex flex-col">
+				<h3 class="font-extrabold">Revenue:</h3>
+				<p>{`$${numberWithCommas(data.revenue)}`}</p>
+			</div>
+		{/if}
 		<div class="my-1 mt-3 flex flex-col">
 			<h3 class="font-extrabold">Miles:</h3>
 			<p>

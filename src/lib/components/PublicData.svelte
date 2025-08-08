@@ -311,4 +311,5 @@
 	bind:detailsHidden
 	{tableClicked}
 	{multipleLoads}
+	loggedIn = {false}
 />
