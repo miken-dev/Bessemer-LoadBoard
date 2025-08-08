@@ -94,7 +94,7 @@
 					<DrawerCarousel>
 						{#each tableData as data}
 							{#if data.originCityName === selectedCity}
-								<DrawerDetails {data} horizontal={false} />
+								<DrawerDetails {data} horizontal={false} {loggedIn}/>
 							{/if}
 						{/each}
 					</DrawerCarousel>
