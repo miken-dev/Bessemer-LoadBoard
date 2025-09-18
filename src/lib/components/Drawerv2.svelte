@@ -42,6 +42,7 @@
 		easing: sineIn
 	};
 	const desktop = new MediaQuery('min-width: 1100px');
+	const desktopHeight = new MediaQuery('min-height: 800px')
 
 	// Prevent background scrolling when drawer is open on mobile
 	$effect(() => {
@@ -62,7 +63,7 @@
 	});
 </script>
 
-{#if !desktop.current}
+{#if !desktop.current || !desktopHeight.current}
 	<div class="outerContainer">
 		<Drawer
 			transitionType="fly"
@@ -103,7 +104,7 @@
 		</Drawer>
 	</div>
 {/if}
-{#if desktop.current}
+{#if desktop.current && desktopHeight.current}
 	<Drawer
 		placement="bottom"
 		transitionType="fly"
